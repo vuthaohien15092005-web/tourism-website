@@ -1,0 +1,982 @@
+<!-- Contact Management Index -->
+<div class="admin-content">
+    <div class="admin-header">
+        <div class="header-left">
+            <h1 class="page-title">Quản lý Liên hệ</h1>
+            <p class="page-subtitle">Quản lý các tin nhắn liên hệ từ khách hàng</p>
+        </div>
+        <div class="header-right">
+            <div class="stats-cards">
+                <div class="stat-card new">
+                    <div class="stat-icon">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number"><%= stats.new %></div>
+                        <div class="stat-label">Mới</div>
+                    </div>
+                </div>
+                <div class="stat-card read">
+                    <div class="stat-icon">
+                        <i class="fa fa-eye"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number"><%= stats.read %></div>
+                        <div class="stat-label">Đã đọc</div>
+                    </div>
+                </div>
+                <div class="stat-card replied">
+                    <div class="stat-icon">
+                        <i class="fa fa-reply"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number"><%= stats.replied %></div>
+                        <div class="stat-label">Đã trả lời</div>
+                    </div>
+                </div>
+                <div class="stat-card total">
+                    <div class="stat-icon">
+                        <i class="fa fa-list"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number"><%= stats.total %></div>
+                        <div class="stat-label">Tổng cộng</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="admin-filters">
+        <form class="filter-form" method="GET" action="/admin/contacts">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="search">Tìm kiếm:</label>
+                    <input 
+                        type="text" 
+                        id="search" 
+                        name="search" 
+                        value="<%= search %>" 
+                        placeholder="Tên, email, nội dung..."
+                        class="form-control"
+                    />
+                </div>
+                <div class="filter-group">
+                    <label for="status">Trạng thái:</label>
+                    <select id="status" name="status" class="form-control">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="new" <%= status === 'new' ? 'selected' : '' %>>Mới</option>
+                        <option value="read" <%= status === 'read' ? 'selected' : '' %>>Đã đọc</option>
+                        <option value="replied" <%= status === 'replied' ? 'selected' : '' %>>Đã trả lời</option>
+                    </select>
+                </div>
+                <div class="filter-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                    <a href="/admin/contacts" class="btn btn-secondary">
+                        <i class="fa fa-refresh"></i> Làm mới
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Contacts Table -->
+    <div class="admin-table-container">
+        <% if (contacts && contacts.length > 0) { %>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Thông tin</th>
+                            <th>Quốc gia</th>
+                            <th>Tin nhắn</th>
+                            <th>Trạng thái</th>
+                            <th>Thời gian</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% contacts.forEach(contact => { %>
+                            <tr class="contact-row <%= contact.status %>" data-contact-id="<%= contact._id %>">
+                                <td class="contact-info">
+                                    <div class="contact-details">
+                                        <div class="contact-name">
+                                            <strong><%= contact.name %></strong>
+                                        </div>
+                                        <div class="contact-email">
+                                            <i class="fa fa-envelope"></i>
+                                            <%= contact.email %>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="contact-country">
+                                    <span class="country-badge">
+                                        <%= contact.country %>
+                                    </span>
+                                </td>
+                                <td class="contact-message">
+                                    <div class="message-preview">
+                                        <%= contact.message.length > 100 ? contact.message.substring(0, 100) + '...' : contact.message %>
+                                    </div>
+                                </td>
+                                <td class="contact-status">
+                                    <span class="status-badge <%= contact.status %>">
+                                        <%= contact.statusText %>
+                                    </span>
+                                </td>
+                                <td class="contact-time">
+                                    <div class="time-info">
+                                        <div class="time-ago"><%= contact.timeAgo %></div>
+                                        <div class="time-full">
+                                            <%= new Date(contact.createdAt).toLocaleString('vi-VN') %>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="contact-actions">
+                                    <div class="action-buttons">
+                                        <a href="/admin/contacts/<%= contact._id %>" 
+                                           class="btn btn-sm btn-info" 
+                                           title="Xem chi tiết">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <% if (contact.status === 'new') { %>
+                                            <button onclick="markAsRead('<%= contact._id %>')" 
+                                                    class="btn btn-sm btn-warning" 
+                                                    title="Đánh dấu đã đọc">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        <% } %>
+                                        <% if (contact.status === 'read') { %>
+                                            <button onclick="markAsReplied('<%= contact._id %>')" 
+                                                    class="btn btn-sm btn-success" 
+                                                    title="Đánh dấu đã trả lời">
+                                                <i class="fa fa-reply"></i>
+                                            </button>
+                                        <% } %>
+                                        <button onclick="openQuickReply('<%= contact._id %>', '<%= contact.name %>', '<%= contact.email %>')" 
+                                                class="btn btn-sm btn-primary" 
+                                                title="Trả lời email">
+                                            <i class="fa fa-envelope"></i>
+                                        </button>
+                                        <a href="/admin/contacts/<%= contact._id %>/delete" 
+                                           class="btn btn-sm btn-danger" 
+                                           title="Xóa"
+                                           onclick="return confirm('Bạn có chắc muốn xóa liên hệ này?')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <% if (totalPages > 1) { %>
+                <div class="admin-pagination">
+                    <div class="pagination-info">
+                        Hiển thị <%= ((currentPage - 1) * 10) + 1 %> - <%= Math.min(currentPage * 10, total) %> 
+                        trong tổng số <%= total %> liên hệ
+                    </div>
+                    <div class="pagination-controls">
+                        <% if (currentPage > 1) { %>
+                            <a href="?page=<%= currentPage - 1 %>&search=<%= search %>&status=<%= status %>" 
+                               class="btn btn-sm btn-outline">
+                                <i class="fa fa-chevron-left"></i> Trước
+                            </a>
+                        <% } %>
+                        
+                        <% for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) { %>
+                            <% if (i === currentPage) { %>
+                                <span class="btn btn-sm btn-primary active"><%= i %></span>
+                            <% } else { %>
+                                <a href="?page=<%= i %>&search=<%= search %>&status=<%= status %>" 
+                                   class="btn btn-sm btn-outline"><%= i %></a>
+                            <% } %>
+                        <% } %>
+                        
+                        <% if (currentPage < totalPages) { %>
+                            <a href="?page=<%= currentPage + 1 %>&search=<%= search %>&status=<%= status %>" 
+                               class="btn btn-sm btn-outline">
+                                Sau <i class="fa fa-chevron-right"></i>
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+        <% } else { %>
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fa fa-envelope-open-o"></i>
+                </div>
+                <h3>Không có liên hệ nào</h3>
+                <p>Chưa có tin nhắn liên hệ nào từ khách hàng.</p>
+                <a href="/admin/contacts" class="btn btn-primary">
+                    <i class="fa fa-refresh"></i> Làm mới
+                </a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<!-- JavaScript for AJAX actions -->
+<script>
+// Mark as read function
+async function markAsRead(contactId) {
+    if (!confirm('Đánh dấu đã đọc?')) return;
+    
+    try {
+        const response = await fetch(`/admin/contacts/${contactId}/mark-read`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('Đánh dấu đã đọc thành công!', 'success');
+            // Update status badge without reload
+            updateContactStatus(contactId, 'read');
+        } else {
+            showNotification('Có lỗi xảy ra: ' + result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('Có lỗi xảy ra khi đánh dấu đã đọc', 'error');
+    }
+}
+
+// Mark as replied function
+async function markAsReplied(contactId) {
+    if (!confirm('Đánh dấu đã trả lời?')) return;
+    
+    try {
+        const response = await fetch(`/admin/contacts/${contactId}/mark-replied`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('Đánh dấu đã trả lời thành công!', 'success');
+            // Update status badge without reload
+            updateContactStatus(contactId, 'replied');
+        } else {
+            showNotification('Có lỗi xảy ra: ' + result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('Có lỗi xảy ra khi đánh dấu đã trả lời', 'error');
+    }
+}
+
+// Update contact status function
+function updateContactStatus(contactId, newStatus) {
+    // Find the contact row
+    const contactRow = document.querySelector(`tr[data-contact-id="${contactId}"]`);
+    if (!contactRow) return;
+    
+    // Update status badge
+    const statusBadge = contactRow.querySelector('.status-badge');
+    if (statusBadge) {
+        statusBadge.className = `status-badge ${newStatus}`;
+        statusBadge.textContent = newStatus === 'read' ? 'Đã đọc' : 
+                                  newStatus === 'replied' ? 'Đã trả lời' : 'Mới';
+    }
+    
+    // Update row class
+    contactRow.className = `contact-row ${newStatus}`;
+    
+    // Hide/show action buttons
+    const markReadBtn = contactRow.querySelector('button[onclick*="markAsRead"]');
+    const markRepliedBtn = contactRow.querySelector('button[onclick*="markAsReplied"]');
+    
+    if (markReadBtn) markReadBtn.style.display = 'none';
+    if (markRepliedBtn) markRepliedBtn.style.display = 'none';
+}
+
+// Show notification function
+function showNotification(message, type) {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Quick reply functions
+function openQuickReply(contactId, contactName, contactEmail) {
+    // Pre-fill subject with contact name
+    const subject = `Re: Liên hệ từ ${contactName}`;
+    
+    // Create modal HTML
+    const modalHtml = `
+        <div id="quickReplyModal" class="modal" style="display: flex;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fa fa-envelope"></i> Trả lời email nhanh</h3>
+                    <button onclick="closeQuickReply()" class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="contact-info" style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                        <p style="margin: 0 0 5px 0;"><strong>Gửi đến:</strong> ${contactName} (${contactEmail})</p>
+                    </div>
+                    <form id="quickReplyForm" onsubmit="submitQuickReply(event, '${contactId}')">
+                        <div class="form-group">
+                            <label for="quickSubject">Tiêu đề email:</label>
+                            <input type="text" id="quickSubject" name="subject" class="form-control" 
+                                   value="${subject}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quickMessage">Nội dung trả lời:</label>
+                            <textarea id="quickMessage" name="message" class="form-control" rows="6" 
+                                      placeholder="Nhập nội dung trả lời..." required></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" onclick="closeQuickReply()" class="btn btn-secondary">
+                                <i class="fa fa-times"></i> Hủy
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-paper-plane"></i> Gửi email
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to page
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeQuickReply() {
+    const modal = document.getElementById('quickReplyModal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = 'auto';
+    }
+}
+
+async function submitQuickReply(event, contactId) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const subject = formData.get('subject');
+    const message = formData.get('message');
+    
+    console.log('📧 [FRONTEND] Starting quick reply:', {
+        contactId,
+        subject: subject ? subject.substring(0, 50) + '...' : 'null',
+        messageLength: message ? message.length : 0,
+        timestamp: new Date().toISOString()
+    });
+    
+    if (!subject || !message) {
+        console.log('❌ [FRONTEND] Validation failed:', {
+            hasSubject: !!subject,
+            hasMessage: !!message
+        });
+        showNotification('Vui lòng điền đầy đủ thông tin', 'error');
+        return;
+    }
+    
+    try {
+        console.log('📧 [FRONTEND] Sending request to server:', {
+            contactId,
+            url: `/admin/contacts/reply/${contactId}`,
+            timestamp: new Date().toISOString()
+        });
+        
+        const response = await fetch(`/admin/contacts/reply/${contactId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ subject, message })
+        });
+        
+        console.log('📧 [FRONTEND] Response received:', {
+            status: response.status,
+            statusText: response.statusText,
+            ok: response.ok,
+            timestamp: new Date().toISOString()
+        });
+        
+        const result = await response.json();
+        
+        console.log('📧 [FRONTEND] Response data:', {
+            success: result.success,
+            message: result.message,
+            timestamp: new Date().toISOString()
+        });
+        
+        if (result.success) {
+            console.log('✅ [FRONTEND] Email sent successfully');
+            showNotification('Email trả lời đã được gửi thành công!', 'success');
+            closeQuickReply();
+            // Update status badge
+            updateContactStatus(contactId, 'replied');
+        } else {
+            console.log('❌ [FRONTEND] Email send failed:', result.message);
+            showNotification('Có lỗi xảy ra: ' + result.message, 'error');
+        }
+    } catch (error) {
+        console.error('❌ [FRONTEND] Network error:', {
+            error: error.message,
+            stack: error.stack,
+            contactId,
+            timestamp: new Date().toISOString()
+        });
+        showNotification('Có lỗi xảy ra khi gửi email', 'error');
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('modal')) {
+        closeQuickReply();
+    }
+});
+</script>
+
+<!-- Notification Styles -->
+<style>
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 15px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease-out;
+    max-width: 400px;
+}
+
+.notification-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.notification-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.notification-content i {
+    font-size: 18px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+</style>
+
+<style>
+/* Contact Management Styles */
+.admin-content {
+    padding: 20px;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header-left .page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 5px 0;
+}
+
+.header-left .page-subtitle {
+    color: #6c757d;
+    margin: 0;
+    font-size: 14px;
+}
+
+.stats-cards {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-width: 120px;
+}
+
+.stat-card.new { border-left: 4px solid #e74c3c; }
+.stat-card.read { border-left: 4px solid #f39c12; }
+.stat-card.replied { border-left: 4px solid #27ae60; }
+.stat-card.total { border-left: 4px solid #3498db; }
+
+.stat-icon {
+    font-size: 24px;
+    color: #6c757d;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-filters {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.filter-form .filter-row {
+    display: flex;
+    gap: 20px;
+    align-items: end;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    background: #f8f9fa;
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.admin-table td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: top;
+}
+
+.contact-row.new {
+    background: #fff5f5;
+}
+
+.contact-row.read {
+    background: #fffbf0;
+}
+
+.contact-row.replied {
+    background: #f0fff4;
+}
+
+.contact-name {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.contact-email {
+    font-size: 14px;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.country-badge {
+    background: #e9ecef;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.message-preview {
+    font-size: 14px;
+    color: #495057;
+    line-height: 1.4;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-badge.new {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-badge.read {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.replied {
+    background: #d4edda;
+    color: #155724;
+}
+
+.time-ago {
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.time-full {
+    font-size: 12px;
+    color: #adb5bd;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+}
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 11px;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-info {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-warning {
+    background: #ffc107;
+    color: #212529;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #dee2e6;
+    color: #6c757d;
+}
+
+.btn:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+}
+
+.btn.active {
+    background: #007bff;
+    color: white;
+}
+
+.admin-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.pagination-info {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    margin: 0 0 10px 0;
+    color: #495057;
+}
+
+.empty-state p {
+    margin: 0 0 20px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .stats-cards {
+        justify-content: center;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+    }
+    
+    .filter-group {
+        min-width: 100%;
+    }
+    
+    .admin-table-container {
+        overflow-x: auto;
+    }
+    
+    .admin-table {
+        min-width: 800px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .admin-pagination {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+    background: #f8f9fa;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.modal-close:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-control[type="text"] {
+    height: 45px;
+}
+
+.form-control[rows] {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #dee2e6;
+}
+</style>

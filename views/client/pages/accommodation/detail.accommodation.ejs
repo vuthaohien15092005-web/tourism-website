@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= (acc && acc.name) || 'Chi tiết lưu trú' %> | Hà Nội Vibes</title>
+    <meta
+      name="description"
+      content="<%= (acc && (acc.name + ' - Lưu trú Hà Nội')) || 'Chi tiết lưu trú Hà Nội' %>"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/harmony.css" />
+    <link rel="stylesheet" href="/client/css/accommodation-detail.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/client/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/client/img/logo.jpg"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/client/img/logo.jpg"
+    />
+    <link rel="manifest" href="/client/img/site.webmanifest" />
+  </head>
+  <body class="accommodation-detail-page">
+    <%- include('../../partials/header') %>
+
+    <!-- ===========================================
+             BANNER
+             =========================================== -->
+    <header
+      class="page-header accommodation-banner"
+      style="
+        background-image: url('<%= (acc && (acc.images && acc.images[0])) || '/client/img/header-bg.jfif' %>');
+      "
+    >
+      <div class="header-content">
+        <h1><%= (acc && acc.name) || 'Lưu trú' %></h1>
+        <p class="font-color" style="text-align: center !important;">Hà Nội Vibes – Trải nghiệm nghỉ dưỡng tuyệt vời tại Hà Nội</p>
+      </div>
+    </header>
+
+    <!-- ===========================================
+             MAIN CONTENT
+             =========================================== -->
+    <main class="acc-detail main">
+      <div class="container main-content">
+        <!-- ===========================================
+                     GALLERY SECTION
+                     =========================================== -->
+        <section class="image-gallery" id="gallery">
+          <% var imgs = (acc && acc.images && acc.images.length) ? acc.images :
+          ['/client/img/hotay.jpg','/client/img/carousel-img3.jpg','/client/img/img1.jfif','/client/img/img2.jfif','/client/img/img3.png'];
+          var hasImages = imgs && imgs.length > 0; %> <% if (hasImages) { %> <%
+          imgs.slice(0, 5).forEach(function(img, idx){ %>
+          <div
+            class="gallery-item"
+            data-index="<%= idx %>"
+            role="button"
+            tabindex="0"
+            aria-label="Xem ảnh <%= idx + 1 %>"
+          >
+            <img
+              src="<%= img %>"
+              alt="<%= (acc && acc.name) || 'Hình ảnh lưu trú' %>"
+              loading="lazy"
+            />
+          </div>
+          <% }) %> <% } else { %>
+          <div
+            class="gallery-item"
+            data-index="0"
+            role="button"
+            tabindex="0"
+            aria-label="Xem ảnh"
+          >
+            <img
+              src="/client/img/hotay.jpg"
+              alt="<%= (acc && acc.name) || 'Hình ảnh lưu trú' %>"
+              loading="lazy"
+            />
+          </div>
+          <% } %>
+        </section>
+
+        <!-- ===========================================
+                     CONTENT GRID
+                     =========================================== -->
+        <div class="content-grid">
+          <!-- ===========================================
+                         LEFT COLUMN: Main Content
+                         =========================================== -->
+          <div>
+            <!-- Intro Section -->
+            <section class="main-section">
+              <h2 class="section-title">Giới thiệu</h2>
+              <div class="description">
+                <% if (acc && acc.description) { %>
+                <p><%= acc.description %></p>
+                <% } else { %>
+                <p>Thông tin đang được cập nhật.</p>
+                <% } %>
+              </div>
+              <% if (acc && acc.amenities && acc.amenities.length) { %>
+              <div class="room-info">
+                <h3><i class="fa fa-bed"></i> Tiện nghi</h3>
+                <div class="room-features-list">
+                  <% acc.amenities.forEach(function(f){ %>
+                  <div class="feature-item">
+                    <i class="fa fa-check-circle"></i><span><%= f %></span>
+                  </div>
+                  <% }) %>
+                </div>
+              </div>
+              <% } %>
+            </section>
+
+          </div>
+
+          <!-- ===========================================
+                         RIGHT COLUMN: Contact Info Sidebar
+                         =========================================== -->
+          <aside class="sidebar">
+            <!-- Contact Info -->
+            <section class="contact-info">
+              <h3><i class="fa fa-address-book"></i> Thông tin liên hệ</h3>
+              <% if (acc && acc.contact && acc.contact.phone) { %>
+              <div class="contact-item">
+                <i class="fa fa-phone"></i>
+                <div>
+                  <div class="value"><%= acc.contact.phone %></div>
+                </div>
+              </div>
+              <% } %> <% if (acc && acc.contact && acc.contact.email) { %>
+              <div class="contact-item">
+                <i class="fa fa-envelope"></i>
+                <div>
+                  <div class="value"><%= acc.contact.email %></div>
+                </div>
+              </div>
+              <% } %>               <% if (acc && acc.address) { %>
+              <div class="contact-item">
+                <i class="fa fa-map-marker"></i>
+                <div>
+                  <div class="value">
+                    <%= acc.address %>
+                    <% if (acc.district) { %>
+                    <br><small class="text-muted">Quận/Huyện: <%= acc.district %></small>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+              <% } %> <% if (acc && acc.website) { %>
+              <div class="contact-item">
+                <i class="fa fa-globe"></i>
+                <div>
+                  <div class="value">
+                    <a href="<%= acc.website %>" target="_blank" rel="noopener"
+                      >Website</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </section>
+          </aside>
+        </div>
+
+        <!-- ===========================================
+                     NEARBY PLACES SECTION
+                     =========================================== -->
+        <% if (acc && acc._id) { %>
+          <%- include('../../components/nearby-places', { 
+              currentType: 'accommodation',
+              currentId: acc._id
+          }) %>
+        <% } %>
+
+        <!-- ===========================================
+                     MAP SECTION (Full Width)
+                     =========================================== -->
+        <section class="map-container">
+          <h2 class="section-title">Vị trí trên bản đồ</h2>
+          <div
+            id="accMap"
+            class="acc-map-embed"
+            data-lat="<%= (acc && acc.map && acc.map.coordinates && acc.map.coordinates[1]) || 21.028511 %>"
+            data-lng="<%= (acc && acc.map && acc.map.coordinates && acc.map.coordinates[0]) || 105.804817 %>"
+            data-zoom="14"
+            data-name="<%= (acc && acc.name) || '' %>"
+            data-address="<%= (acc && acc.address) || '' %>"
+            data-image="<%= (acc && (acc.images && acc.images[0])) || '' %>"
+            data-url="<%= (acc && ('/accommodation/' + (acc.slug || ''))) || '' %>"
+          ></div>
+          <% if (acc && acc.address) { %>
+          <p class="map-address">
+            <strong>Địa chỉ:</strong> <%= acc.address %>
+          </p>
+          <% } %>
+        </section>
+      </div>
+    </main>
+
+    <!-- up scroll -->
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+    <!-- ===========================================
+             GALLERY MODAL
+             =========================================== -->
+    <div class="gallery-modal" id="galleryModal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" type="button" aria-label="Đóng">
+          <i class="fa fa-times"></i>
+        </button>
+        <div class="modal-nav">
+          <button class="nav-prev" type="button" aria-label="Ảnh trước">
+            <i class="fa fa-chevron-left"></i>
+          </button>
+          <button class="nav-next" type="button" aria-label="Ảnh sau">
+            <i class="fa fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="modal-image">
+          <img src="" alt="Gallery image" />
+        </div>
+        <div class="modal-info">
+          <span class="image-counter">1 / 4</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===========================================
+             REVIEWS SECTION
+             =========================================== -->
+    <% if (acc && acc._id) { %>
+        <%- include('../../components/reviews-section', { 
+            targetType: 'accommodation',
+            targetId: acc._id,
+            title: 'Đánh giá từ khách hàng',
+            showForm: true,
+            currentUrl: '/accommodation/' + (acc.slug || acc._id)
+        }) %>
+    <% } %>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-accommodation-detail' }) %>
+
+    <!--footer-->
+    <%- include('../../partials/footer') %>
+    <!--footer-->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
+    <script src="/client/js/accommodation-detail.js"></script>
+
+    <!-- Fix scroll to top on page load -->
+    <script>
+      // Force scroll to top when page loads
+      window.addEventListener('load', function() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+      
+      // Also scroll to top on DOM ready
+      document.addEventListener('DOMContentLoaded', function() {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+    </script>
+
+  </body>
+</html>

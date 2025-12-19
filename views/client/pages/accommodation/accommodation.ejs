@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lưu trú Hà Nội | Hà Nội Vibes</title>
+        <meta name="description" content="Tìm khách sạn, homestay, nhà nghỉ, căn hộ dịch vụ tại Hà Nội. Lọc nhanh theo loại hình, mức giá, khu vực, tiện ích." />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/client/css/style.css" />
+        <link rel="stylesheet" href="/client/css/responsive.css" />
+        <link rel="stylesheet" href="/client/css/harmony.css" />
+        <link rel="stylesheet" href="/client/css/accommodation.css" />
+        <link rel="stylesheet" href="/client/css/components/pagination.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+        <link rel="manifest" href="/site.webmanifest" />
+    </head>
+    <body class="accommodation">
+        <%- include('../../partials/header') %>
+
+        <!-- Banner -->
+        <header class="page-header accommodation-banner" style="background-image: url('/client/img/hotel.jpg');">
+            <div class="header-content">
+                <h1>Lưu trú Hà Nội</h1>
+                <p class="font-color">Hà Nội Vibes – chọn nơi lưu trú, chọn cảm hứng mới</p>
+            
+            </div>
+        </header>
+
+        <!-- Filters -->
+        <section>
+            <div class="accommodation-filters" aria-label="Bộ lọc lưu trú">
+                <div class="filter-row">
+                    <div class="box" role="search">
+                        <i class="fa fa-search" aria-hidden="true" style="margin-right:8px"></i>
+                        <input id="acc-search" type="text" placeholder="Tìm theo tên cơ sở lưu trú..." aria-label="Tìm theo tên" value="<%= filters.search || '' %>" />
+                    </div>
+                    <div class="box">
+                        <select id="acc-price" aria-label="Chọn mức giá">
+                            <option value="all" <%= filters.price === 'all' || !filters.price ? 'selected' : '' %>>Tất cả mức giá</option>
+                            <option value="lt1m" <%= filters.price === 'lt1m' ? 'selected' : '' %>>Dưới 1.000.000đ</option>
+                            <option value="1to2m" <%= filters.price === '1to2m' ? 'selected' : '' %>>1.000.000đ - 2.000.000đ</option>
+                            <option value="2to3m" <%= filters.price === '2to3m' ? 'selected' : '' %>>2.000.000đ - 3.000.000đ</option>
+                            <option value="gt3m" <%= filters.price === 'gt3m' ? 'selected' : '' %>>Trên 3.000.000đ</option>
+                        </select>
+                    </div>
+                    <div class="box">
+                        <select id="acc-area" aria-label="Chọn khu vực">
+                            <option value="all" <%= filters.area === 'all' || !filters.area ? 'selected' : '' %>>Tất cả khu vực</option>
+                            <option value="Hoàn Kiếm" <%= filters.area === 'Hoàn Kiếm' ? 'selected' : '' %>>Hoàn Kiếm</option>
+                            <option value="Ba Đình" <%= filters.area === 'Ba Đình' ? 'selected' : '' %>>Ba Đình</option>
+                            <option value="Tây Hồ" <%= filters.area === 'Tây Hồ' ? 'selected' : '' %>>Tây Hồ</option>
+                            <option value="Long Biên" <%= filters.area === 'Long Biên' ? 'selected' : '' %>>Long Biên</option>
+                            <option value="Cầu Giấy" <%= filters.area === 'Cầu Giấy' ? 'selected' : '' %>>Cầu Giấy</option>
+                            <option value="Đống Đa" <%= filters.area === 'Đống Đa' ? 'selected' : '' %>>Đống Đa</option>
+                            <option value="Hai Bà Trưng" <%= filters.area === 'Hai Bà Trưng' ? 'selected' : '' %>>Hai Bà Trưng</option>
+                            <option value="Hoàng Mai" <%= filters.area === 'Hoàng Mai' ? 'selected' : '' %>>Hoàng Mai</option>
+                            <option value="Thanh Xuân" <%= filters.area === 'Thanh Xuân' ? 'selected' : '' %>>Thanh Xuân</option>
+                            <option value="Hà Đông" <%= filters.area === 'Hà Đông' ? 'selected' : '' %>>Hà Đông</option>
+                            <option value="Nam Từ Liêm" <%= filters.area === 'Nam Từ Liêm' ? 'selected' : '' %>>Nam Từ Liêm</option>
+                            <option value="Bắc Từ Liêm" <%= filters.area === 'Bắc Từ Liêm' ? 'selected' : '' %>>Bắc Từ Liêm</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <section class="accommodation-grid" aria-label="Danh sách cơ sở lưu trú">
+                <% 
+                    var list = (typeof accommodations !== 'undefined' && accommodations && accommodations.length) ? accommodations : null;
+                    function slugify(str){
+                        if (!str) return '';
+                        return String(str).toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
+                    }
+                    
+                    
+                    function getAreaLabel(district) {
+                        return district || 'all';
+                    }
+                %>
+                <% if (list) { list.forEach(function(item){
+                    var title = item.name || 'Cơ sở lưu trú';
+                    var img = (item.images && item.images[0]) || '/client/img/hotay.jpg';
+                    var area = getAreaLabel(item.district) || 'all';
+                    var price = item.priceFrom || '';
+                    var amenities = (item.amenities && item.amenities.join(',')) || '';
+                    var desc = item.description || '';
+                    var slug = item.slug || slugify(title);
+                    var rating = item.avgRating || 0;
+                    var reviewCount = item.reviewCount || 0;
+                    var star = item.star || 0;
+                %>
+                <article class="accommodation-card" data-title="<%= title %>" data-area="<%= area %>" data-price="<%= price %>" data-amenities="<%= amenities %>">
+                    <div class="thumb">
+                        <img src="<%= img %>" alt="<%= title %>" loading="lazy" />
+                        <% if (star > 0) { %>
+                        <div class="star-badge">
+                            <% for (var i = 0; i < star; i++) { %>
+                            <i class="fa fa-star"></i>
+                            <% } %>
+                        </div>
+                        <% } %>
+                    </div>
+                    <div class="content">
+                        <div class="card-header">
+                            <h3 class="title dark"><%= title %></h3>
+                        </div>
+                        <% if (price) { %>
+                        <span class="price price-inline">Giá từ: <%= Number(price).toLocaleString('vi-VN') %> VNĐ</span>
+                        <% } %>
+                        <% if (desc) { %><p class="desc font-color"><%= desc %></p><% } %>
+                        <div class="meta">
+                            <% if (rating > 0) { %>
+                            <div class="rating">
+                                <span class="rating-value"><%= rating.toFixed(1) %></span>
+                                <div class="stars">
+                                    <% for (var i = 1; i <= 5; i++) { %>
+                                    <i class="fa fa-star<%= i <= Math.round(rating) ? '' : '-o' %>"></i>
+                                    <% } %>
+                                </div>
+                                <% if (reviewCount > 0) { %>
+                                <span class="review-count">(<%= reviewCount %>)</span>
+                                <% } %>
+                            </div>
+                            <% } %>
+                        </div>
+                        <div class="amenities">
+                            <% if (item.amenities && item.amenities.length) { item.amenities.slice(0,3).forEach(function(a){ %>
+                            <span class="tag"><%= a %></span>
+                            <% }) } %>
+                        </div>
+                        <div class="actions">
+                            <a class="ctn" href="/accommodation/<%= slug %>">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </article>
+                <% }) } else { %>
+                <div class="no-results">
+                    <i class="fa fa-search"></i>
+                    <h3>Không tìm thấy cơ sở lưu trú nào</h3>
+                    <p>Hãy thử điều chỉnh bộ lọc hoặc từ khóa tìm kiếm</p>
+                </div>
+                <% } %>
+            </section>
+
+            <!-- Pagination Component -->
+            <%- include('../../components/pagination', {
+                pagination: pagination,
+                queryString: (() => {
+                    const params = [];
+                    if (filters.area && filters.area !== 'all') params.push(`area=${filters.area}`);
+                    if (filters.price && filters.price !== 'all') params.push(`price=${filters.price}`);
+                    if (filters.search) params.push(`search=${encodeURIComponent(filters.search)}`);
+                    if (filters.sort) params.push(`sort=${filters.sort}`);
+                    return params.length > 0 ? '&' + params.join('&') : '';
+                })()
+            }) %>
+        </section>
+
+        <!-- Contact Section -->
+        <%- include('../../components/contact-section', { sectionId: 'contact-accommodation' }) %>
+
+        <!-- up scroll -->
+        <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+        <!--footer-->
+        <%- include('../../partials/footer') %>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/client/js/includes.js"></script>
+        <script src="/client/js/script.js"></script>
+        <script src="/client/js/components/pagination.js"></script>
+        <script src="/client/js/accommodation.js"></script>
+        <script>
+        // Hero search functionality for accommodation
+        document.addEventListener('DOMContentLoaded', function() {
+            var heroSearchInput = document.getElementById('hero-search-input');
+            var searchSuggestions = document.getElementById('search-suggestions');
+            var searchClearBtn = document.querySelector('.search-clear');
+            var searchTimeout;
+
+            // Load accommodations data from page
+            var accommodationsData = [];
+            var allCards = document.querySelectorAll('.accommodation-card');
+            allCards.forEach(function(card) {
+                var title = card.getAttribute('data-title');
+                if (title) {
+                    accommodationsData.push({
+                        title: title,
+                        icon: 'fa-bed'
+                    });
+                }
+            });
+
+            function normalize(str) {
+                return (str || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+            }
+
+            function showSuggestions(query) {
+                if (!query || query.length < 2) {
+                    searchSuggestions.style.display = 'none';
+                    return;
+                }
+
+                var normalizedQuery = normalize(query);
+                var matches = accommodationsData.filter(function(item) {
+                    return normalize(item.title).includes(normalizedQuery);
+                }).slice(0, 5);
+
+                if (matches.length > 0) {
+                    searchSuggestions.innerHTML = matches.map(function(item) {
+                        return '<div class="suggestion-item" data-title="' + item.title + '">' +
+                               '<i class="fa ' + item.icon + ' suggestion-icon"></i>' +
+                               '<span class="suggestion-text">' + item.title + '</span>' +
+                               '</div>';
+                    }).join('');
+                    searchSuggestions.classList.add('show');
+                    searchSuggestions.style.display = 'block';
+                } else {
+                    searchSuggestions.style.display = 'none';
+                }
+            }
+
+            function hideSuggestions() {
+                setTimeout(function() {
+                    searchSuggestions.style.display = 'none';
+                    searchSuggestions.classList.remove('show');
+                }, 200);
+            }
+
+            // Search input events
+            if (heroSearchInput) {
+                heroSearchInput.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(function() {
+                        showSuggestions(this.value);
+                    }.bind(this), 300);
+                });
+
+                heroSearchInput.addEventListener('focus', function() {
+                    if (this.value.length >= 2) {
+                        showSuggestions(this.value);
+                    }
+                });
+
+                heroSearchInput.addEventListener('blur', hideSuggestions);
+            }
+
+            // Suggestion click events
+            if (searchSuggestions) {
+                searchSuggestions.addEventListener('click', function(e) {
+                    var suggestionItem = e.target.closest('.suggestion-item');
+                    if (suggestionItem) {
+                        var title = suggestionItem.getAttribute('data-title');
+                        heroSearchInput.value = title;
+                        hideSuggestions();
+                        // Trigger search
+                        var searchInput = document.getElementById('acc-search');
+                        if (searchInput) {
+                            searchInput.value = title;
+                            searchInput.dispatchEvent(new Event('input'));
+                        }
+                    }
+                });
+            }
+
+            // Clear button
+            if (searchClearBtn) {
+                searchClearBtn.addEventListener('click', function() {
+                    heroSearchInput.value = '';
+                    hideSuggestions();
+                    heroSearchInput.focus();
+                });
+            }
+
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.hero-search-container')) {
+                    hideSuggestions();
+                }
+            });
+        });
+        </script>
+        <!--footer-->
+    </body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= (attraction && (attraction.title || attraction.name)) || 'Chi tiết điểm tham quan' %> | Hà Nội Vibes</title>
+        <meta name="description" content="<%= (attraction && (attraction.seoDescription || attraction.shortDescription)) || 'Chi tiết điểm tham quan Hà Nội' %>" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/client/css/style.css" />
+        <link rel="stylesheet" href="/client/css/responsive.css" />
+        <link rel="stylesheet" href="/client/css/harmony.css" />
+        <link rel="stylesheet" href="/client/css/attraction-detail.css" />
+        <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+        <link rel="manifest" href="/client/img/site.webmanifest" />
+    </head>
+    <body>
+        <%- include('../../partials/header') %>
+        <% var attraction = (typeof attraction !== 'undefined' && attraction) ? attraction : null; %>
+        <% const bannerUrl = (attraction && (attraction.heroImage || (attraction.images && attraction.images[0] && attraction.images[0].url))) || '/client/img/header-bg.jfif'; %>
+        <!-- Banner -->
+        <header class="page-header attraction-banner" style="background-image: url('<%= bannerUrl %>');">
+            <div class="header-content">
+                <h2 id="quote" style="color: #fff;">
+                    <%= attraction && attraction.category === 'nhan-van' ? 'Điểm tham quan nhân văn' :
+                        attraction && attraction.category === 'tu-nhien' ? 'Điểm đến tham quan tự nhiên' : 'Điểm tham quan' %>
+                </h2>
+                <div class="line"></div>
+                <h1><%= (attraction && (attraction.title || attraction.name)) || 'Điểm tham quan' %></h1>
+                <% if (attraction && attraction.hasReviewWidget) { %>
+                    <div class="banner-rating">
+                        <div class="stars">
+                            <% 
+                                const rating = (attraction.rating && attraction.rating.average) ? attraction.rating.average : 4.7;
+                                const fullStars = Math.floor(rating);
+                                const hasHalfStar = (rating % 1) >= 0.5;
+                                for(let i = 0; i < 5; i++) {
+                                    if(i < fullStars) { %>
+                                        <i class="fa fa-star active"></i>
+                                    <% } else if(i === fullStars && hasHalfStar) { %>
+                                        <i class="fa fa-star-half-o active"></i>
+                                    <% } else { %>
+                                        <i class="fa fa-star-o"></i>
+                                    <% }
+                                }
+                            %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </header>
+
+        <main class="attraction-detail main" aria-label="Nội dung chi tiết điểm tham quan">
+            <div class="container">
+                <section id="attraction-intro" class="content-section itinerary-day no-margin-top">
+                    <!-- <div class="itinerary-day__hero-wrapper">
+                        <div class="itinerary-day__hero-media">
+                            <img src="<%= (attraction && attraction.images && attraction.images[1] && attraction.images[1].url) || '/client/img/carousel-img5.jpg' %>" 
+                                 alt="<%= (attraction && (attraction.title || attraction.name)) || 'Điểm tham quan' %>" 
+                                 loading="lazy" />
+                        </div>
+                    </div> -->
+
+                    <div class="itinerary-day__overlay">
+                        <div class="itinerary-day__content-container">
+                            <div class="intro-layout">
+                                <!-- LEFT: Introduction -->
+                                <div class="intro-section">
+                                    <div class="itinerary-day__description-card">
+                                        <div class="itinerary-day__description">
+                                            <h3>Giới thiệu chung:</h3>
+                                            <div class="description-content">
+                                                <p><%= (attraction && attraction.description) || 'Khám phá điểm tham quan thú vị tại Hà Nội với lịch sử và văn hóa đặc sắc.' %></p>
+                                                <% if (attraction && attraction.intro) { %>
+                                                    <p><%= attraction.intro %></p>
+                                                <% } %>
+                                                <% if (attraction && attraction.history) { %>
+                                                    <h4>Lịch sử</h4>
+                                                    <p><%= attraction.history %></p>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- RIGHT: Basic Info -->
+                                <div class="info-section">
+                                    <div class="itinerary-day__info-card">
+                                        <ul class="itinerary-day__info-list">
+                                            <li><strong>Vị trí:</strong>
+                                                <div class="ticket-info-text"><pre style="white-space: pre-wrap; margin: 0;"><%= (attraction && attraction.address) || 'Địa chỉ chưa cập nhật' %></pre></div></li>
+                                            
+                                            <% if (attraction && (attraction.opening_hours || attraction.openingHoursText || attraction.openHoursText)) { %>
+                                            <li><strong>Giờ mở cửa:</strong>
+                                                <div class="opening-hours-text"><pre style="white-space: pre-wrap; margin: 0;"><%= attraction.opening_hours || attraction.openingHoursText || attraction.openHoursText %></pre></div>
+                                            </li>
+                                            <% } else { %>
+                                            <li><strong>Giờ mở cửa:</strong> Thông tin chưa cập nhật</li>
+                                            <% } %>
+                                            
+                                            <% if (attraction && (attraction.ticketInfoText || attraction.ticketText)) { %>
+                                            <li><strong>Giá vé tham quan:</strong>
+                                                <div class="ticket-info-text"><pre style="white-space: pre-wrap; margin: 0;"><%= attraction.ticketInfoText || attraction.ticketText %></pre></div>
+                                            </li>
+                                            <% } else { %>
+                                            <li><strong>Giá vé tham quan:</strong>Thông tin chưa cập nhật</li>
+                                            <% } %>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Info Row -->
+                            <div class="additional-info-row">
+                                <% if (attraction && attraction.amenities && attraction.amenities.length > 0) { %>
+                                <div class="itinerary-day__amenities">
+                                    <h3>Tiện ích</h3>
+                                    <ul class="itinerary-day__amenities-list">
+                                        <% attraction.amenities.forEach(function(amenity) { %>
+                                        <li><%= amenity %></li>
+                                        <% }); %>
+                                    </ul>
+                                </div>
+                                <% } %>
+
+                                <% if (attraction && attraction.tags && attraction.tags.length > 0) { %>
+                                <div class="itinerary-day__tags">
+                                    <h3>Tags</h3>
+                                    <div class="tags-container">
+                                        <% attraction.tags.forEach(function(tag) { %>
+                                        <span class="tag"><%= tag %></span>
+                                        <% }); %>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="attraction-experiences" class="content-section itinerary-day">
+                    <div class="itinerary-day__hero-wrapper">
+                        <div class="itinerary-day__hero-media">
+                            <img src="<%= (attraction && attraction.images && attraction.images[1] && attraction.images[1].url) || '/client/img/carousel-img4.jpg' %>" 
+                                 alt="<%= (attraction && (attraction.title || attraction.name)) || 'Điểm tham quan' %> - Trải nghiệm" 
+                                 loading="lazy" />
+                        </div>
+                    </div>
+
+                    <div class="itinerary-day__overlay">
+                        <div class="itinerary-day__content-container">
+                            <div class="itinerary-day__columns">
+                                <!-- LEFT COLUMN: Experiences -->
+                                <div class="itinerary-day__column-left">
+                                    <div class="itinerary-day__experiences">
+                                        <h3>Trải nghiệm của du khách:</h3>
+                                        <% if (attraction && attraction.experiences && attraction.experiences.length > 0) { %>
+                                        <div class="experiences-grid">
+                                            <% attraction.experiences.forEach(function(experience) { %>
+                                            <div class="experience-card">
+                                                <div class="experience-icon">
+                                                    <i class="fa <%= experience.icon || 'fa-star' %>"></i>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <h4><%= experience.title %></h4>
+                                                    <p><%= experience.text %></p>
+                                                    <div class="experience-meta">
+                                                        <span class="duration"><i class="fa fa-clock-o"></i> <%= experience.duration %></span>
+                                                        <span class="difficulty difficulty-<%= experience.difficulty ? experience.difficulty.toLowerCase() : 'easy' %>">
+                                                            <i class="fa fa-signal"></i> <%= experience.difficulty || 'Dễ' %>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }); %>
+                                        </div>
+                                        <% } else if (attraction && attraction.highlights && attraction.highlights.length > 0) { %>
+                                        <ul class="itinerary-day__notes-list">
+                                            <% attraction.highlights.forEach(function(highlight) { %>
+                                            <li><%= highlight %></li>
+                                            <% }); %>
+                                        </ul>
+                                        <% } else { %>
+                                        <div class="no-experiences"><p>Thông tin trải nghiệm đang được cập nhật. Vui lòng quay lại sau.</p></div>
+                                        <% } %>
+                                    </div>
+                                </div>
+
+                                <!-- RIGHT COLUMN: Guidelines & Rules -->
+                                <div class="itinerary-day__column-right">
+                                    <div class="itinerary-day__guidelines">
+                                        <h3>Lưu ý tham quan cho du khách:</h3>
+                                        <% if (attraction && attraction.rules && attraction.rules.length > 0) { %>
+                                        <ul class="itinerary-day__notes-list">
+                                            <% attraction.rules.forEach(function(rule) { %>
+                                            <li><%= rule %></li>
+                                            <% }); %>
+                                        </ul>
+                                        <% } else if (attraction && attraction.notes && attraction.notes.length > 0) { %>
+                                        <ul class="itinerary-day__notes-list">
+                                            <% attraction.notes.forEach(function(note) { %>
+                                            <li><%= note %></li>
+                                            <% }); %>
+                                        </ul>
+                                        <% } else { %>
+                                        <div class="no-guidelines">
+                                            <p>Thông tin hướng dẫn đang được cập nhật.</p>
+                                        </div>
+                                        <% } %>
+                                    </div>
+
+                                    <% if (attraction && attraction.tips && attraction.tips.length > 0) { %>
+                                    <div class="itinerary-day__tips">
+                                        <h3>Mẹo tham quan</h3>
+                                        <ul class="itinerary-day__tips-list">
+                                            <% attraction.tips.forEach(function(tip) { %>
+                                            <li><%= tip %></li>
+                                            <% }); %>
+                                        </ul>
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Media Showcase Section (Hero + Thumbnails) -->
+                <section id="media-showcase" class="content-section media-showcase">
+                    <% 
+                        const images = (attraction && attraction.images) || []; 
+                        const heroImg = images[2] && images[0].url ? images[2].url : '/client/img/carousel-img3.jpg';
+                        const thumbs = images; // Show all images
+                    %>
+                    <div class="media-hero-wrapper">
+                    <div class="media-hero" style="background-image: url('<%= heroImg %>');" data-images='[<%=(images && images.length ? images.map(i=>`"${i.url}"`).join(',') : '')%>]' data-index="0">
+                        <div class="media-hero__overlay"></div>
+                        <div class="media-hero__content">
+                            <h2 class="media-hero__title">Hình ảnh</h2>
+                            <p class="media-hero__subtitle" style="color: white"></p>
+                        </div>
+                        <button class="media-hero__nav prev" type="button" aria-label="Ảnh trước"><i class="fa fa-chevron-left"></i></button>
+                        <button class="media-hero__nav next" type="button" aria-label="Ảnh sau"><i class="fa fa-chevron-right"></i></button>
+                        <button class="media-hero__zoom" type="button" aria-label="Phóng to"><i class="fa fa-search-plus"></i></button>
+                    </div>
+                    </div>
+                    <div class="media-thumbs">
+                        <div class="media-thumbs__header"></div>
+                        <div class="media-thumbs__grid">
+                            <% if (thumbs.length > 0) { %>
+                                <% thumbs.forEach(function(img){ %>
+                                    <button class="thumb" type="button" data-src="<%= img.url %>">
+                                        <span class="thumb__img" style="background-image:url('<%= img.url %>')"></span>
+                                    </button>
+                                <% }); %>
+                            <% } else { %>
+                                <div class="no-gallery"><p>Hình ảnh đang được cập nhật</p></div>
+                            <% } %>
+                        </div>
+                    </div>
+                </section>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function(){
+                  var heroEl = document.querySelector('#media-showcase .media-hero');
+                  if(!heroEl) return;
+                  var images = (heroEl.getAttribute('data-images')||'').replace(/&quot;/g,'"');
+                  try { images = JSON.parse(images); } catch(e){ images = []; }
+                  var idx = 0;
+                  function setHero(src){ heroEl.style.transition = 'background-image .35s ease'; heroEl.style.backgroundImage = 'url("'+src+'")'; }
+                  function show(i){ if(!images.length) return; idx = (i+images.length)%images.length; setHero(images[idx]); }
+                  document.querySelectorAll('#media-showcase .thumb').forEach(function(btn){
+                    btn.addEventListener('click', function(){ var s=this.getAttribute('data-src'); var i = images.indexOf(s); if(i>-1){ show(i); } else { setHero(s); }
+                    });
+                  });
+                  var prevBtn = document.querySelector('#media-showcase .media-hero__nav.prev');
+                  var nextBtn = document.querySelector('#media-showcase .media-hero__nav.next');
+                  if(prevBtn) prevBtn.addEventListener('click', function(){ show(idx-1); });
+                  if(nextBtn) nextBtn.addEventListener('click', function(){ show(idx+1); });
+                  // Zoom in-place using existing modal
+                  var zoomBtn = document.querySelector('#media-showcase .media-hero__zoom');
+                  var modal = document.getElementById('galleryModal');
+                  var modalImg = modal ? modal.querySelector('.modal-image img') : null;
+                  var modalClose = modal ? modal.querySelector('.modal-close') : null;
+                  var modalPrev = modal ? modal.querySelector('.nav-prev') : null;
+                  var modalNext = modal ? modal.querySelector('.nav-next') : null;
+                  var modalCounter = modal ? modal.querySelector('.image-counter') : null;
+
+                  function srcFromBg(){
+                    var s = heroEl.style.backgroundImage || '';
+                    return s.replace(/^url\("|"\)$/g,'');
+                  }
+                  function openModal(){
+                    if(!modal || !modalImg) return;
+                    if(!images.length){ modalImg.src = srcFromBg(); }
+                    else { modalImg.src = images[idx]; }
+                    if(modalCounter){ modalCounter.textContent = (idx+1)+' / '+(images.length||1); }
+                    modal.classList.add('active');
+                  }
+                  function closeModal(){ if(modal) modal.classList.remove('active'); }
+
+                  if(zoomBtn) zoomBtn.addEventListener('click', openModal);
+                  if(modalClose) modalClose.addEventListener('click', closeModal);
+                  if(modalPrev) modalPrev.addEventListener('click', function(){ show(idx-1); if(modalImg){ modalImg.src = images[idx]; if(modalCounter){ modalCounter.textContent = (idx+1)+' / '+images.length; } } });
+                  if(modalNext) modalNext.addEventListener('click', function(){ show(idx+1); if(modalImg){ modalImg.src = images[idx]; if(modalCounter){ modalCounter.textContent = (idx+1)+' / '+images.length; } } });
+                });
+                </script>
+
+                <!-- ===========================================
+                     NEARBY PLACES SECTION
+                     =========================================== -->
+                <% if (attraction && attraction._id) { %>
+                  <%- include('../../components/nearby-places', { 
+                      currentType: 'attraction',
+                      currentId: attraction._id
+                  }) %>
+                <% } %>
+
+                <!-- ===========================================
+                     MAP SECTION (Full Width)
+                     =========================================== -->
+                <section class="map-container">
+                    <h2 class="section-title">Vị trí trên bản đồ</h2>
+                    <div class="itinerary-overview__map-container">
+                        <div class="itinerary-overview__map-inner">
+                            <div id="glanceMap"
+                                 class="itinerary-overview__map"
+                                 data-lat="<%= (attraction && (attraction.lat || attraction.coordinates?.lat)) || 21.028511 %>"
+                                 data-lng="<%= (attraction && (attraction.lng || attraction.coordinates?.lng)) || 105.804817 %>"
+                                 data-zoom="<%= (attraction && (attraction.mapZoom || attraction.map?.zoom)) || 14 %>"
+                                 data-name="<%= (attraction && (attraction.title || attraction.name)) || '' %>"
+                                 data-address="<%= (attraction && attraction.address) || '' %>"
+                                 data-image="<%= (attraction && (attraction.heroImage || (attraction.images && attraction.images[0] && attraction.images[0].url))) || '' %>"
+                                 data-url="<%= (attraction && ('/attraction/' + (attraction.slug || attraction._id))) || '' %>"
+                                 data-route='<%- JSON.stringify((attraction && attraction.route) || []) %>'></div>
+                        </div>
+                        <div class="itinerary-overview__map-gradient-vertical"></div>
+                        <div class="itinerary-overview__map-gradient-horizontal"></div>
+                    </div>
+                    <% if (attraction && attraction.address) { %>
+                    <p class="map-address">
+                        <strong>Địa chỉ:</strong> <%= attraction.address %>
+                    </p>
+                    <% } %>
+                </section>
+
+                <!-- ===========================================
+                     REVIEWS SECTION
+                     =========================================== -->
+                <% if (attraction && attraction._id) { %>
+                    <%- include('../../components/reviews-section', { 
+                        targetType: 'attraction',
+                        targetId: attraction._id,
+                        title: 'Đánh giá từ du khách',
+                        showForm: true,
+                        currentUrl: '/attraction/' + (attraction.slug || attraction._id)
+                    }) %>
+                <% } %>
+            </div>
+        </main>
+
+        <!-- Gallery Modal -->
+        <div class="gallery-modal" id="galleryModal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" type="button">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="modal-nav">
+                    <button class="nav-prev" type="button">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-next" type="button">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="modal-image">
+                    <img src="" alt="Gallery image" />
+                </div>
+                <div class="modal-info">
+                    <span class="image-counter">1 / 4</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <%- include('../../components/contact-section', { sectionId: 'contact-attraction-detail' }) %>
+
+        <!-- up scroll -->
+        <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+        <!--footer-->
+        <%- include('../../partials/footer') %>
+        <!--footer-->
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/client/js/includes.js"></script>
+        <script src="/client/js/script.js"></script>
+        <script src="/client/js/attraction-data.js"></script>
+        <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
+        <script src="/client/js/attraction-detail.js"></script>
+        
+        <!-- Initialize Dynamic Data -->
+        <script>
+            // Initialize attraction data with server data
+            window.AttractionData.initialize(null);
+            
+        </script>
+
+        <!-- Fix scroll to top on page load -->
+        <script>
+          // Force scroll to top when page loads
+          window.addEventListener('load', function() {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+          });
+          
+          // Also scroll to top on DOM ready
+          document.addEventListener('DOMContentLoaded', function() {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+          });
+        </script>
+    </body>
+</html>
+

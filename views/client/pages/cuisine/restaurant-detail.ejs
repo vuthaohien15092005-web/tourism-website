@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= (restaurant && restaurant.name) || 'Chi tiết nhà hàng' %> | Hà Nội Vibes</title>
+    <meta name="description" content="<%= (restaurant && restaurant.description && restaurant.description[0]) || 'Nhà hàng Hà Nội' %>" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/harmony.css" />
+    <link rel="stylesheet" href="/client/css/restaurant-detail.css" />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/client/img/site.webmanifest" />
+</head>
+<body class="restaurant-detail-page">
+    <%- include('../../partials/header') %>
+
+    <!-- Banner -->
+    <header class="page-header restaurant-banner" style="background-image: url('<%= (restaurant && (restaurant.image || (restaurant.images && restaurant.images[0]))) || "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200" %>');">
+        <div class="header-content">
+            <h1><%= (restaurant && restaurant.name) || 'Nhà hàng Hà Nội' %></h1>
+            <p class="font-color">Khám phá hương vị đặc sắc</p>
+        </div>
+    </header>
+
+    <main class="restaurant-detail main">
+        <div class="container">
+            <% if (!restaurant) { %>
+                <section class="content-section">
+                    <h2 class="section-title"><i class="fa fa-warning"></i> Không tìm thấy nhà hàng</h2>
+                    <p>Rất tiếc, nhà hàng bạn tìm không tồn tại hoặc đã bị ẩn.</p>
+                    <a href="/cuisine" class="ctn">Quay lại danh sách Ẩm thực</a>
+                </section>
+            <% } else { %>
+            <div class="main-grid">
+                <div>
+                    <section class="content-section">
+                        <h2 class="section-title"><i class="fa fa-info-circle"></i> Giới thiệu</h2>
+                        <div class="description">
+                            <% var paragraphs = (restaurant && restaurant.description && Array.isArray(restaurant.description)) ? restaurant.description : (restaurant && restaurant.description ? [restaurant.description] : []); %>
+                            <% if (!paragraphs.length) { %>
+                                <p>Thông tin về nhà hàng đang được cập nhật.</p>
+                            <% } else { paragraphs.forEach(function(p){ %>
+                                <p><%= p %></p>
+                            <% }) } %>
+                        </div>
+
+                        <% var specialties = (restaurant && restaurant.specialties) || []; %>
+                        <% if (specialties.length) { %>
+                        <h3 class="subsection-title"><i class="fa fa-star"></i> Món đặc sản</h3>
+                        <div class="specialties-grid">
+                            <% specialties.forEach(function(specialty){ %>
+                            <div class="specialty-item">
+                                <i class="fa fa-cutlery"></i>
+                                <div>
+                                    <strong><%= specialty.name %></strong>
+                                    <% if (specialty.description) { %><p class="muted"><%= specialty.description %></p><% } %>
+                                    <% if (specialty.price) { %><span class="price"><%= specialty.price %></span><% } %>
+                                </div>
+                            </div>
+                            <% }) %>
+                        </div>
+                        <% } %>
+
+                        <% var gallery = (restaurant && restaurant.images) || []; %>
+                        <% if (gallery.length) { %>
+                        <h3 class="subsection-title"><i class="fa fa-image"></i> Hình ảnh nhà hàng</h3>
+                        <div class="image-gallery">
+                            <% gallery.slice(0, 6).forEach(function(img){ %>
+                            <div class="gallery-item"><img src="<%= img %>" alt="Hình nhà hàng" loading="lazy" /></div>
+                            <% }) %>
+                        </div>
+                        <% } %>
+                    </section>
+                </div>
+
+                <aside class="sidebar">
+                    <section class="info-card">
+                        <h3><i class="fa fa-info-circle"></i> Thông tin nhà hàng</h3>
+                        <div class="info-item">
+                            <i class="fa fa-map-marker"></i>
+                            <div>
+                                <div class="info-label">Địa chỉ</div>
+                                <div class="info-value"><%= (restaurant && restaurant.address) || 'Hà Nội' %></div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa fa-clock-o"></i>
+                            <div>
+                                <div class="info-label">Giờ mở cửa</div>
+                                <div class="info-value"><%= (restaurant && restaurant.time) || '8:00 - 22:00' %></div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa fa-star"></i>
+                            <div>
+                                <div class="info-label">Đánh giá</div>
+                                <div class="info-value"><%= (restaurant && restaurant.rating) || '4.5' %>/5</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa fa-money"></i>
+                            <div>
+                                <div class="info-label">Mức giá</div>
+                                <div class="info-value"><%= (restaurant && restaurant.price) || 'Trung bình' %></div>
+                            </div>
+                        </div>
+                        <% if (restaurant && restaurant.phone) { %>
+                        <div class="info-item">
+                            <i class="fa fa-phone"></i>
+                            <div>
+                                <div class="info-label">Điện thoại</div>
+                                <div class="info-value"><%= restaurant.phone %></div>
+                            </div>
+                        </div>
+                        <% } %>
+                    </section>
+
+                    <% if (restaurant && restaurant.mapUrl) { %>
+                    <section class="info-card">
+                        <h3><i class="fa fa-map"></i> Bản đồ</h3>
+                        <a class="btn-map" href="<%= restaurant.mapUrl %>" target="_blank">
+                            <i class="fa fa-map"></i> Xem trên bản đồ
+                        </a>
+                    </section>
+                    <% } %>
+                </aside>
+            </div>
+
+            <% var menu = (restaurant && restaurant.menu) || []; %>
+            <% if (menu.length) { %>
+            <section class="menu-section">
+                <h2 class="section-title"><i class="fa fa-book"></i> Thực đơn</h2>
+                <div class="menu-grid">
+                    <% menu.forEach(function(category){ %>
+                    <div class="menu-category">
+                        <h3 class="category-title"><%= category.name %></h3>
+                        <div class="menu-items">
+                            <% category.items.forEach(function(item){ %>
+                            <div class="menu-item">
+                                <div class="item-info">
+                                    <h4 class="item-name"><%= item.name %></h4>
+                                    <% if (item.description) { %><p class="item-description"><%= item.description %></p><% } %>
+                                </div>
+                                <div class="item-price"><%= item.price %></div>
+                            </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </section>
+            <% } %>
+            <% } %>
+        </div>
+    </main>
+
+    <!-- up scroll -->
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+    <!-- ===========================================
+             REVIEWS SECTION
+             =========================================== -->
+    <% if (restaurant && restaurant.id) { %>
+        <%- include('../../components/reviews-section', { 
+            targetType: 'cuisine-place',
+            targetId: restaurant.id,
+            title: 'Đánh giá từ khách hàng',
+            showForm: true,
+            currentUrl: '/cuisine/restaurant/' + (restaurant.slug || restaurant.id)
+        }) %>
+    <% } %>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-restaurant-detail' }) %>
+
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
+    <script src="/client/js/restaurant-detail.js"></script>
+</body>
+</html>

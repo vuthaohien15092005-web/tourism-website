@@ -1,0 +1,193 @@
+<!-- Top Row - Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon purple">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Lượt xem</h6>
+                    <h4 class="mb-0"><%= stats.views || '112.000' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon blue">
+                    <i class="fas fa-landmark"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Điểm tham quan</h6>
+                    <h4 class="mb-0"><%= stats.attractions || '0' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon green">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Lưu trú</h6>
+                    <h4 class="mb-0"><%= stats.accommodations || '0' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon red">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Đánh giá</h6>
+                    <h4 class="mb-0"><%= stats.reviews || '0' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Second Row - Additional Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon orange">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Ẩm thực</h6>
+                    <h4 class="mb-0"><%= stats.cuisines || '0' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon teal">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Địa điểm ẩm thực</h6>
+                    <h4 class="mb-0"><%= stats.cuisinePlaces || '0' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon pink">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Giải trí</h6>
+                    <h4 class="mb-0"><%= stats.entertainments || '0' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon indigo">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Liên hệ</h6>
+                    <h4 class="mb-0"><%= stats.contacts || '0' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Third Row - User Statistics -->
+<div class="row mb-4">
+    <div class="col-6 col-lg-3 col-md-6">
+        <div class="stats-card">
+            <div class="d-flex align-items-center">
+                <div class="stats-icon dark">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="text-muted mb-1">Người dùng</h6>
+                    <h4 class="mb-0"><%= stats.users || '0' %></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Row -->
+<div class="row">
+    <!-- Left Column - Charts -->
+    <div class="col-12 col-lg-8">
+        <!-- Lượt truy cập theo tháng -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Lượt truy cập theo tháng</h5>
+            </div>
+            <div class="card-body">
+                <div id="profile-visit-chart" style="height: 300px;"></div>
+            </div>
+        </div>
+    
+    </div>
+    
+    <!-- Right Column - Additional Info -->
+    <div class="col-12 col-lg-4">
+        <!-- Admin Profile -->
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <img src="/client/img/avatar.png" class="rounded-circle" width="80" height="80" alt="Admin">
+                </div>
+                <h5 class="mb-1">Admin</h5>
+                <p class="text-muted mb-0">@admin</p>
+            </div>
+        </div>
+        
+        <!-- Thống kê theo khu vực -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Thống kê theo khu vực</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-primary rounded-circle me-2" style="width: 10px; height: 10px;"></div>
+                    <span class="fw-bold">Hà Nội</span>
+                    <span class="ms-auto">862</span>
+                </div>
+                <div id="europe-chart" style="height: 100px;"></div>
+                
+                <div class="d-flex align-items-center mb-3 mt-3">
+                    <div class="bg-success rounded-circle me-2" style="width: 10px; height: 10px;"></div>
+                    <span class="fw-bold">TP.HCM</span>
+                    <span class="ms-auto">375</span>
+                </div>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-info rounded-circle me-2" style="width: 10px; height: 10px;"></div>
+                    <span class="fw-bold">Đà Nẵng</span>
+                    <span class="ms-auto">625</span>
+                </div>
+                
+                <div class="d-flex align-items-center">
+                    <div class="bg-danger rounded-circle me-2" style="width: 10px; height: 10px;"></div>
+                    <span class="fw-bold">Hạ Long</span>
+                    <span class="ms-auto">1025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

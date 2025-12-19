@@ -1,0 +1,112 @@
+<!-- Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2"><%= pageTitle %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="/admin/cuisines/create" class="btn btn-primary">
+      <i class="fas fa-plus me-2"></i>Thêm Ẩm thực
+    </a>
+  </div>
+  </div>
+
+<!-- Flash -->
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= flash.error[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+<% if (typeof flash !== 'undefined' && flash.success && flash.success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= flash.success[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+
+<!-- Filters -->
+<form class="row g-2 mb-3" method="GET" action="/admin/cuisines">
+  <div class="col-md-6">
+    <input type="text" name="search" value="<%= search || '' %>" class="form-control" placeholder="Tìm theo tên, mô tả, tag...">
+  </div>
+  <div class="col-md-4">
+    <select name="status" class="form-select">
+      <option value="">Tất cả trạng thái</option>
+      <option value="published" <%= status==='published'?'selected':'' %>>Công khai</option>
+      <option value="draft" <%= status==='draft'?'selected':'' %>>Bản nháp</option>
+      <option value="hidden" <%= status==='hidden'?'selected':'' %>>Ẩn</option>
+      <option value="featured" <%= status==='featured'?'selected':'' %>>Nổi bật</option>
+      <option value="active" <%= status==='active'?'selected':'' %>>Kích hoạt</option>
+      <option value="inactive" <%= status==='inactive'?'selected':'' %>>Chưa kích hoạt</option>
+    </select>
+  </div>
+  <div class="col-md-2 d-grid">
+    <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search me-2"></i>Lọc</button>
+  </div>
+</form>
+
+<!-- Table -->
+<div class="card">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-striped align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th style="width:60px">Ảnh</th>
+            <th>Tên</th>
+            <th>Trạng thái</th>
+            <th>Hiển thị</th>
+            <th style="width:170px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (cuisines || []).forEach(item => { %>
+            <tr>
+              <td>
+                <% const thumb = (item.mainImages && item.mainImages[0]); %>
+                <% if (thumb) { %>
+                  <img src="<%= thumb %>" alt="thumb" class="rounded" style="width:48px;height:48px;object-fit:cover;">
+                <% } else { %>
+                  <div class="bg-secondary" style="width:48px;height:48px;border-radius:6px;"></div>
+                <% } %>
+              </td>
+              <td>
+                <div class="fw-semibold"><a href="/admin/cuisines/<%= item._id %>"><%= item.name %></a></div>
+              </td>
+              <td>
+                <% const st = item.status || 'published'; %>
+                <span class="badge <%= st==='published'?'text-bg-success':(st==='draft'?'text-bg-warning':'text-bg-secondary') %>"><%= st %></span>
+              </td>
+              <td>
+                <% if (item.featured) { %><span class="badge text-bg-primary me-1">Nổi bật</span><% } %>
+                <% if (item.isActive) { %><span class="badge text-bg-success">Kích hoạt</span><% } else { %><span class="badge text-bg-secondary">Tắt</span><% } %>
+              </td>
+              <td class="text-end">
+                <a href="/admin/cuisines/edit/<%= item._id %>" class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></a>
+                <form method="POST" action="/admin/cuisines/delete/<%= item._id %>" style="display:inline" onsubmit="return confirm('Xóa mục này?')">
+                  <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+          <% if (!cuisines || cuisines.length === 0) { %>
+            <tr>
+              <td colspan="5" class="text-center text-muted py-4">Chưa có dữ liệu</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer d-flex justify-content-between align-items-center">
+    <div class="text-muted">Tổng: <%= (typeof totalPages!=='undefined' && typeof currentPage!=='undefined') ? (totalPages>0? (cuisines||[]).length : 0) : '' %></div>
+    <nav>
+      <ul class="pagination mb-0">
+        <% const cp = currentPage || 1; const tp = totalPages || 1; %>
+        <li class="page-item <%= cp<=1?'disabled':'' %>"><a class="page-link" href="?page=<%= cp-1 %>&search=<%= search||'' %>&status=<%= status||'' %>">Trước</a></li>
+        <li class="page-item disabled"><span class="page-link">Trang <%= cp %>/<%= tp %></span></li>
+        <li class="page-item <%= cp>=tp?'disabled':'' %>"><a class="page-link" href="?page=<%= cp+1 %>&search=<%= search||'' %>&status=<%= status||'' %>">Sau</a></li>
+      </ul>
+    </nav>
+  </div>
+  </div>
+
+

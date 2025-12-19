@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>500 - Lỗi máy chủ | Hà Nội Vibes</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+      .error-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: white;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 30px;
+      }
+      .error-image {
+        margin-right: 60px;
+      }
+      .error-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .error-code {
+        margin-bottom: 30px;
+        font-weight: 900;
+        line-height: 1;
+        color: #ef4444;
+        font-size: 60px;
+      }
+      .error-title {
+        margin-bottom: 10px;
+        font-size: 24px;
+        color: #111827;
+        text-transform: capitalize;
+      }
+      .error-description {
+        margin-bottom: 30px;
+        font-size: 16px;
+        color: #374151;
+      }
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background-color 0.3s;
+      }
+      .btn:hover {
+        background-color: #2563eb;
+      }
+      .error-details {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 14px;
+        color: #dc2626;
+        max-width: 500px;
+        word-wrap: break-word;
+      }
+      @media (max-width: 768px) {
+        .error-container {
+          flex-direction: column;
+          text-align: center;
+        }
+        .error-image {
+          margin-right: 0;
+          margin-bottom: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-container">
+      <div class="error-image">
+        <img alt="500 Error" src="/client/img/500.png" style="max-width: 300px; height: auto;" />
+      </div>
+
+      <div class="error-content">
+        <h1 class="error-code">500</h1>
+        <h3 class="error-title">Lỗi máy chủ nội bộ</h3>
+        <p class="error-description">Có lỗi xảy ra với máy chủ của chúng tôi, vui lòng thử lại sau.</p>
+        <div>
+          <a href="/" class="btn">Về trang chủ</a>
+        </div>
+        <% if (typeof error !== 'undefined' && error) { %>
+        <div class="error-details">
+          <strong>Chi tiết lỗi:</strong><br>
+          <%= error.message || 'Không có thông tin lỗi' %>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

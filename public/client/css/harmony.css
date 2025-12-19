@@ -1,0 +1,360 @@
+/* Harmony CSS - Styles for Events Page */
+
+/* ===========================================
+   TEXT JUSTIFICATION FOR ALL CONTENT
+   =========================================== */
+.harmony-page p,
+.harmony-page .description,
+.harmony-page .content,
+.harmony-page .harmony-description,
+.harmony-page .feature-description {
+  text-align: justify !important;
+  line-height: 1.6;
+  font-family: var(--ff-primary);
+  font-size: var(--fs-paragraphs);
+}
+
+/* Page Header Styles */
+.page-header {
+    width: 100vw;
+    height: 70vh;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Let the image extend behind the fixed navbar */
+    margin-top: 0;
+    padding-top: 70px;
+    position: relative;
+}
+
+.page-header .header-content {
+    font-family: var(--ff-lora);
+    letter-spacing: 0.5rem;
+    color: whitesmoke;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    /* create a subtle glass effect without blocking the hero */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+.page-header .header-content h2 {
+    font-size: 3vmin;
+    margin-bottom: 1rem;
+}
+
+.page-header .header-content h1 {
+    font-size: 5vmin;
+    margin: 20px 0;
+}
+
+.page-header .header-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Page Section Styles */
+.page-section {
+    width: 80%;
+    margin: 80px auto;
+}
+
+/* Adjust first section margin to account for header */
+.page-section:first-of-type {
+    margin-top: 60px;
+}
+
+/* Title styles for different modes */
+.page-section .title h1.dark {
+    color: #333;
+}
+
+body.dark .page-section .title h1.dark {
+    color: white;
+}
+
+/* Standard Row and Card Styles */
+.standard-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 2rem;
+    margin-top: 50px;
+}
+
+.standard-card {
+    flex: 1;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.standard-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.standard-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-family: var(--ff-lora);
+    color: #333;
+}
+
+.card-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex: 1;
+    padding: 0; /* override global .col p padding */
+}
+
+.card-content h4,
+.card-content p { text-align: left; margin-left: 0; }
+
+.card-content .ctn {
+    align-self: center;
+    margin-top: 16px;
+}
+
+/* Event Details Styles */
+.event-details {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(252, 3, 107, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.event-details p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.event-details strong {
+    color: var(--primary-color);
+}
+
+/* Feature Cards */
+.feature-card {
+    flex: 1;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-family: var(--ff-montserrat);
+    color: white;
+}
+
+.feature-card p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+/* Dark Mode Adjustments */
+body.dark .standard-card {
+    background: #2a2a2a;
+    color: #ffffff;
+}
+
+body.dark .standard-card h4 {
+    color: #ffffff;
+}
+
+body.dark .standard-card p {
+    color: #cccccc;
+}
+
+body.dark .event-details {
+    background: rgba(252, 3, 107, 0.2);
+}
+
+body.dark .event-details p {
+    color: #cccccc;
+}
+
+/* Light Mode Adjustments for Feature Cards */
+body:not(.dark) .feature-card {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body:not(.dark) .feature-card h3 {
+    color: #333;
+}
+
+body:not(.dark) .feature-card p {
+    color: #666;
+}
+
+/* Light Mode Background for Event Categories Section */
+body:not(.dark) .page-section.event-categories {
+    background: #f8f9fa;
+    padding: 40px;
+    border-radius: 15px;
+    margin: 60px auto;
+}
+
+/* Dark Mode Adjustments for Feature Cards */
+body.dark .feature-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.dark .feature-card h3 {
+    color: white;
+}
+
+body.dark .feature-card p {
+    color: #ccc;
+}
+
+/* Dark Mode Background for Event Categories Section */
+body.dark .page-section.event-categories {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    border-radius: 15px;
+    margin: 60px auto;
+}
+
+/* Chatbot widget */
+.hnv-chatbot { position: fixed; right: 18px; bottom: 18px; z-index: 1200; font-family: inherit; }
+.hnv-chatbot__toggle { background: var(--primary-color); color: #fff; border: 0; border-radius: 999px; padding: 10px 14px; cursor: pointer; box-shadow: none; }
+.hnv-chatbot__panel { position: absolute; right: 0; bottom: 56px; width: 360px; max-height: 70vh; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.2); display: none; overflow: hidden; }
+.hnv-chatbot.open .hnv-chatbot__panel { display: grid; grid-template-rows: auto 1fr auto; height: 70vh; }
+.hnv-chatbot__header { padding: 10px 12px; font-weight: 700; background: rgba(0,0,0,.04); cursor: pointer; }
+.hnv-chatbot__body { padding: 10px; overflow-y: auto; display: grid; gap: 8px; min-height: 0; }
+.hnv-chatbot__msg { padding: 8px 10px; border-radius: 10px; line-height: 1.4; max-width: 90%; }
+.hnv-chatbot__msg.u { background: #eef; justify-self: end; }
+.hnv-chatbot__msg.a { background: #f6f6f6; }
+.hnv-chatbot__form { display: flex; gap: 8px; padding: 10px; border-top: 1px solid rgba(0,0,0,.06); }
+.hnv-chatbot__input { flex: 1; border: 1px solid #e6e6e6; border-radius: 999px; padding: 8px 12px; }
+.hnv-chatbot__send { border: 0; background: var(--primary-color); color: #fff; border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+
+@media (max-width: 600px) {
+  .hnv-chatbot__panel { right: 8px; left: 8px; width: auto; height: 70vh; max-height: none; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .standard-row {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .standard-card {
+        min-height: auto;
+    }
+    
+    .page-header {
+        height: 60vh;
+    }
+    
+    .page-header .header-content h1 {
+        font-size: 3rem;
+    }
+    
+    .page-header .header-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .page-header .header-content {
+        padding: 1.5rem;
+    }
+    
+    .event-details {
+        padding: 10px;
+    }
+    
+    .event-details p {
+        font-size: 0.85rem;
+    }
+    
+    /* Event Categories responsive */
+    body:not(.dark) .page-section.event-categories,
+    body.dark .page-section.event-categories {
+        padding: 20px;
+        margin: 40px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-section {
+        width: 95%;
+    }
+    
+    .page-header .header-content {
+        padding: 1rem;
+    }
+    
+    .page-header .header-content h1 {
+        font-size: 2rem;
+    }
+    
+    .page-header .header-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .page-header .header-content {
+        padding: 1rem;
+    }
+    
+    .card-content {
+        padding: 1rem;
+    }
+    
+    .event-details {
+        padding: 8px;
+    }
+    
+    .event-details p {
+        font-size: 0.8rem;
+    }
+}

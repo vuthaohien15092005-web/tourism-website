@@ -1,0 +1,235 @@
+<!-- Page Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2"><%= pageTitle %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="/admin/cuisine/places/create" class="btn btn-primary">
+      <i class="fas fa-plus me-2"></i>
+      Thêm địa điểm
+    </a>
+  </div>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    <%= flash.error[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+<% if (typeof flash !== 'undefined' && flash.success && flash.success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fas fa-check-circle me-2"></i>
+    <%= flash.success[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+
+<!-- Filters -->
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Tìm kiếm</label>
+        <input type="text" class="form-control" name="search" value="<%= search %>" placeholder="Tên địa điểm, địa chỉ...">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Món ăn</label>
+        <select class="form-select" name="cuisine">
+          <option value="">Tất cả món ăn</option>
+          <% cuisines.forEach(cuisine => { %>
+            <option value="<%= cuisine._id %>" <%= selectedCuisine === String(cuisine._id) ? 'selected' : '' %>>
+              <%= cuisine.name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Trạng thái</label>
+        <select class="form-select" name="status">
+          <option value="">Tất cả</option>
+          <option value="published" <%= status === 'published' ? 'selected' : '' %>>Công khai</option>
+          <option value="draft" <%= status === 'draft' ? 'selected' : '' %>>Bản nháp</option>
+          <option value="hidden" <%= status === 'hidden' ? 'selected' : '' %>>Ẩn</option>
+          <option value="active" <%= status === 'active' ? 'selected' : '' %>>Kích hoạt</option>
+          <option value="inactive" <%= status === 'inactive' ? 'selected' : '' %>>Tắt</option>
+          <option value="featured" <%= status === 'featured' ? 'selected' : '' %>>Nổi bật</option>
+        </select>
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-outline-primary me-2">Lọc</button>
+        <a href="/admin/cuisine/places" class="btn btn-outline-secondary">Xóa</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Places Table -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Danh sách địa điểm (<%= places.length %>/<%= totalPages * 10 %>)</h5>
+  </div>
+  <div class="card-body">
+    <% if (places.length === 0) { %>
+      <div class="text-center py-5">
+        <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
+        <h5 class="text-muted">Chưa có địa điểm nào</h5>
+        <p class="text-muted">Hãy thêm địa điểm đầu tiên để bắt đầu quản lý</p>
+        <a href="/admin/cuisine/places/create" class="btn btn-primary">
+          <i class="fas fa-plus me-2"></i>Thêm địa điểm
+        </a>
+      </div>
+    <% } else { %>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Hình ảnh</th>
+              <th>Tên địa điểm</th>
+              <th>Món ăn</th>
+              <th>Địa chỉ</th>
+              <th>Đánh giá</th>
+              <th>Trạng thái</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% places.forEach(place => { %>
+            <tr>
+              <td>
+                <% if (place.images && place.images.length > 0) { %>
+                  <img src="<%= place.images[0] %>" alt="<%= place.name %>" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                <% } else { %>
+                  <div class="bg-light d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 4px;">
+                    <i class="fas fa-image text-muted"></i>
+                  </div>
+                <% } %>
+              </td>
+              <td>
+                <div class="fw-bold"><%= place.name %></div>
+                <small class="text-muted">
+                  <% if (place.openingHours) { %>
+                    <i class="fas fa-clock me-1"></i><%= place.openingHours %>
+                  <% } %>
+                </small>
+              </td>
+              <td>
+                <% if (place.cuisine) { %>
+                  <a href="/admin/cuisines/<%= place.cuisine._id %>" class="text-decoration-none">
+                    <%= place.cuisine.name %>
+                  </a>
+                <% } else { %>
+                  <span class="text-muted">Chưa liên kết</span>
+                <% } %>
+              </td>
+              <td>
+                <div class="text-truncate" style="max-width: 200px;" title="<%= place.address || '' %>">
+                  <%= place.address || 'Chưa có địa chỉ' %>
+                </div>
+                <% if (place.priceRange) { %>
+                  <small class="text-success"><%= place.priceRange %></small>
+                <% } %>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <% if (place.avgRating > 0) { %>
+                    <span class="text-warning me-1">
+                      <% for (let i = 1; i <= 5; i++) { %>
+                        <i class="fas fa-star<%= i <= place.avgRating ? '' : '-o' %>"></i>
+                      <% } %>
+                    </span>
+                    <span class="text-muted">(<%= place.reviewCount %>)</span>
+                  <% } else { %>
+                    <span class="text-muted">Chưa có đánh giá</span>
+                  <% } %>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column gap-1">
+                  <span class="badge bg-<%= place.status === 'published' ? 'success' : place.status === 'draft' ? 'warning' : 'secondary' %>">
+                    <%= place.status === 'published' ? 'Công khai' : place.status === 'draft' ? 'Bản nháp' : 'Ẩn' %>
+                  </span>
+                  <% if (place.featured) { %>
+                    <span class="badge bg-primary">Nổi bật</span>
+                  <% } %>
+                  <% if (!place.isActive) { %>
+                    <span class="badge bg-danger">Tắt</span>
+                  <% } %>
+                </div>
+              </td>
+              <td>
+                <div class="btn-group" role="group">
+                  <a href="/admin/cuisine/places/<%= place._id %>" class="btn btn-sm btn-outline-info" title="Xem chi tiết">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                  <a href="/admin/cuisine/places/edit/<%= place._id %>" class="btn btn-sm btn-outline-warning" title="Chỉnh sửa">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete('<%= place._id %>', '<%= place.name %>')" title="Xóa">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <% if (totalPages > 1) { %>
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <% if (currentPage > 1) { %>
+              <li class="page-item">
+                <a class="page-link" href="?page=<%= currentPage - 1 %>&search=<%= search %>&status=<%= status %>&cuisine=<%= selectedCuisine %>">Trước</a>
+              </li>
+            <% } %>
+            
+            <% for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) { %>
+              <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                <a class="page-link" href="?page=<%= i %>&search=<%= search %>&status=<%= status %>&cuisine=<%= selectedCuisine %>"><%= i %></a>
+              </li>
+            <% } %>
+            
+            <% if (currentPage < totalPages) { %>
+              <li class="page-item">
+                <a class="page-link" href="?page=<%= currentPage + 1 %>&search=<%= search %>&status=<%= status %>&cuisine=<%= selectedCuisine %>">Sau</a>
+              </li>
+            <% } %>
+          </ul>
+        </nav>
+      <% } %>
+    <% } %>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận xóa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn xóa địa điểm <strong id="deletePlaceName"></strong>?</p>
+        <p class="text-danger"><small>Hành động này không thể hoàn tác!</small></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <form method="POST" action="" id="deleteForm" style="display: inline;">
+          <button type="submit" class="btn btn-danger">Xóa</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function confirmDelete(id, name) {
+  document.getElementById('deletePlaceName').textContent = name;
+  document.getElementById('deleteForm').action = '/admin/cuisine/places/delete/' + id;
+  new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+</script>

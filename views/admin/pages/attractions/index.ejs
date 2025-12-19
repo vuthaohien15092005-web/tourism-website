@@ -1,0 +1,259 @@
+<!-- Page Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><%= pageTitle %></h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="/admin/attractions/create" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>
+            Thêm mới
+        </a>
+    </div>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.success && flash.success.length > 0) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <%= flash.success[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <%= flash.error[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<!-- Filters -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="fas fa-filter me-2"></i>
+            Bộ lọc và tìm kiếm
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-4">
+                <label for="search" class="form-label">Tìm kiếm</label>
+                <input type="text" class="form-control" id="search" name="search" 
+                       value="<%= search %>" placeholder="Tên điểm tham quan...">
+            </div>
+            <div class="col-md-3">
+                <label for="category" class="form-label">Danh mục</label>
+                <select class="form-select" id="category" name="category">
+                    <option value="">Tất cả danh mục</option>
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat.value %>" <%= category === cat.value ? 'selected' : '' %>>
+                            <%= cat.label %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="status" class="form-label">Trạng thái</label>
+                <select class="form-select" id="status" name="status">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="active" <%= status === 'active' ? 'selected' : '' %>>Hoạt động</option>
+                    <option value="inactive" <%= status === 'inactive' ? 'selected' : '' %>>Tạm dừng</option>
+                    <option value="featured" <%= status === 'featured' ? 'selected' : '' %>>Nổi bật</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-outline-primary me-2">
+                    <i class="fas fa-search me-1"></i>
+                    Tìm kiếm
+                </button>
+            </div>
+            <div class="col-12">
+                <a href="/admin/attractions" class="btn btn-outline-secondary">
+                    <i class="fas fa-times me-1"></i>
+                    Xóa bộ lọc
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Table -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="fas fa-list me-2"></i>
+            Danh sách điểm tham quan (<%= attractions ? attractions.length : 0 %>)
+        </h5>
+    </div>
+    <div class="card-body">
+        <% if (attractions && attractions.length > 0) { %>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 80px;">Hình ảnh</th>
+                            <th>Tên</th>
+                            <th style="width: 120px;">Danh mục</th>
+                            <th style="width: 200px;">Địa chỉ</th>
+                            <th style="width: 100px;">Trạng thái</th>
+                            <th style="width: 150px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% attractions.forEach(attraction => { %>
+                            <tr>
+                                <td>
+                                    <% if (attraction.images && attraction.images.length > 0) { %>
+                                        <img src="<%= attraction.images[0] %>" 
+                                             alt="<%= attraction.name %>" 
+                                             class="rounded" 
+                                             style="width: 60px; height: 60px; object-fit: cover;">
+                                    <% } else { %>
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-center" 
+                                             style="width: 60px; height: 60px;">
+                                            <i class="fas fa-image text-muted"></i>
+                                        </div>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div>
+                                        <strong><%= attraction.name %></strong>
+                                        <% if (attraction.featured) { %>
+                                            <span class="badge bg-warning ms-1">Nổi bật</span>
+                                        <% } %>
+                                    </div>
+                                    <% if (attraction.intro) { %>
+                                        <div class="mt-1">
+                                            <small class="text-muted"><%= attraction.intro.length > 50 ? attraction.intro.substring(0, 50) + '...' : attraction.intro %></small>
+                                        </div>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% const categoryLabel = categories.find(c => c.value === attraction.category)?.label || attraction.category; %>
+                                    <span class="badge bg-info"><%= categoryLabel %></span>
+                                </td>
+                                <td>
+                                    <div>
+                                        <%= attraction.address %>
+                                    </div>
+                                    <small class="text-muted"><%= attraction.district %></small>
+                                </td>
+                                <td>
+                                    <% if (attraction.isActive) { %>
+                                        <span class="badge bg-success">Hoạt động</span>
+                                    <% } else { %>
+                                        <span class="badge bg-secondary">Tạm dừng</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="/admin/attractions/<%= attraction._id %>" 
+                                           class="btn btn-sm btn-outline-info" 
+                                           title="Xem chi tiết">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="/admin/attractions/edit/<%= attraction._id %>" 
+                                           class="btn btn-sm btn-outline-primary" 
+                                           title="Chỉnh sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" 
+                                                class="btn btn-sm btn-outline-danger" 
+                                                title="Xóa"
+                                                onclick="confirmDelete('<%= attraction._id %>', '<%= attraction.name %>')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <% if (totalPages > 1) { %>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <% if (currentPage > 1) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<%= currentPage - 1 %>&search=<%= search %>&category=<%= category %>&status=<%= status %>">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                        <% } %>
+                        
+                        <% for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) { %>
+                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                <a class="page-link" href="?page=<%= i %>&search=<%= search %>&category=<%= category %>&status=<%= status %>">
+                                    <%= i %>
+                                </a>
+                            </li>
+                        <% } %>
+                        
+                        <% if (currentPage < totalPages) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<%= currentPage + 1 %>&search=<%= search %>&category=<%= category %>&status=<%= status %>">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </nav>
+            <% } %>
+        <% } else { %>
+            <div class="text-center py-5">
+                <i class="fas fa-landmark fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">Không có điểm tham quan nào</h5>
+                <p class="text-muted">
+                    <% if (search || category || status) { %>
+                        Không tìm thấy điểm tham quan phù hợp với bộ lọc của bạn
+                    <% } else { %>
+                        Hãy thêm điểm tham quan đầu tiên của bạn
+                    <% } %>
+                </p>
+                <a href="/admin/attractions/create" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>
+                    Thêm điểm tham quan
+                </a>
+                <% if (search || category || status) { %>
+                    <a href="/admin/attractions" class="btn btn-outline-secondary ms-2">
+                        <i class="fas fa-times me-2"></i>
+                        Xóa bộ lọc
+                    </a>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa điểm tham quan <strong id="deleteName"></strong>?</p>
+                <p class="text-danger"><small>Hành động này không thể hoàn tác!</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <form id="deleteForm" method="POST" style="display: inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDelete(id, name) {
+    document.getElementById('deleteName').textContent = name;
+    document.getElementById('deleteForm').action = '/admin/attractions/delete/' + id;
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+</script>

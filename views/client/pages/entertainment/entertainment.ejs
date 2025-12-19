@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Giải trí Hà Nội | Hà Nội Vibes</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link rel="stylesheet" href="/client/css/style.css" />
+        <link rel="stylesheet" href="/client/css/responsive.css" />
+        <link rel="stylesheet" href="/client/css/harmony.css" />
+        <link rel="stylesheet" href="/client/css/entertainment.css" />
+        <link rel="stylesheet" href="/client/css/components/pagination.css" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/client/img/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/client/img/logo.jpg"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/client/img/logo.jpg"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+    </head>
+    <body class="entertainment"
+        onload='if (window.location.href.substr(window.location.href.length - 6) == "#about") { introAboutLogoTransition(); }'
+    >
+        <!--navbar-->
+        <%- include('../../partials/header') %>
+        <!--navbar-->
+
+        <!-- Page Header -->
+        <header class="page-header entertainment-main-banner" style="background-image: url('/client/img/hotay.jpg');">
+            <div class="header-content">
+                <h1><%= hero.title %></h1>
+                <p class="font-color"><%= hero.subtitle %></p>
+            </div>
+        </header>
+
+        <!--Entertainment Venues Section-->
+        <section class="page-section" id="entertainments">
+            <!-- Removed page title per request -->
+            
+            <!-- Filters -->
+            <div class="entertainment-filters" aria-label="Bộ lọc giải trí">
+                <div class="filter-row">
+                    <div class="box" role="search">
+                        <i class="fa fa-search" aria-hidden="true" style="margin-right:8px"></i>
+                        <input id="ent-search" type="text" placeholder="Tìm theo tên địa điểm..." aria-label="Tìm theo tên" value="<%= currentSearch %>" />
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn <%= currentZone === 'all' ? 'active' : '' %>" data-zone="all">
+                            Tất cả
+                        </button>
+                        <button class="filter-btn <%= currentZone === 'Khu văn hoá – nghệ thuật' ? 'active' : '' %>" data-zone="Khu văn hoá – nghệ thuật">
+                            Khu văn hoá – nghệ thuật
+                        </button>
+                        <button class="filter-btn <%= currentZone === 'Địa điểm ngoài trời – công viên' ? 'active' : '' %>" data-zone="Địa điểm ngoài trời – công viên">
+                            Địa điểm ngoài trời – công viên
+                        </button>
+                        <button class="filter-btn <%= currentZone === 'Trung tâm thương mại – Khu vui chơi trong nhà' ? 'active' : '' %>" data-zone="Trung tâm thương mại – Khu vui chơi trong nhà">
+                            Trung tâm thương mại – Khu vui chơi trong nhà
+                        </button>
+                        <button class="filter-btn <%= currentZone === 'Khu vui chơi giải trí quy mô lớn' ? 'active' : '' %>" data-zone="Khu vui chơi giải trí quy mô lớn">
+                            Khu vui chơi giải trí quy mô lớn
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entertainment Grid (single grid like attractions) -->
+            <div class="entertainment-grid" aria-label="Danh sách địa điểm giải trí">
+                <% entertainments.forEach(function(entertainment){ %>
+                    <article class="standard-card entertainment-item" data-zone="<%= entertainment.zone %>">
+                        <div class="card-image-container">
+                            <img src="<%= entertainment.images && entertainment.images.length > 0 ? entertainment.images[0] : '/client/img/header-bg.jfif' %>" alt="<%= entertainment.name %>" />
+                            <% if (entertainment.featured) { %>
+                                <div class="featured-badge">
+                                    <i class="fa fa-star"></i> Nổi bật
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="title dark"><%= entertainment.name %></h3>
+                            <p class="font-color">
+                                <%= entertainment.activities && entertainment.activities.length > 0 
+                                    ? entertainment.activities.slice(0, 2).join(', ') + (entertainment.activities.length > 2 ? '...' : '')
+                                    : entertainment.type %>
+                            </p>
+                            <!-- <% if (entertainment.targetAudience && entertainment.targetAudience.length > 0) { %>
+                                <p class="font-color small">
+                                    <i class="fa fa-users me-1"></i>
+                                    <%= entertainment.targetAudience.slice(0, 2).join(', ') + (entertainment.targetAudience.length > 2 ? '...' : '') %>
+                                </p>
+                            <% } %> -->
+                            <a href="/entertainment/<%= entertainment._id %>" class="ctn">Xem chi tiết</a>
+                        </div>
+                    </article>
+                <% }) %>
+            </div>
+
+            <!-- Pagination -->
+            <%- include('../../components/pagination') %>
+        </section>
+
+        <!-- Contact Section -->
+        <%- include('../../components/contact-section', { sectionId: 'contact-entertainment' }) %>
+
+        <!-- up scroll -->
+        <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+        <!--footer-->
+        <%- include('../../partials/footer') %>
+        <!--footer-->
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/client/js/includes.js"></script>
+        <script src="/client/js/script.js"></script>
+        <script src="/client/js/components/pagination.js"></script>
+        <script>
+        // Entertainment filtering functionality (server-side)
+        document.addEventListener('DOMContentLoaded', function() {
+            var filterButtons = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+            var searchInput = document.getElementById('ent-search');
+            var currentUrl = new URL(window.location.href);
+            var searchTimeout;
+
+            function updateUrl(zone, search) {
+                var url = new URL(window.location.href);
+                url.searchParams.set('zone', zone);
+                if (search && search.trim()) {
+                    url.searchParams.set('search', search.trim());
+                } else {
+                    url.searchParams.delete('search');
+                }
+                url.searchParams.delete('page'); // Reset to page 1 when filtering
+                return url.toString();
+            }
+
+            function applyFilter(zone, search) {
+                var newUrl = updateUrl(zone, search);
+                window.location.href = newUrl;
+            }
+
+            // Filter button clicks
+            filterButtons.forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var zone = this.getAttribute('data-zone');
+                    var search = searchInput ? searchInput.value : '';
+                    applyFilter(zone, search);
+                });
+            });
+
+            // Search input with debounce
+            if (searchInput) {
+                searchInput.addEventListener('input', function(){
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(function(){
+                        var active = document.querySelector('.filter-btn.active');
+                        var zone = active ? active.getAttribute('data-zone') : 'all';
+                        var search = searchInput.value;
+                        applyFilter(zone, search);
+                    }, 500); // 500ms debounce
+                });
+            }
+        });
+        </script>
+    </body>
+</html>

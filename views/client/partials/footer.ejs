@@ -1,0 +1,546 @@
+<!-- Footer Component -->
+<section class="footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <img src="/client/img/logo.jpg" alt="Hà Nội Vibes" width="36" height="36" />
+                <strong>Hà Nội Vibes</strong>
+            </div>
+            <p class="footer-slogan">Hà Nội Vibes – Chạm nhịp Thủ đô</p>
+            <p class="footer-copy">&#169; 2025 Hà Nội Vibes. Mọi quyền được bảo lưu.</p>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Liên hệ</h4>
+            <p>Email: <a href="mailto:hanoivibess@gmail.com">hanoivibess@gmail.com</a></p>
+            <p>Hotline: <a href="tel:19003690">1900 3690</a></p>
+            <div class="social">
+                <li>
+                    <a href="/" title="Trang chủ"><i class="fa fa-home"></i></a>
+                    <a href="#" title="Facebook"><i class="fa fa-facebook"></i></a>
+                    <a href="#" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+                    <a href="#" title="TikTok"><i class="fa fa-music"></i></a>
+                    <a href="mailto:hanoivibess@gmail.com" title="Email"><i class="fa fa-envelope"></i></a>
+                </li>
+            </div>
+        </div>
+
+        <div class="footer-dev">
+            <h4>Đơn vị phát triển</h4>
+            <p>Website được phát triển bởi nhóm sinh viên khoa Du lịch – Khách sạn, Trường Kinh tế Phenikaa, Đại học Phenikaa.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Global Chatbot mount -->
+<div id="hnv-chatbot-root"></div>
+
+<!-- Z-index Configuration for proper layering -->
+<style>
+    /* Z-index hierarchy: nav-links.active (5000) > Lịch sử chat (3000) > Chat panel (2000) > Navbar (1000) > GTranslate (100) */
+    
+    /* GTranslate (thấp nhất) - Force override widget's default z-index */
+    .gtranslate_wrapper {
+        z-index: 100 !important;
+    }
+    
+    /* Override any GTranslate widget internal z-index */
+    .gtranslate_wrapper * {
+        z-index: inherit !important;
+    }
+    
+    /* Desktop navbar (thấp hơn chat history) */
+    .navbar {
+        z-index: 1000;
+    }
+    
+    /* Chatbot z-index (chat panel) */
+    #hnv-chatbot-root {
+        z-index: 2000;
+    }
+    
+    /* Chat history z-index (cao hơn chat panel) */
+    #chat-history-sidebar {
+        z-index: 3000;
+    }
+    
+    /* Mobile nav-links (cao nhất) */
+    .nav-links {
+        z-index: 5000;
+    }
+</style>
+
+<!-- GTranslate Widget -->
+<style>
+    .gtranslate_wrapper {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100; /* Thấp nhất: GTranslate */
+        font-family: Arial, sans-serif;
+    }
+    
+    /* Style cho flag button */
+    .gtranslate_wrapper .gt_selector {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 8px;
+        background: white;
+        color: #000 !important;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        border: 1px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        font-weight: 500;
+        min-width: 40px;
+        text-align: center;
+    }
+    
+    .gtranslate_wrapper .gt_selector:hover {
+        background: #f8f9fa;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
+    }
+    
+    /* Style cho dropdown menu */
+    .gtranslate_wrapper .gt_selector option {
+        color: #000 !important;
+        background: white !important;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    /* Fix cho tất cả elements trong GTranslate */
+    .gtranslate_wrapper * {
+        color: #000 !important;
+        font-family: Arial, sans-serif;
+    }
+    
+    .gtranslate_wrapper span,
+    .gtranslate_wrapper div,
+    .gtranslate_wrapper p {
+        color: #000 !important;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .gtranslate_wrapper {
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+        }
+        
+        .gtranslate_wrapper .gt_selector {
+            padding: 6px 10px;
+            font-size: 13px;
+            min-width: 36px;
+            border-radius: 6px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .gtranslate_wrapper {
+            top: 10px;
+            right: 10px;
+        }
+        
+        .gtranslate_wrapper .gt_selector {
+            padding: 5px 8px;
+            font-size: 12px;
+            min-width: 32px;
+        }
+    }
+    
+    /* Đảm bảo thứ tự z-index: nav-links.active > Lịch sử chat > Chat panel > GTranslate */
+    @media (max-width: 1024px) {
+        .gtranslate_wrapper {
+            z-index: 100; /* GTranslate thấp nhất */
+        }
+    }
+    
+    /* Fix cho dropdown menu trên mobile */
+    @media (max-width: 768px) {
+        .gtranslate_wrapper .gt_selector option {
+            font-size: 13px;
+            padding: 6px 10px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .gtranslate_wrapper .gt_selector option {
+            font-size: 12px;
+            padding: 5px 8px;
+        }
+    }
+    
+    /* Đảm bảo không bị translate */
+    .notranslate { 
+        unicode-bidi: plaintext; 
+    }
+    
+    /* Mark brand as not translated */
+    .footer-logo, .logo { 
+        translate: none; 
+    }
+    
+    /* Fix cho dropdown khi mở */
+    .gtranslate_wrapper .gt_selector:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+</style>
+<div class="gtranslate_wrapper"></div>
+<script>
+    window.gtranslateSettings = {
+        default_language: "vi",
+        wrapper_selector: ".gtranslate_wrapper",
+        languages: [
+            "vi",     // Vietnamese
+            "en",     // English
+            "zh-CN",  // Simplified Chinese
+            "zh-TW",  // Traditional Chinese
+            "ja",     // Japanese
+            "ko",     // Korean
+            "th",     // Thai
+            "fr",     // French
+            "de",     // German
+            "es"      // Spanish
+        ],
+        native_language_names: true,
+        detect_browser_language: false,
+        flag_size: 20,
+        float_switcher_open_direction: "bottom",
+        switcher_text_color: "#000000",
+        switcher_background_color: "#ffffff",
+        switcher_border_color: "#e0e0e0",
+        switcher_hover_color: "#f8f9fa"
+    };
+    // Set default language to Vietnamese if no preference is stored
+    document.documentElement.setAttribute('lang', 'vi');
+    
+    // Hàm lấy cookie
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // Hàm set cookie
+    function setCookie(name, value, days = 30) {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+    }
+    
+    // Lazy load GTranslate for better performance
+    window.addEventListener('DOMContentLoaded', function(){
+        if(!document.querySelector('script[src*="gtranslate"]')){
+            // Delay loading to improve initial page load
+            setTimeout(() => {
+                var s=document.createElement('script');
+                s.src='https://cdn.gtranslate.net/widgets/latest/float.js';
+                s.defer=true;
+                s.async=true;
+                document.body.appendChild(s);
+                
+                // After GTranslate loads, apply saved language or default to Vietnamese
+                s.onload = function() {
+                    setTimeout(() => {
+                        if (window.gtranslate) {
+                            try {
+                                // Lấy ngôn ngữ đã lưu hoặc mặc định là tiếng Việt
+                                var savedLang = localStorage.getItem('selectedLanguage') || getCookie('googtrans') || 'vi';
+                                
+                                // Áp dụng ngôn ngữ đã lưu
+                                if (savedLang && savedLang !== 'auto') {
+                                    window.gtranslate.switchLanguage(savedLang);
+                                }
+                                
+                                // Apply custom styles after GTranslate loads
+                                applyGTranslateStyles();
+                                
+                                // Lắng nghe sự kiện thay đổi ngôn ngữ
+                                setTimeout(() => {
+                                    var selector = document.querySelector('.gt_selector');
+                                    if (selector) {
+                                        selector.addEventListener('change', function() {
+                                            var selectedLang = this.value;
+                                            
+                                            // Lưu vào localStorage và cookie
+                                            localStorage.setItem('selectedLanguage', selectedLang);
+                                            setCookie('googtrans', selectedLang);
+                                            
+                                            console.log('Language changed to:', selectedLang);
+                                        });
+                                    }
+                                }, 1000);
+                                
+                            } catch(e) {
+                                console.log('GTranslate language setup:', e);
+                            }
+                        }
+                    }, 500);
+                };
+            }, 1000);
+        }
+    });
+    
+    // Function to apply custom styles to GTranslate elements
+    function applyGTranslateStyles() {
+        setTimeout(() => {
+            var wrapper = document.querySelector('.gtranslate_wrapper');
+            if (wrapper) {
+                // Force override GTranslate z-index (thấp nhất)
+                wrapper.style.setProperty('z-index', '100', 'important');
+                
+                // Override any child elements z-index
+                var allElements = wrapper.querySelectorAll('*');
+                allElements.forEach(function(element) {
+                    element.style.setProperty('z-index', 'inherit', 'important');
+                });
+                
+                // Style the selector
+                var selector = wrapper.querySelector('.gt_selector');
+                if (selector) {
+                    selector.style.display = 'inline-block';
+                    selector.style.padding = '8px 12px';
+                    selector.style.borderRadius = '8px';
+                    selector.style.background = 'white';
+                    selector.style.color = '#000';
+                    selector.style.boxShadow = '0 2px 12px rgba(0,0,0,0.15)';
+                    selector.style.border = '1px solid #e0e0e0';
+                    selector.style.cursor = 'pointer';
+                    selector.style.transition = 'all 0.3s ease';
+                    selector.style.fontSize = '14px';
+                    selector.style.fontWeight = '500';
+                    selector.style.minWidth = '40px';
+                    selector.style.textAlign = 'center';
+                }
+                
+                // Responsive adjustments
+                if (window.innerWidth <= 768) {
+                    wrapper.style.top = '15px';
+                    wrapper.style.right = '15px';
+                    if (selector) {
+                        selector.style.padding = '6px 10px';
+                        selector.style.fontSize = '13px';
+                        selector.style.minWidth = '36px';
+                        selector.style.borderRadius = '6px';
+                    }
+                }
+                
+                if (window.innerWidth <= 480) {
+                    wrapper.style.top = '10px';
+                    wrapper.style.right = '10px';
+                    if (selector) {
+                        selector.style.padding = '5px 8px';
+                        selector.style.fontSize = '12px';
+                        selector.style.minWidth = '32px';
+                    }
+                }
+            }
+        }, 100);
+    }
+    
+    // Reapply styles on window resize
+    window.addEventListener('resize', function() {
+        setTimeout(applyGTranslateStyles, 100);
+    });
+    
+    // Observer để theo dõi thay đổi DOM của GTranslate và force override z-index
+    var gtranslateObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList' && mutation.target.classList && mutation.target.classList.contains('gtranslate_wrapper')) {
+                setTimeout(applyGTranslateStyles, 50);
+                
+                // Force override z-index immediately
+                var wrapper = document.querySelector('.gtranslate_wrapper');
+                if (wrapper) {
+                    wrapper.style.setProperty('z-index', '100', 'important');
+                    var allElements = wrapper.querySelectorAll('*');
+                    allElements.forEach(function(element) {
+                        element.style.setProperty('z-index', 'inherit', 'important');
+                    });
+                }
+            }
+        });
+    });
+    
+    // Bắt đầu observe khi DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+        var wrapper = document.querySelector('.gtranslate_wrapper');
+        if (wrapper) {
+            gtranslateObserver.observe(wrapper, { childList: true, subtree: true });
+        }
+    });
+    
+    // Force apply styles sau khi GTranslate load xong
+    window.addEventListener('load', function() {
+        setTimeout(applyGTranslateStyles, 1000);
+    });
+    // Helper to refresh translation after dynamic content updates (optional usage)
+    window.refreshTranslation = function(){
+        if (window.gtranslate && typeof window.gtranslate.translate === 'function') {
+            window.gtranslate.translate();
+        }
+    };
+    
+    // Function to ensure proper z-index hierarchy
+    function ensureZIndexHierarchy() {
+        // GTranslate (thấp nhất) - Force override
+        var gtranslateWrapper = document.querySelector('.gtranslate_wrapper');
+        if (gtranslateWrapper) {
+            gtranslateWrapper.style.setProperty('z-index', '100', 'important');
+            
+            // Override any child elements
+            var allElements = gtranslateWrapper.querySelectorAll('*');
+            allElements.forEach(function(element) {
+                element.style.setProperty('z-index', 'inherit', 'important');
+            });
+        }
+        
+        // Desktop navbar (thấp hơn chat history)
+        var navbar = document.querySelector('.navbar');
+        if (navbar) navbar.style.zIndex = '1000';
+        
+        // Chatbot (chat panel)
+        var chatbotRoot = document.getElementById('hnv-chatbot-root');
+        if (chatbotRoot) {
+            chatbotRoot.style.zIndex = '2000';
+        }
+        
+        // Chat history (cao hơn chat panel)
+        var chatHistoryElements = document.querySelectorAll('#chat-history-sidebar');
+        chatHistoryElements.forEach(function(element) {
+            element.style.zIndex = '3000';
+        });
+        
+        // Mobile nav-links (cao nhất)
+        var navLinks = document.querySelector('.nav-links');
+        if (navLinks) navLinks.style.zIndex = '5000';
+    }
+    
+    // Apply z-index hierarchy on page load
+    document.addEventListener('DOMContentLoaded', ensureZIndexHierarchy);
+    
+    // Reapply when new elements are added
+    var zIndexObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                setTimeout(ensureZIndexHierarchy, 100);
+            }
+        });
+    });
+    
+    // Start observing
+    document.addEventListener('DOMContentLoaded', function() {
+        zIndexObserver.observe(document.body, { childList: true, subtree: true });
+    });
+</script>
+<!-- Global Reading Progress (client-only) -->
+<link rel="stylesheet" href="/client/css/reading-progress.css" />
+<script src="/client/js/reading-progress.js"></script>
+<script>
+    // Lightweight client-side overrides for specific phrases after GTranslate
+    (function(){
+        // Targeted English overrides (fast, no heavy DOM walk)
+        // var EN_OVERRIDES = {
+        //     nav: {
+        //         pri: 'Home',
+        //         sec: 'Attractions',
+        //         tri: 'Stays',
+        //         quad: 'Food & Drinks',
+        //         quint: 'Transportation',
+        //         hex: 'Entertainment'
+        //     },
+        //     texts: [
+        //         { selector: 'header .header-content h2#quote', text: 'Discover Hanoi — Heritage and Vibrancy' },
+        //         { selector: 'header .header-content h1', text: 'Hanoi Travel Guide' },
+        //         { selector: 'header .header-content .ctn', text: 'Learn More' },
+        //         { selector: '.tours .content-col h1', text: 'Overview of Hanoi' },
+        //         { selector: '.explore .explore-content h1', text: 'Project Overview' },
+        //         { selector: '.events .title h1', text: 'Featured Tours' },
+        //         { selector: '.map-section .map-title-overlay h1', text: 'Hanoi Map' },
+        //         { selector: '#about .title h1', text: 'Gallery' },
+        //         { selector: '.title h1.font-color', text: 'Contributors' },
+        //         { selector: '#contact .title h1', text: 'Contact' },
+        //         { selector: '.cbox-message', text: 'Prefer Another Method?\nContact us using the details below' }
+        //     ],
+        //     links: [
+        //         { selector: '.card .ctn', text: 'View Details' }
+        //     ]
+        // };
+
+        function getCurrentLanguage(){
+            try {
+                if (window.gtranslate && typeof window.gtranslate.getCurrentLanguage === 'function') {
+                    return window.gtranslate.getCurrentLanguage();
+                }
+            } catch(e) {}
+            var htmlLang = document.documentElement.getAttribute('lang');
+            if (htmlLang) return htmlLang;
+            var first = (location.pathname.split('/')[1] || '').toLowerCase();
+            return first || 'vi';
+        }
+        function applyCustomTranslations(){
+            var lang = getCurrentLanguage();
+            if (lang !== 'en') return; // only override in English, keep Vietnamese default as-is
+
+            // Navigation by fixed ids
+            try {
+                var navMap = EN_OVERRIDES.nav || {};
+                Object.keys(navMap).forEach(function(id){
+                    var el = document.getElementById(id);
+                    if (el && !el.closest('.notranslate')) el.textContent = navMap[id];
+                });
+            } catch(e) {}
+
+            // Key headings and CTAs
+            try {
+                (EN_OVERRIDES.texts || []).forEach(function(item){
+                    var el = document.querySelector(item.selector);
+                    if (el && !el.closest('.notranslate')) el.textContent = item.text;
+                });
+            } catch(e) {}
+
+            // Re-label repeated card CTAs if present
+            try {
+                (EN_OVERRIDES.links || []).forEach(function(item){
+                    document.querySelectorAll(item.selector).forEach(function(el){
+                        if (!el.closest('.notranslate')) el.textContent = item.text;
+                    });
+                });
+            } catch(e) {}
+        }
+
+        // Debounced apply to avoid thrashing on large DOM updates
+        var timer;
+        function scheduleApply(){
+            clearTimeout(timer);
+            timer = setTimeout(applyCustomTranslations, 200);
+        }
+
+        // Run after initial load
+        window.addEventListener('load', scheduleApply);
+
+        // Re-run when GTranslate likely changed content (URL or DOM changes)
+        window.addEventListener('popstate', scheduleApply);
+        window.addEventListener('hashchange', scheduleApply);
+
+        // Observe DOM changes to re-apply overrides post-translation
+        var isApplying = false;
+        var mo = new MutationObserver(function(){
+            if (isApplying) return;
+            scheduleApply();
+        });
+        mo.observe(document.body || document.documentElement, { childList: true, subtree: true });
+
+        // Hook into our helper to re-apply after manual refreshTranslation calls
+        var originalRefresh = window.refreshTranslation;
+        window.refreshTranslation = function(){
+            try { if (originalRefresh) originalRefresh(); } catch(e) {}
+            scheduleApply();
+        };
+    })();
+</script>

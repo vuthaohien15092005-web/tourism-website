@@ -1,0 +1,454 @@
+<!-- Page Actions -->
+<div class="d-flex justify-content-end mb-3">
+    <a href="/admin/entertainments" class="btn btn-outline-secondary me-2">
+        <i class="fas fa-arrow-left me-2"></i>
+        Quay lại
+    </a>
+    <a href="/admin/entertainments/<%= entertainment._id %>/edit" class="btn btn-primary">
+        <i class="fas fa-edit me-2"></i>
+        Chỉnh sửa
+    </a>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.success && flash.success.length > 0) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <%= flash.success[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <%= flash.error[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<div class="row">
+    <!-- === THÔNG TIN CƠ BẢN === -->
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Thông tin cơ bản
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tên địa điểm</label>
+                            <p class="form-control-plaintext"><%= entertainment.name %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Khu vực</label>
+                            <p class="form-control-plaintext">
+                                <span class="badge bg-info"><%= entertainment.zone %></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Loại hình</label>
+                            <p class="form-control-plaintext">
+                                <span class="badge bg-secondary"><%= entertainment.type %></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Địa chỉ</label>
+                            <p class="form-control-plaintext"><%= entertainment.address %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Giờ mở cửa</label>
+                            <p class="form-control-plaintext"><%= entertainment.openHours %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Giá vé</label>
+                            <p class="form-control-plaintext"><%= entertainment.ticket %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Trạng thái</label>
+                            <p class="form-control-plaintext">
+                                <% if (entertainment.isActive) { %>
+                                    <span class="badge bg-success">Hoạt động</span>
+                                <% } else { %>
+                                    <span class="badge bg-secondary">Tạm dừng</span>
+                                <% } %>
+                                <% if (entertainment.featured) { %>
+                                    <span class="badge bg-warning ms-1">Nổi bật</span>
+                                <% } %>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Đánh giá</label>
+                            <p class="form-control-plaintext">
+                                <span class="me-1"><%= entertainment.averageRating || 0 %></span>
+                                <div class="rating d-inline-block">
+                                    <% for (let i = 1; i <= 5; i++) { %>
+                                        <i class="fas fa-star <%= i <= (entertainment.averageRating || 0) ? 'text-warning' : 'text-muted' %>" style="font-size: 0.8em;"></i>
+                                    <% } %>
+                                </div>
+                                <small class="text-muted ms-1">(<%= entertainment.reviewCount || 0 %> đánh giá)</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === HOẠT ĐỘNG VÀ ĐỐI TƯỢNG === -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    Hoạt động chính
+                </h5>
+            </div>
+            <div class="card-body">
+                <% if (entertainment.activities && entertainment.activities.length > 0) { %>
+                    <ul class="list-unstyled">
+                        <% entertainment.activities.forEach(activity => { %>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                <%= activity %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p class="text-muted">Chưa có thông tin hoạt động</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-users me-2"></i>
+                    Đối tượng phù hợp
+                </h5>
+            </div>
+            <div class="card-body">
+                <% if (entertainment.audience && entertainment.audience.length > 0) { %>
+                    <ul class="list-unstyled">
+                        <% entertainment.audience.forEach(audience => { %>
+                            <li class="mb-2">
+                                <i class="fas fa-user text-primary me-2"></i>
+                                <%= audience %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p class="text-muted">Chưa có thông tin đối tượng</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- === LỊCH SỬ VÀ KIẾN TRÚC === -->
+    <% if (entertainment.history || entertainment.architecture) { %>
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-history me-2"></i>
+                        Lịch sử và kiến trúc
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <% if (entertainment.history) { %>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">Lịch sử hình thành</h6>
+                                <p><%= entertainment.history %></p>
+                            </div>
+                        <% } %>
+                        <% if (entertainment.architecture) { %>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">Kiến trúc & Thiết kế</h6>
+                                <p><%= entertainment.architecture %></p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- === TRẢI NGHIỆM VÀ LƯU Ý === -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-star me-2"></i>
+                    Trải nghiệm nổi bật
+                </h5>
+            </div>
+            <div class="card-body">
+                <% if (entertainment.experience && entertainment.experience.length > 0) { %>
+                    <ul class="list-unstyled">
+                        <% entertainment.experience.forEach(exp => { %>
+                            <li class="mb-2">
+                                <i class="fas fa-star text-warning me-2"></i>
+                                <%= exp %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p class="text-muted">Chưa có thông tin trải nghiệm</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Lưu ý cần biết
+                </h5>
+            </div>
+            <div class="card-body">
+                <% if (entertainment.notes && entertainment.notes.length > 0) { %>
+                    <ul class="list-unstyled">
+                        <% entertainment.notes.forEach(note => { %>
+                            <li class="mb-2">
+                                <i class="fas fa-info-circle text-info me-2"></i>
+                                <%= note %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p class="text-muted">Chưa có lưu ý nào</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- === HOẠT ĐỘNG VÀ ĐỐI TƯỢNG === -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-running me-2"></i>
+                    Hoạt động của du khách
+                </h5>
+            </div>
+            <div class="card-body">
+                <% if (entertainment.activities && entertainment.activities.length > 0) { %>
+                    <ul class="list-unstyled">
+                        <% entertainment.activities.forEach(activity => { %>
+                            <li class="mb-2">
+                                <i class="fas fa-play text-success me-2"></i>
+                                <%= activity %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p class="text-muted">Chưa có thông tin hoạt động</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-users me-2"></i>
+                    Đối tượng khách hàng
+                </h5>
+            </div>
+            <div class="card-body">
+                <% if (entertainment.targetAudience && entertainment.targetAudience.length > 0) { %>
+                    <ul class="list-unstyled">
+                        <% entertainment.targetAudience.forEach(audience => { %>
+                            <li class="mb-2">
+                                <i class="fas fa-user text-primary me-2"></i>
+                                <%= audience %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p class="text-muted">Chưa có thông tin đối tượng</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- === HÌNH ẢNH === -->
+    <% if (entertainment.images && entertainment.images.length > 0) { %>
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-images me-2"></i>
+                        Hình ảnh (<%= entertainment.images.length %>)
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <% entertainment.images.forEach((image, index) => { %>
+                            <div class="col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="<%= image %>" class="card-img-top" alt="Hình <%= index + 1 %>" 
+                                         style="height: 200px; object-fit: cover;">
+                                    <div class="card-body p-2">
+                                        <small class="text-muted">Hình <%= index + 1 %></small>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- === BẢN ĐỒ === -->
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Thông tin bản đồ
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Vĩ độ</label>
+                            <p class="form-control-plaintext"><%= entertainment.map.lat %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Kinh độ</label>
+                            <p class="form-control-plaintext"><%= entertainment.map.lng %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">URL nhúng</label>
+                            <p class="form-control-plaintext">
+                                <a href="<%= entertainment.map.embedUrl %>" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-external-link-alt me-1"></i>
+                                    Xem bản đồ
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="map-container" style="height: 300px; border-radius: 8px; overflow: hidden;">
+                            <iframe src="<%= entertainment.map.embedUrl %>" 
+                                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === ĐÁNH GIÁ === -->
+    <% if (entertainment.reviews && entertainment.reviews.length > 0) { %>
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-comments me-2"></i>
+                        Đánh giá (<%= entertainment.reviews.length %>)
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <% entertainment.reviews.forEach(review => { %>
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="card-title mb-0"><%= review.author %></h6>
+                                            <small class="text-muted"><%= new Date(review.createdAt).toLocaleDateString('vi-VN') %></small>
+                                        </div>
+                                        <div class="mb-2">
+                                            <% for (let i = 1; i <= 5; i++) { %>
+                                                <i class="fas fa-star <%= i <= review.rating ? 'text-warning' : 'text-muted' %>" style="font-size: 0.8em;"></i>
+                                            <% } %>
+                                            <span class="ms-1"><%= review.rating %>/5</span>
+                                        </div>
+                                        <p class="card-text"><%= review.comment %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<!-- Action Buttons -->
+<div class="d-flex justify-content-end gap-2 mt-4">
+    <button type="button" class="btn btn-outline-danger" onclick="confirmDelete('<%= entertainment._id %>', '<%= entertainment.name %>')">
+        <i class="fas fa-trash me-2"></i>
+        Xóa
+    </button>
+    <a href="/admin/entertainments/<%= entertainment._id %>/edit" class="btn btn-primary">
+        <i class="fas fa-edit me-2"></i>
+        Chỉnh sửa
+    </a>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa địa điểm giải trí <strong id="deleteName"></strong>?</p>
+                <p class="text-danger"><small>Hành động này không thể hoàn tác!</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <form id="deleteForm" method="POST" style="display: inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDelete(id, name) {
+    document.getElementById('deleteName').textContent = name;
+    document.getElementById('deleteForm').action = '/admin/entertainments/' + id;
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+</script>

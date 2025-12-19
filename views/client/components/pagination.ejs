@@ -1,0 +1,63 @@
+<!-- Pagination Component -->
+<% if (pagination && pagination.totalPages > 1) { %>
+    <div class="pagination-container">
+        <nav class="pagination" aria-label="Phân trang">
+            <% if (pagination.hasPrev) { %>
+                <a href="?page=<%= pagination.currentPage - 1 %><%= queryString %>" 
+                   class="pagination-btn prev">
+                    <i class="fa fa-chevron-left"></i>
+                    <span>Trước</span>
+                </a>
+            <% } %>
+            
+            <div class="pagination-pages">
+                <% 
+                // Tính toán range hiển thị
+                let startPage = Math.max(1, pagination.currentPage - 2);
+                let endPage = Math.min(pagination.totalPages, pagination.currentPage + 2);
+                
+                // Đảm bảo hiển thị ít nhất 5 trang nếu có thể
+                if (endPage - startPage < 4) {
+                    if (startPage === 1) {
+                        endPage = Math.min(pagination.totalPages, startPage + 4);
+                    } else if (endPage === pagination.totalPages) {
+                        startPage = Math.max(1, endPage - 4);
+                    }
+                }
+                
+                // Hiển thị trang đầu nếu không liền kề
+                if (startPage > 1) { %>
+                    <a href="?page=1<%= queryString %>" class="pagination-page">1</a>
+                    <% if (startPage > 2) { %>
+                        <span class="pagination-ellipsis">...</span>
+                    <% } %>
+                <% } %>
+                
+                <% for (let i = startPage; i <= endPage; i++) { %>
+                    <a href="?page=<%= i %><%= queryString %>" 
+                       class="pagination-page <%= i === pagination.currentPage ? 'active' : '' %>">
+                        <%= i %>
+                    </a>
+                <% } %>
+                
+                <% // Hiển thị trang cuối nếu không liền kề
+                if (endPage < pagination.totalPages) { %>
+                    <% if (endPage < pagination.totalPages - 1) { %>
+                        <span class="pagination-ellipsis">...</span>
+                    <% } %>
+                    <a href="?page=<%= pagination.totalPages %><%= queryString %>" class="pagination-page">
+                        <%= pagination.totalPages %>
+                    </a>
+                <% } %>
+            </div>
+            
+            <% if (pagination.hasNext) { %>
+                <a href="?page=<%= pagination.currentPage + 1 %><%= queryString %>" 
+                   class="pagination-btn next">
+                    <span>Sau</span>
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            <% } %>
+        </nav>
+    </div>
+<% } %>

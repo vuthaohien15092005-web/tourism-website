@@ -1,0 +1,857 @@
+/* mobile responsiveness design */
+@media screen and (max-width: 990px) {
+  .contact_us {
+    flex-direction: column;
+    width: 100%;
+  }
+  form,
+  .cbox {
+    margin: auto;
+    margin-bottom: 30px;
+  }
+}
+@media screen and (max-width: 1130px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .navbar {
+    padding: 45px;
+  }
+
+  .logo {
+    position: absolute;
+    top: 30px;
+    left: 15px;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    flex-direction: column;
+    width: 300px;
+    height: 100vh;
+    justify-content: flex-start;
+    background: #1261A6;
+    transform: translateX(100%);
+    padding-top: 80px;
+    padding-left: 20px;
+    padding-right: 20px;
+    z-index: 5000; /* nav-links cao nhất */
+    overflow-y: auto;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 90vw; /* Đảm bảo không vượt quá viewport */
+  }
+
+  .nav-links.active {
+    transform: translateX(0);
+  }
+
+  .mobile-menu {
+    margin-top: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .nav-links li {
+    margin: 15px 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Close button styling */
+  .menu-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    margin: 0 !important;
+    width: auto !important;
+    text-align: right !important;
+  }
+  
+  .close-menu-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 0;
+    padding: 0;
+  }
+  
+  .close-menu-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+  }
+  
+  .close-icon {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    display: block;
+  }
+  
+  .nav-links li a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    /* background: rgba(255, 255, 255, 0.1); */
+    backdrop-filter: blur(10px);
+  }
+  
+  .nav-links li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  /* Auth section styling */
+  .auth-section-mobile {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .user-menu-mobile,
+  .auth-buttons-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .user-name-mobile {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .dropdown-item-mobile,
+  .btn-login-mobile,
+  .btn-register-mobile {
+    display: block;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+  
+  .dropdown-item-mobile:hover,
+  .btn-login-mobile:hover,
+  .btn-register-mobile:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Mobile menu responsive improvements */
+@media screen and (max-width: 768px) {
+  .nav-links {
+    width: 280px;
+    padding-top: 70px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .menu-close-btn {
+    top: 15px;
+    right: 15px;
+  }
+  
+  .close-menu-btn {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .close-icon {
+    font-size: 20px;
+  }
+  
+  .nav-links li a {
+    padding: 12px 15px;
+    font-size: 1rem;
+  }
+  
+  .user-name-mobile {
+    font-size: 0.9rem;
+  }
+  
+  .dropdown-item-mobile,
+  .btn-login-mobile,
+  .btn-register-mobile {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nav-links {
+    width: 260px;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .menu-close-btn {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .close-menu-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .close-icon {
+    font-size: 18px;
+  }
+  
+  .nav-links li a {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+  
+  .user-name-mobile {
+    font-size: 0.85rem;
+  }
+  
+  .dropdown-item-mobile,
+  .btn-login-mobile,
+  .btn-register-mobile {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* --- Attraction page & hero/banner responsive refinements --- */
+@media screen and (max-width: 1130px) {
+  /* add extra top padding so fixed header doesn't cover banner text */
+  .page-header {
+    padding-top: 100px;
+    min-height: 60vh;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page-header {
+    padding-top: 110px; /* more room for stacked mobile header */
+    min-height: 55vh;
+  }
+
+  /* attraction filters: stack fields, increase touch targets */
+  .attraction-filters .filter-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .attraction-filters .search-input,
+  .attraction-filters .category-select {
+    padding: 12px 16px;
+    border-radius: 14px;
+  }
+  .attraction-filters .category-select select {
+    height: 48px;
+  }
+  .attraction-pills {
+    gap: 12px;
+    padding-bottom: 6px;
+  }
+  .attraction-pills .pill {
+    padding: 10px 16px;
+  }
+  /* touch feedback when tapping pills */
+  .attraction-pills .pill:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  }
+}
+
+/* Hover effects for larger screens remain subtle and elevated */
+@media (hover: hover) and (pointer: fine) {
+  .attraction-pills .pill:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media screen and (max-width: 1440px) {
+	 .containerx {
+	  top: 40%;
+	  bottom: 40%;
+	  transform-style: preserve-3d;
+	}
+	
+	#about_us div {
+		padding: 10px;
+		display: block;
+		align-items: normal;
+	}
+	
+	.cards {
+		position: relative;
+		width: 90vw;
+		height: 100%;
+	}
+	
+	#about-quad {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 850px) {
+  /*events*/
+  .row {
+    flex-direction: column;
+  }
+
+  .row .col {
+    margin: 20px auto;
+  }
+
+  .col img {
+    max-width: 90%;
+  }
+
+  /*explore*/
+  .explore-content {
+    width: 100%;
+  }
+
+  /*tours*/
+  .tours {
+    width: 100%;
+  }
+  
+  .tours .row {
+    gap: 2rem;
+  }
+  
+  .tours .content-col {
+    order: 1;
+  }
+  
+  .tours .image-col {
+    order: 2;
+    display: block !important;
+    width: 100%;
+  }
+  
+  .tours .image-gallery {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .tours .image-gallery img {
+    width: 100%;
+    max-height: 220px;
+    min-height: 170px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  /*footer*/
+  .footer {
+    padding: 10px;
+  }
+  .content-col {
+    width: 100%;
+  }
+  #about_us p {
+    width: 70%;
+    text-align: justify;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  #about_us p {
+    width: 85%;
+    padding-top: 7em;
+    margin: auto;
+    text-align: justify;
+  }
+  form,
+  .cbox {
+    width: 90%;
+  }
+  .ctn {
+    margin: auto;
+  }
+
+  .explore-content {
+    margin: 0 auto;
+    text-align: center;
+    width: 90%;
+    padding: 1.2rem 0.8rem;
+  }
+
+  .explore-content .ctn {
+    margin: 40px auto;
+  }
+}
+@media screen and (max-width: 600px) {
+  /* make explore copy readable on narrow screens */
+  .explore { padding: 40px 0; min-height: 70vh; }
+  .explore-content p { padding: 0 16px; max-width: 100%; }
+  .explore-content h1 { letter-spacing: 0.1rem; }
+  
+  /* Events section responsive */
+  .title h1 { letter-spacing: 0.1rem; }
+  
+  /* All section headings responsive */
+  .content-col h1 { letter-spacing: 0.1rem; }
+  .crow-message h1 { letter-spacing: 0.1rem; }
+
+  #about_us p {
+    margin: auto;
+    text-align: justify !important;
+  }
+  
+  /* Ensure all text content is justified on small screens */
+  p,
+  .description,
+  .content,
+  .article-content,
+  .blog-content,
+  .detail-content,
+  .attraction-description,
+  .cuisine-description,
+  .entertainment-description,
+  .accommodation-description,
+  .transportation-description {
+    text-align: justify !important;
+  }
+  /* carousel: keep each duplicate contained */
+  .containerx { gap: 1.2rem; }
+  .cards { height: 42vh; }
+  .cardt { left: 0; width: 70%; }
+  
+  /* Tours section - Show images on mobile */
+  .tours .row {
+    gap: 2rem;
+  }
+  
+  .tours .content-col {
+    order: 1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tours .image-col {
+    order: 2;
+    display: block !important;
+    width: 100%;
+  }
+  
+  /* Image gallery mobile optimization */
+  .image-gallery {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    padding: 0.5rem;
+  }
+  
+  .image-gallery img {
+    width: 100%;
+    max-height: 200px;
+    min-height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+}
+@media screen and (max-width: 470px) {
+  .ctn {
+    padding: 13px 25px;
+  }
+  .c_boxx a p {
+    font-size: 17.5px;
+  }
+  
+  /* Tours section - maintain image display */
+  .tours .image-col {
+    display: block !important;
+  }
+  
+  /* Image gallery very small screens */
+  .image-gallery {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    padding: 0.3rem;
+  }
+  
+  .image-gallery img {
+    width: 100%;
+    max-height: 180px;
+    min-height: 130px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+  
+  /* Ensure text justification on very small screens */
+  p,
+  .description,
+  .content,
+  .article-content,
+  .blog-content,
+  .detail-content {
+    text-align: justify !important;
+  }
+}
+@media screen and (max-width: 400px) {
+  .ctn {
+    padding: 13px 25px;
+  }
+  .c_boxx a p {
+    font-size: 1rem;
+  }
+  
+  /* Tours section - ensure images remain visible */
+  .tours .image-col {
+    display: block !important;
+  }
+  
+  /* Image gallery extra small screens */
+  .image-gallery {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    padding: 0.2rem;
+  }
+  
+  .image-gallery img {
+    width: 100%;
+    max-height: 170px;
+    min-height: 120px;
+    object-fit: cover;
+  }
+  
+  /* Ensure text justification on extra small screens */
+  p,
+  .description,
+  .content,
+  .article-content,
+  .blog-content,
+  .detail-content {
+    text-align: justify !important;
+  }
+}
+
+/* Footer responsive (namespaced classes to avoid collisions) */
+@media screen and (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .footer-logo strong { font-size: 1rem; }
+  .footer-slogan { font-size: 0.875rem; }
+}
+
+@media (max-width: 850px) {
+  .content-col {
+    text-align: center;
+  }
+  .content-col .line {
+    margin: 0.5rem auto;
+  }
+  .content-col .ctn {
+    margin: 0 auto;
+    position: inherit;
+  }
+  .content-col p {
+    max-width: 75%;
+    text-align: justify !important;
+  }
+  
+  /* Ensure all page content is justified on mobile */
+  p,
+  .description,
+  .content,
+  .article-content,
+  .blog-content,
+  .detail-content {
+    text-align: justify !important;
+  }
+  
+  /* Image gallery responsive */
+  .image-gallery {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0.5rem;
+  }
+  
+  .image-gallery img {
+    max-height: 300px;
+    min-height: 250px;
+  }
+  
+  .tours .row {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+/* ===========================================
+   MAP SECTION RESPONSIVE STYLES
+   =========================================== */
+
+/* Tablet and smaller screens */
+@media screen and (max-width: 768px) {
+  .map-section {
+    height: 80vh;
+    min-height: 500px;
+  }
+  
+  #hanoi-map {
+    height: 80vh;
+    min-height: 500px;
+  }
+  
+  .map-title-overlay {
+    top: 40px;
+    padding: 20px 30px;
+    max-width: 400px;
+  }
+  .map-title-overlay.transparent { background: transparent !important; }
+  
+  .map-title-overlay h1 {
+    font-size: var(--fs-headings);
+    letter-spacing: 0.1rem;
+  }
+  
+  .map-title-overlay p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile screens */
+@media screen and (max-width: 480px) {
+  .map-section {
+    height: 70vh;
+    min-height: 400px;
+  }
+  
+  #hanoi-map {
+    height: 70vh;
+    min-height: 400px;
+  }
+  
+  .map-title-overlay {
+    top: 30px;
+    padding: 15px 20px;
+    max-width: 350px;
+  }
+  
+  .map-title-overlay h1 {
+    font-size: var(--fs-headings);
+    letter-spacing: 0.1rem;
+  }
+  
+  .map-title-overlay .line {
+    width: 60px;
+    height: 2px;
+  }
+  
+  .map-title-overlay p {
+    font-size: 0.8rem;
+  }
+}
+
+/* Very small screens */
+@media screen and (max-width: 320px) {
+  .map-section {
+    height: 60vh;
+    min-height: 350px;
+  }
+  
+  #hanoi-map {
+    height: 60vh;
+    min-height: 350px;
+  }
+  
+  .map-title-overlay h1 {
+    font-size: var(--fs-headings);
+    letter-spacing: 0.1rem;
+  }
+}
+
+/* ===========================================
+   MAP CONTROLS & LEGEND RESPONSIVE
+   =========================================== */
+
+/* Tablet and smaller screens */
+@media screen and (max-width: 768px) {
+  .map-controls {
+    top: 15px;
+    left: 15px;
+  }
+  
+  .map-control-group {
+    flex-direction: row;
+    gap: 8px;
+    padding: 8px;
+  }
+  
+  .map-control-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 0.875rem;
+  }
+  
+  .area-navigation {
+    margin-top: 10px;
+    padding: 8px;
+  }
+  
+  .area-navigation h5 {
+    font-size: var(--fs-xs);
+    margin-bottom: 8px;
+  }
+  
+  .area-btn {
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    font-size: 0.625rem;
+  }
+  
+  .area-btn i {
+    font-size: 0.625rem;
+    width: 12px;
+  }
+  
+  .map-legend {
+    bottom: 15px;
+    left: 15px;
+    padding: 12px;
+    min-width: 180px;
+  }
+  
+  .map-legend h4 {
+    font-size: var(--fs-base);
+    margin-bottom: 10px;
+  }
+  
+  .legend-item {
+    font-size: var(--fs-xs);
+    margin-bottom: 6px;
+  }
+  
+  .legend-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 0.625rem;
+  }
+  
+  .popup-content {
+    padding: 15px;
+  }
+  
+  .popup-title {
+    font-size: var(--fs-base);
+  }
+  
+  .popup-description {
+    font-size: var(--fs-xs);
+  }
+}
+
+/* Mobile screens */
+@media screen and (max-width: 480px) {
+  .map-controls {
+    top: 10px;
+    left: 10px;
+  }
+  
+  .map-control-group {
+    gap: 6px;
+    padding: 6px;
+  }
+  
+  .map-control-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 0.75rem;
+  }
+  
+  .area-navigation {
+    margin-top: 8px;
+    padding: 6px;
+  }
+  
+  .area-navigation h5 {
+    font-size: 0.625rem;
+    margin-bottom: 6px;
+  }
+  
+  .area-btn {
+    padding: 4px 6px;
+    margin-bottom: 3px;
+    font-size: 0.5625rem;
+  }
+  
+  .area-btn i {
+    font-size: 0.5625rem;
+    width: 10px;
+  }
+  
+  .map-legend {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 10px;
+    min-width: auto;
+  }
+  
+  .map-legend h4 {
+    font-size: var(--fs-sm);
+    margin-bottom: 8px;
+  }
+  
+  .legend-item {
+    font-size: 0.6875rem;
+    margin-bottom: 4px;
+  }
+  
+  .legend-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 0.5625rem;
+  }
+  
+  .popup-content {
+    padding: 12px;
+  }
+  
+  .popup-title {
+    font-size: var(--fs-sm);
+  }
+  
+  .popup-description {
+    font-size: 0.6875rem;
+  }
+  
+  .type-badge {
+    padding: 3px 8px;
+    font-size: 0.625rem;
+  }
+}

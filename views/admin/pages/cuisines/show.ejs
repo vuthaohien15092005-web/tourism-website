@@ -1,0 +1,95 @@
+<!-- Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2"><%= pageTitle %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="/admin/cuisines/edit/<%= cuisine._id %>" class="btn btn-primary"><i class="fas fa-edit me-2"></i>Sửa</a>
+    <a href="/admin/cuisines" class="btn btn-outline-secondary ms-2"><i class="fas fa-arrow-left me-2"></i>Quay lại</a>
+  </div>
+  </div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">Thông tin</h5></div>
+      <div class="card-body">
+        <div class="mb-3"><strong>Tên:</strong> <%= cuisine.name %></div>
+        <div class="mb-3"><strong>Mô tả:</strong><div class="text-muted"><%= cuisine.description %></div></div>
+        <% if (cuisine.recipe) { %>
+          <div class="mb-3"><strong>Công thức nấu:</strong>
+            <div class="text-muted small"><%= cuisine.recipe.slice(0, 200) %><% if (cuisine.recipe.length > 200) { %>...<% } %></div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">Địa điểm phục vụ</h5></div>
+      <div class="card-body">
+        <% if ((cuisine.places||[]).length === 0) { %>
+          <div class="text-muted">Chưa có địa điểm</div>
+        <% } %>
+        <div class="row g-3">
+        <% (cuisine.places||[]).forEach((p)=>{ %>
+          <div class="col-md-6">
+            <div class="border rounded p-3 h-100">
+              <div class="fw-semibold mb-1"><%= p.name %></div>
+              <% if (p.address) { %>
+                <div class="text-muted small mb-1">
+                  <%= p.address %>
+                </div>
+              <% } %>
+              <% if (p.openingHours) { %><div class="small"><strong>Giờ:</strong> <%= p.openingHours %></div><% } %>
+              <% if (p.priceRange) { %><div class="small"><strong>Giá:</strong> <%= p.priceRange %></div><% } %>
+              <% if (p.mapLink) { %>
+                <div class="mt-2"><a target="_blank" href="<%= p.mapLink %>" class="btn btn-sm btn-outline-primary"><i class="fas fa-map-marker-alt me-1"></i>Google Maps</a></div>
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">Hình ảnh</h5></div>
+      <div class="card-body">
+        <% if ((cuisine.mainImages||[]).length===0) { %>
+          <div class="text-muted">Chưa có hình ảnh</div>
+        <% } %>
+        <div class="d-flex flex-wrap gap-2">
+          <% (cuisine.mainImages||[]).slice(0,12).forEach(img=>{ %>
+            <img src="<%= img %>" style="width:96px;height:96px;object-fit:cover;border-radius:6px;">
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <% if ((cuisine.tips||[]).length) { %>
+    <div class="card mb-4">
+      <div class="card-header"><h5 class="mb-0">Mẹo thưởng thức</h5></div>
+      <div class="card-body">
+        <% cuisine.tips.forEach(tip=>{ %>
+          <div class="mb-2">
+            <div class="fw-semibold"><i class="fa fa-lightbulb-o me-2"></i><%= tip %></div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    <% } %>
+
+    <div class="card">
+      <div class="card-header"><h5 class="mb-0">Trạng thái</h5></div>
+      <div class="card-body">
+        <div class="mb-2"><strong>Hiển thị:</strong> <span class="badge <%= cuisine.status==='published'?'text-bg-success':(cuisine.status==='draft'?'text-bg-warning':'text-bg-secondary') %>"><%= cuisine.status %></span></div>
+        <div class="mb-2"><strong>Kích hoạt:</strong> <%= cuisine.isActive ? 'Có' : 'Không' %></div>
+        <div class="mb-2"><strong>Nổi bật:</strong> <%= cuisine.featured ? 'Có' : 'Không' %></div>
+        <div class="text-muted small">Tạo: <%= new Date(cuisine.createdAt).toLocaleString('vi-VN') %></div>
+        <div class="text-muted small">Cập nhật: <%= new Date(cuisine.updatedAt).toLocaleString('vi-VN') %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

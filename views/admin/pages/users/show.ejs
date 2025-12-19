@@ -1,0 +1,255 @@
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0 text-gray-800">Chi tiết người dùng</h1>
+            <p class="text-muted">Thông tin chi tiết về người dùng</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="/admin/users" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- User Info Card -->
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Thông tin người dùng</h6>
+                    <div class="d-flex gap-2">
+                        <% if (userDetail.role !== 'admin' || userDetail.email !== process.env.ADMIN_EMAIL) { %>
+                            <button class="btn btn-sm btn-outline-<%= userDetail.status === 'active' ? 'warning' : 'success' %>"
+                                    onclick="toggleStatus('<%= userDetail._id %>', '<%= userDetail.status %>')">
+                                <i class="fas fa-<%= userDetail.status === 'active' ? 'ban' : 'check' %>"></i>
+                                <%= userDetail.status === 'active' ? 'Vô hiệu hóa' : 'Kích hoạt' %>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger"
+                                    onclick="deleteUser('<%= userDetail._id %>', '<%= userDetail.fullName %>')">
+                                <i class="fas fa-trash"></i> Xóa
+                            </button>
+                        <% } else { %>
+                            <span class="text-muted">Không thể thao tác</span>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4">
+                            <img src="<%= userDetail.avatar %>" alt="Avatar" 
+                                 class="rounded-circle mb-3" width="120" height="120"
+                                 onerror="this.src='/client/img/avatar.png'">
+                            <h5 class="font-weight-bold"><%= userDetail.fullName %></h5>
+                            <p class="text-muted"><%= userDetail.email %></p>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row mb-3">
+                                <div class="col-sm-4">
+                                    <strong>Họ tên:</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <%= userDetail.fullName %>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4">
+                                    <strong>Email:</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <a href="mailto:<%= userDetail.email %>"><%= userDetail.email %></a>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4">
+                                    <strong>Số điện thoại:</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <%= userDetail.phone || 'Chưa cập nhật' %>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4">
+                                    <strong>Vai trò:</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <% if (userDetail.role === 'admin') { %>
+                                        <span class="badge bg-danger">Admin</span>
+                                    <% } else if (userDetail.role === 'editor') { %>
+                                        <span class="badge bg-warning">Editor</span>
+                                    <% } else { %>
+                                        <span class="badge bg-info">User</span>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4">
+                                    <strong>Trạng thái:</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <span class="badge bg-<%= userDetail.status === 'active' ? 'success' : 'secondary' %>">
+                                        <%= userDetail.status === 'active' ? 'Hoạt động' : 'Không hoạt động' %>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4">
+                                    <strong>Trạng thái online:</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <span class="badge bg-<%= userDetail.statusOnline === 'online' ? 'success' : 'secondary' %>">
+                                        <%= userDetail.statusOnline === 'online' ? 'Online' : 'Offline' %>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4">
+                                    <strong>Đăng nhập cuối:</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <%= userDetail.lastLogin ? new Date(userDetail.lastLogin).toLocaleString('vi-VN') : 'Chưa đăng nhập' %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Card -->
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Thông tin hoạt động</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>Ngày tạo tài khoản:</strong>
+                        <div class="text-muted">
+                            <%= new Date(userDetail.createdAt).toLocaleString('vi-VN') %>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Cập nhật cuối:</strong>
+                        <div class="text-muted">
+                            <%= new Date(userDetail.updatedAt).toLocaleString('vi-VN') %>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Token User:</strong>
+                        <div class="text-muted small">
+                            <code><%= userDetail.tokenUser %></code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Thao tác nhanh</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <% if (userDetail.phone) { %>
+                            <a href="tel:<%= userDetail.phone %>" class="btn btn-outline-success">
+                                <i class="fas fa-phone"></i> Gọi điện
+                            </a>
+                        <% } %>
+                        <button class="btn btn-outline-info" onclick="copyToken('<%= userDetail.tokenUser %>')">
+                            <i class="fas fa-copy"></i> Copy Token
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Toggle user status
+async function toggleStatus(userId, currentStatus) {
+    try {
+        const response = await fetch(`/admin/users/${userId}/toggle-status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification(result.message, 'success');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        } else {
+            showNotification(result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('Có lỗi xảy ra khi thay đổi trạng thái', 'error');
+    }
+}
+
+// Delete user
+async function deleteUser(userId, userName) {
+    if (confirm(`Bạn có chắc chắn muốn xóa người dùng "${userName}"?`)) {
+        try {
+            const response = await fetch(`/admin/users/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showNotification(result.message, 'success');
+                setTimeout(() => {
+                    window.location.href = '/admin/users';
+                }, 1500);
+            } else {
+                showNotification(result.message, 'error');
+            }
+        } catch (error) {
+            showNotification('Có lỗi xảy ra khi xóa người dùng', 'error');
+        }
+    }
+}
+
+// Copy token to clipboard
+function copyToken(token) {
+    navigator.clipboard.writeText(token).then(() => {
+        showNotification('Đã copy token vào clipboard', 'success');
+    }).catch(() => {
+        showNotification('Không thể copy token', 'error');
+    });
+}
+
+// Show notification
+function showNotification(message, type) {
+    const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    const alertHtml = `
+        <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+    
+    // Insert at top of page
+    const container = document.querySelector('.container-fluid');
+    container.insertAdjacentHTML('afterbegin', alertHtml);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        const alert = container.querySelector('.alert');
+        if (alert) {
+            alert.remove();
+        }
+    }, 5000);
+}
+</script>

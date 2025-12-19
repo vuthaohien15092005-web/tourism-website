@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= (food && food.title) || 'Chi tiết ẩm thực' %> | Hà Nội Vibes</title>
+        <meta name="description" content="<%= (food && food.seoDescription) || 'Ẩm thực Hà Nội' %>" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/client/css/style.css" />
+        <link rel="stylesheet" href="/client/css/responsive.css" />
+        <link rel="stylesheet" href="/client/css/blog.css" />
+        <link rel="stylesheet" href="/client/css/harmony.css" />
+        <link rel="stylesheet" href="/client/css/cuisine-detail.css" />
+        <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+        <link rel="manifest" href="/client/img/site.webmanifest" />
+    </head>
+    <body class="cuisine-detail-page">
+        <%- include('../../partials/header') %>
+
+        <!-- Banner -->
+        <% 
+        var bannerImage = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1200"; // Ảnh mặc định
+        if (food && food.images && food.images.length > 0) {
+            bannerImage = food.images[0]; // Lấy ảnh đầu tiên (index 0)
+        } else if (food && food.heroImage) {
+            bannerImage = food.heroImage;
+        }
+        %>
+        <header class="page-header cuisine-banner" style="background-image: url('<%= bannerImage %>');">
+            <div class="header-content">
+                <h1><%= (food && food.title) || 'Món đặc sản Hà Nội' %></h1>
+                <p class="font-color">Khám phá hương vị truyền thống Hà Nội</p>
+            </div>
+        </header>
+
+        <main class="cuisine-detail main">
+            <div class="container">
+                <% if (!food) { %>
+                    <section class="content-section">
+                        <h2 class="section-title"><i class="fa fa-warning"></i> Không tìm thấy món ăn</h2>
+                        <p>Rất tiếc, món ăn bạn tìm không tồn tại hoặc đã bị ẩn.</p>
+                        <a href="/cuisine" class="ctn">Quay lại danh sách Ẩm thực</a>
+                    </section>
+                <% } else { %>
+                <div class="main-grid">
+                    <div>
+                        <section class="content-section">
+                            <h2 class="section-title"><i class="fa fa-book"></i> Giới thiệu</h2>
+                            <div class="description">
+                                <% var paragraphs = (food && food.description && Array.isArray(food.description)) ? food.description : (food && food.description ? [food.description] : []); %>
+                                <% if (!paragraphs.length) { %>
+                                    <p>Bài viết về món ăn đang được cập nhật.</p>
+                                <% } else { paragraphs.forEach(function(p){ %>
+                                    <p><%= p %></p>
+                                <% }) } %>
+                            </div>
+
+
+                            <% var ingredients = (food && food.ingredients) || []; %>
+                            <% if (ingredients.length) { %>
+                            <h3 class="subsection-title"><i class="fa fa-pepper"></i> Thành phần món ăn</h3>
+                            <div class="ingredients-grid">
+                                <% ingredients.forEach(function(it){ %>
+                                <div class="ingredient-item">
+                                    <i class="fa fa-circle"></i>
+                                    <div>
+                                        <strong><%= it.name %></strong>
+                                        <% if (it.note) { %><p class="muted"><%= it.note %></p><% } %>
+                                    </div>
+                                </div>
+                                <% }) %>
+                            </div>
+                            <% } %>
+
+                            <% 
+                            var gallery = (food && food.images) || []; 
+                            var galleryImages = [];
+                            if (gallery.length > 1) {
+                                // Lấy ảnh từ index 1 trở đi (bỏ qua ảnh đầu tiên đã dùng cho banner)
+                                galleryImages = gallery.slice(1, 7); // Lấy tối đa 6 ảnh từ index 1-6
+                            } else if (gallery.length === 1) {
+                                // Nếu chỉ có 1 ảnh, vẫn hiển thị nó trong gallery
+                                galleryImages = gallery;
+                            }
+                            %>
+                            <% if (galleryImages.length) { %>
+                            <h3 class="subsection-title"><i class="fa fa-image"></i> Hình ảnh món ăn</h3>
+                            <div class="image-gallery">
+                                <% galleryImages.forEach(function(img){ %>
+                                <div class="gallery-item"><img src="<%= img %>" alt="Hình món ăn" loading="lazy" /></div>
+                                <% }) %>
+                            </div>
+                            <% } %>
+                        </section>
+                    </div>
+                </div>
+
+                <% var restaurants = (food && food.restaurants) || []; %>
+                <% if (restaurants.length) { %>
+                <section class="blog-section" id="cuisine-restaurants">
+                    <div class="container">
+                        <div class="title">
+                            <h1 class="font-color">Địa điểm thưởng thức nổi bật</h1>
+                            <div class="line"></div>
+                        </div>
+                        <div class="blog-grid">
+                            <% restaurants.forEach(function(r, idx){ %>
+                            <% var defaultImage = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800'; %>
+                            <% var restaurantImage = defaultImage; %>
+                            <% if (r.images && r.images.length > 0) { %>
+                                <% restaurantImage = r.images[0]; %>
+                            <% } else if (r.image) { %>
+                                <% restaurantImage = r.image; %>
+                            <% } %>
+                            <article class="blog-card" data-restaurant-index="<%= idx %>" 
+                                     data-restaurant-id="<%= r.id || idx %>"
+                                     data-restaurant-name="<%= r.name %>"
+                                     data-restaurant-address="<%= r.address || '' %>"
+                                     data-restaurant-lat="<%= r.lat || '' %>"
+                                     data-restaurant-lng="<%= r.lng || '' %>"
+                                     data-restaurant-mapurl="<%= r.mapUrl || '' %>">
+                                <div class="blog-image" data-images='<%= JSON.stringify(r.images || []) %>' data-restaurant-name="<%= r.name %>">
+                                    <img src="<%= restaurantImage %>" alt="<%= r.name %>" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-meta">
+                                        <div class="blog-address">
+                                            <span class="blog-author"><i class="fa fa-map-marker"></i> <%= r.address || r.distance || '' %></span>
+                                        </div>
+                                        <% if (r.price) { %>
+                                        <div class="blog-price">
+                                            <span class="blog-price-text"><i class="fa fa-money"></i> <%= r.price %></span>
+                                        </div>
+                                        <% } %>
+                                        <% if (r.time) { %>
+                                        <div class="blog-hours">
+                                            <span class="blog-hours-text"><i class="fa fa-clock-o"></i> <%= r.time %></span>
+                                        </div>
+                                        <% } %>
+                                        <% if (r.phone) { %>
+                                        <div class="blog-phone">
+                                            <span class="blog-phone-text"><i class="fa fa-phone"></i> <%= r.phone %></span>
+                                        </div>
+                                        <% } %>
+                                    </div>
+                                    <h3 class="blog-title"><%= r.name %></h3>
+                                    <% if (r.description) { %>
+                                    <p class="blog-excerpt"><%= r.description %></p>
+                                    <% } %>
+                                    <a href="#" class="ctn view-map-btn">Xem bản đồ</a>
+                                </div>
+                            </article>
+                            <% }) %>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+
+                <% var tips = (food && food.tips) || []; %>
+                <% if (tips.length) { %>
+                <section class="tips-section">
+                    <div class="container">
+                        <h2 class="section-title"><i class="fa fa-lightbulb-o"></i> Mẹo thưởng thức</h2>
+                        <div class="tips-grid">
+                            <% tips.forEach(function(t){ %>
+                            <div class="tip-card">
+                                <h4><i class="fa fa-lightbulb-o"></i> <%= t %></h4>
+                            </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+
+                <% if (food && food.recipe) { %>
+                <section class="recipe-section">
+                    <h2 class="section-title"><i class="fa fa-book"></i> Công thức nấu</h2>
+                    <div class="recipe-content">
+                        <div class="recipe-text">
+                            <%= food.recipe.replace(/\n/g, '<br>') %>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+            </div>
+            <% } %>
+        </main>
+
+        <!-- Restaurant Images Modal -->
+        <div class="restaurant-images-modal" id="restaurantImagesModal">
+            <div class="modal-overlay" onclick="closeRestaurantImagesModal()"></div>
+            <div class="modal-content">
+                <button class="modal-close" type="button" onclick="closeRestaurantImagesModal()">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="modal-header">
+                    <h3 id="restaurantModalTitle">Hình ảnh địa điểm</h3>
+                </div>
+                <div class="modal-nav">
+                    <button class="nav-prev" type="button" onclick="prevRestaurantImage()">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-next" type="button" onclick="nextRestaurantImage()">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="modal-image">
+                    <img src="" alt="Restaurant image" id="restaurantModalImage" />
+                </div>
+                <div class="modal-info">
+                    <span class="image-counter" id="restaurantImageCounter">1 / 1</span>
+                </div>
+            </div>
+        </div>
+
+        <aside class="sidebar">
+            <% var similars = (food && food.similar) || []; %>
+            <% if (similars.length) { %>
+            <section class="info-card">
+                <h3><i class="fa fa-heart"></i> Món ăn tương tự</h3>
+                            <div class="similar-list">
+                                <% similars.forEach(function(s){ %>
+                                <a class="similar-link" href="<%= s.href || '#' %>">
+                                    <i class="fa fa-cutlery"></i>
+                                    <span><%= s.name %></span>
+                                </a>
+                                <% }) %>
+                            </div>
+            </section>
+            <% } %>
+        </aside>
+
+        <!-- Contact Section -->
+        <%- include('../../components/contact-section', { sectionId: 'contact-cuisine-detail' }) %>
+
+        <!-- up scroll -->
+        <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+        <%- include('../../partials/footer') %>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/client/js/includes.js"></script>
+        <script src="/client/js/script.js"></script>
+        <script src="/client/js/slug.js"></script>
+        <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
+        <script src="/client/js/cuisine-detail.js"></script>
+
+        <script>
+        // Restaurant images modal functionality
+        let currentRestaurantImages = [];
+        let currentRestaurantImageIndex = 0;
+        let currentRestaurantName = '';
+
+        function showRestaurantImages(restaurantIndex) {
+            const restaurantCard = document.querySelector('[data-restaurant-index="' + restaurantIndex + '"]');
+            if (!restaurantCard) return;
+
+            const imagesData = restaurantCard.querySelector('.blog-image').getAttribute('data-images');
+            const restaurantName = restaurantCard.querySelector('.blog-image').getAttribute('data-restaurant-name');
+            
+            try {
+                currentRestaurantImages = JSON.parse(imagesData);
+                currentRestaurantName = restaurantName;
+                currentRestaurantImageIndex = 0;
+
+                if (currentRestaurantImages.length === 0) {
+                    alert('Không có hình ảnh nào cho địa điểm này');
+                    return;
+                }
+
+                // Update modal title
+                document.getElementById('restaurantModalTitle').textContent = 'Hình ảnh ' + restaurantName;
+                
+                // Show modal
+                document.getElementById('restaurantImagesModal').classList.add('active');
+                
+                // Show first image
+                showRestaurantImage(0);
+            } catch (e) {
+                console.error('Error parsing restaurant images:', e);
+                alert('Có lỗi khi tải hình ảnh');
+            }
+        }
+
+        function showRestaurantImage(index) {
+            if (currentRestaurantImages.length === 0) return;
+            
+            currentRestaurantImageIndex = index;
+            const imageUrl = currentRestaurantImages[index];
+            
+            document.getElementById('restaurantModalImage').src = imageUrl;
+            document.getElementById('restaurantImageCounter').textContent = (index + 1) + ' / ' + currentRestaurantImages.length;
+            
+            // Show/hide navigation buttons
+            const prevBtn = document.querySelector('.restaurant-images-modal .nav-prev');
+            const nextBtn = document.querySelector('.restaurant-images-modal .nav-next');
+            
+            if (prevBtn) prevBtn.style.display = currentRestaurantImages.length > 1 ? 'block' : 'none';
+            if (nextBtn) nextBtn.style.display = currentRestaurantImages.length > 1 ? 'block' : 'none';
+        }
+
+        function prevRestaurantImage() {
+            if (currentRestaurantImages.length === 0) return;
+            const newIndex = (currentRestaurantImageIndex - 1 + currentRestaurantImages.length) % currentRestaurantImages.length;
+            showRestaurantImage(newIndex);
+        }
+
+        function nextRestaurantImage() {
+            if (currentRestaurantImages.length === 0) return;
+            const newIndex = (currentRestaurantImageIndex + 1) % currentRestaurantImages.length;
+            showRestaurantImage(newIndex);
+        }
+
+        function closeRestaurantImagesModal() {
+            document.getElementById('restaurantImagesModal').classList.remove('active');
+            currentRestaurantImages = [];
+            currentRestaurantImageIndex = 0;
+            currentRestaurantName = '';
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('restaurantImagesModal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeRestaurantImagesModal();
+                } else if (e.key === 'ArrowLeft') {
+                    prevRestaurantImage();
+                } else if (e.key === 'ArrowRight') {
+                    nextRestaurantImage();
+                }
+            }
+        });
+
+        // Restaurant map navigation
+        function viewRestaurantMap(restaurantId, restaurantName, address, lat, lng, mapUrl) {
+            console.log('Viewing restaurant map:', restaurantId, restaurantName, address, lat, lng, mapUrl);
+            
+            if (mapUrl) {
+                // Use the existing mapUrl from database (same as restaurant-detail.ejs)
+                window.open(mapUrl, '_blank');
+            } else if (lat && lng) {
+                // If coordinates are available, open in Google Maps
+                const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+                window.open(googleMapsUrl, '_blank');
+            } else if (address) {
+                // If no coordinates but have address, search by address
+                const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+                window.open(googleMapsUrl, '_blank');
+            } else {
+                // Fallback: search by restaurant name
+                const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurantName)}`;
+                window.open(googleMapsUrl, '_blank');
+            }
+        }
+
+        // Add click animation to restaurant cards (blog layout)
+        document.addEventListener('DOMContentLoaded', function() {
+            const restaurantCards = document.querySelectorAll('#cuisine-restaurants .blog-card');
+            
+            restaurantCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Add click animation
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Handle view map button clicks
+            const viewMapButtons = document.querySelectorAll('.view-map-btn');
+            viewMapButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const card = this.closest('.blog-card');
+                    const restaurantId = card.getAttribute('data-restaurant-id');
+                    const restaurantName = card.getAttribute('data-restaurant-name');
+                    const address = card.getAttribute('data-restaurant-address');
+                    const lat = card.getAttribute('data-restaurant-lat');
+                    const lng = card.getAttribute('data-restaurant-lng');
+                    const mapUrl = card.getAttribute('data-restaurant-mapurl');
+                    
+                    viewRestaurantMap(restaurantId, restaurantName, address, lat, lng, mapUrl);
+                });
+            });
+
+            // Lightbox for cuisine image gallery
+            var cuisineTitle = '<%= (food && food.title) || "Món ăn" %>';
+            var allFoodImages = <%- JSON.stringify((food && food.images) || []) %>;
+
+            const galleryNodeList = document.querySelectorAll('.image-gallery img');
+            const galleryArray = Array.prototype.slice.call(galleryNodeList);
+            galleryArray.forEach(function(img, index) {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', function(ev) {
+                    ev.preventDefault();
+                    
+                    // Sử dụng tất cả ảnh từ database, không chỉ ảnh trong gallery
+                    currentRestaurantImages = allFoodImages;
+                    currentRestaurantName = cuisineTitle;
+                    
+                    // Tính index thực tế trong mảng gốc
+                    // Nếu có nhiều hơn 1 ảnh, gallery bắt đầu từ index 1
+                    var realIndex = allFoodImages.length > 1 ? index + 1 : index;
+                    currentRestaurantImageIndex = realIndex;
+
+                    // title
+                    var titleEl = document.getElementById('restaurantModalTitle');
+                    if (titleEl) { titleEl.textContent = 'Hình ảnh món ăn - ' + cuisineTitle; }
+
+                    // open modal on selected index
+                    document.getElementById('restaurantImagesModal').classList.add('active');
+                    showRestaurantImage(realIndex);
+                });
+            });
+        });
+        </script>
+    </body>
+</html>

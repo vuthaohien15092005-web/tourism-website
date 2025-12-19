@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Khám phá di sản Hoàng Thành Thăng Long – Trái tim lịch&nbsp;sử của Hà Nội' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Khám phá Hoàng Thành Thăng Long - Di sản Văn hóa Thế giới UNESCO, trái tim lịch sử của Hà Nội với hơn 1.300 năm lịch sử.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'Hoàng Thành Thăng Long, Di sản UNESCO, Điện Kính Thiên, Đoan Môn, lịch sử Việt Nam, Hà Nội, du lịch Hà Nội, Hà Nội Vibes' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Hoàng Thành Thăng Long"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Khám phá di sản Hoàng Thành Thăng Long – Trái tim lịch&nbsp;sử của Hà Nội",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-12-23') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/Overview-4.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Khám phá Hoàng Thành Thăng Long - Di sản Văn hóa Thế giới UNESCO, trái tim lịch sử của Hà Nội.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/Overview-4.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Hoàng Thành Thăng Long</span></div>
+        <h1 class="post-title">Khám phá di sản Hoàng Thành Thăng Long – Trái tim lịch&nbsp;sử của Hà Nội</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '20/10/2025' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Lịch sử</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <div class="article-cover">
+          <img src="/client/img/Overview-4.jpg" alt="Hoàng Thành Thăng Long" />
+          <figcaption>Hoàng Thành Thăng Long - Di sản Văn hóa Thế giới UNESCO</figcaption>
+        </div>
+
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>BÀI 11 – Khám phá di sản Hoàng Thành Thăng Long – Trái tim lịch&nbsp;sử của Hà Nội</h2>
+          <p>Hoàng Thành Thăng Long là một trong những di sản văn&nbsp;hóa quan trọng nhất của Việt Nam, được UNESCO công nhận là Di sản Văn&nbsp;hóa Thế giới vào năm 2010. Nơi đây lưu giữ hơn 1.300 năm lịch&nbsp;sử và là trái tim của Thăng Long - Hà Nội.</p>
+          <p>Với "Hà Nội Vibes", bạn sẽ có cơ hội khám&nbsp;phá những bí mật lịch&nbsp;sử và&nbsp;giá&nbsp;trị văn&nbsp;hóa đặc&nbsp;sắc của Hoàng Thành Thăng Long, từ những công trình kiến&nbsp;trúc cổ đến những câu chuyện lịch&nbsp;sử hào hùng.</p>
+        </section>
+
+
+        <!-- Sections -->
+        <section class="article-section" id="lich-su">
+          <h2>1. Lịch sử và ý nghĩa</h2>
+          <p>Hoàng Thành Thăng Long được xây dựng từ thế kỷ 7 dưới thời nhà Đường, sau đó được các triều đại Lý, Trần, Lê, Nguyễn tiếp tục sử dụng và mở rộng. Đây là trung tâm chính trị, hành chính của Việt Nam trong suốt hơn 1.300 năm.</p>
+          <p>Năm 2010, UNESCO đã công nhận Hoàng Thành Thăng Long là Di sản Văn&nbsp;hóa Thế giới, ghi nhận giá&nbsp;trị lịch&nbsp;sử, văn&nbsp;hóa và&nbsp;kiến&nbsp;trúc độc&nbsp;đáo của công trình này.</p>
+        </section>
+
+        <section class="article-section" id="doan-mon">
+          <h2>2. Đoan Môn - Cổng chính</h2>
+          <p>Đoan Môn là cổng chính của Hoàng Thành, được xây dựng theo kiến trúc cổ kính với 5 cửa vòm. Đây là nơi đón tiếp các sứ thần và quan lại vào triều kiến vua.</p>
+          <p>Kiến&nbsp;trúc Đoan Môn thể hiện tinh thần uy nghiêm và&nbsp;quyền&nbsp;lực của triều đình phong kiến Việt Nam, với những họa tiết trang trí tinh xảo và&nbsp;ý&nbsp;nghĩa sâu sắc.</p>
+        </section>
+
+        <section class="article-section" id="dien-kinh-thien">
+          <h2>3. Điện Kính Thiên</h2>
+          <p>Điện Kính Thiên là công trình quan trọng nhất trong Hoàng Thành, nơi vua thiết triều và tiếp kiến các quan lại. Điện được xây dựng trên nền cũ của điện Càn Nguyên thời Lý.</p>
+          <p>Hiện tại, Điện Kính Thiên chỉ còn lại nền móng và một số di tích, nhưng vẫn thể hiện được quy mô và tầm quan trọng của công trình trong lịch sử.</p>
+        </section>
+
+        <section class="article-section" id="khu-khao-co">
+          <h2>4. Khu khảo cổ 18 Hoàng Diệu</h2>
+          <p>Khu khảo cổ 18 Hoàng Diệu là nơi phát hiện nhiều di tích quan trọng, bao gồm nền móng các cung điện, hệ thống thoát nước, và nhiều hiện vật có giá trị lịch sử cao.</p>
+          <p>Đây là nơi du khách có thể tận mắt thấy những dấu tích của các triều đại phong kiến Việt Nam, từ thời Lý đến thời Nguyễn, tạo nên một bức tranh lịch sử sống động.</p>
+        </section>
+
+        <section class="article-section tips">
+          <h2>Lưu ý khi tham quan Hoàng Thành</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-clock-o"></i> Thời gian mở cửa: 8h-17h hàng ngày</div>
+            <div class="tip"><i class="fa fa-ticket"></i> Giá vé: 30.000 VNĐ/người lớn, 15.000 VNĐ/trẻ em</div>
+            <div class="tip"><i class="fa fa-info-circle"></i> Có hướng dẫn viên và audio guide</div>
+            <div class="tip"><i class="fa fa-camera"></i> Chụp ảnh: Được phép, tránh sử dụng flash</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>Kết luận</h2>
+          <p>Hoàng Thành Thăng Long không chỉ là một di sản văn&nbsp;hóa mà còn là biểu tượng của lịch&nbsp;sử và&nbsp;văn&nbsp;hóa Việt Nam. Nơi đây lưu giữ những giá&nbsp;trị truyền&nbsp;thống và là niềm tự hào của dân tộc.</p>
+          <p>Với "Hà Nội Vibes", bạn sẽ có cơ hội khám&nbsp;phá Hoàng Thành Thăng Long một cách trọn vẹn nhất, từ những câu chuyện lịch&nbsp;sử đến những giá&nbsp;trị văn&nbsp;hóa đặc&nbsp;sắc. Hãy để chúng tôi đồng hành cùng bạn trong hành trình khám&nbsp;phá trái tim lịch&nbsp;sử của Hà Nội.</p>
+          <p><em>"Hà Nội Vibes – Cùng bạn tận hưởng trọn vẹn hơi thở Hà Nội."</em></p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-1">Lăng Bác - Quảng trường Ba Đình</a></li>
+            <li><a href="/blog/bai-10">Văn Miếu - Quốc Tử Giám</a></li>
+            <li><a href="/blog/bai-5">Phố cổ Hà Nội - 36 phố phường</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>

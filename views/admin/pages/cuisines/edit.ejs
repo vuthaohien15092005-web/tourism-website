@@ -1,0 +1,222 @@
+<!-- Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2"><%= pageTitle %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="/admin/cuisines" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>Quay lại</a>
+  </div>
+  </div>
+
+<!-- Flash -->
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= flash.error[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+<% if (typeof flash !== 'undefined' && flash.success && flash.success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= flash.success[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+
+<form method="POST" action="/admin/cuisines/edit/<%= cuisine._id %>?_method=PATCH" enctype="multipart/form-data">
+  <div class="row">
+    <!-- Basic -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Thông tin cơ bản</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Tên</label>
+              <input type="text" class="form-control" name="name" value="<%= cuisine.name || '' %>">
+            </div>
+            <div class="col-12 mb-3">
+              <label class="form-label">Mô tả</label>
+              <textarea class="form-control" name="description" rows="4"><%= cuisine.description || '' %></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Media -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-images me-2"></i>Hình ảnh</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="d-flex flex-wrap gap-2">
+                <% (cuisine.mainImages||[]).forEach((img, idx)=>{ %>
+                  <div class="position-relative">
+                    <img src="<%= img %>" style="width:100px;height:100px;object-fit:cover;border-radius:6px;">
+                    <label class="form-check position-absolute top-0 end-0 m-1 bg-white p-1 rounded">
+                      <input type="checkbox" class="form-check-input" name="removeImages" value="<%= idx %>"> Xóa
+                    </label>
+                  </div>
+                <% }) %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Thêm ảnh</label>
+              <input type="file" class="form-control" name="images" multiple accept="image/*">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Mẹo thưởng thức</h5></div>
+        <div class="card-body">
+          <div id="tips-container">
+            <% (cuisine.tips||[]).forEach((tip)=>{ %>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" name="tips[]" value="<%= tip %>" placeholder="VD: Cách ăn phở đúng cách">
+              <button type="button" class="btn btn-outline-danger" onclick="removeField(this)"><i class="fas fa-times"></i></button>
+            </div>
+            <% }) %>
+            <% if (!cuisine.tips || cuisine.tips.length === 0) { %>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" name="tips[]" placeholder="VD: Cách ăn phở đúng cách">
+              <button type="button" class="btn btn-outline-danger" onclick="removeField(this)"><i class="fas fa-times"></i></button>
+            </div>
+            <% } %>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="addField('tips-container','tips[]','VD: Cách ăn phở đúng cách')"><i class="fas fa-plus me-1"></i>Thêm mẹo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-book me-2"></i>Công thức nấu</h5></div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Hướng dẫn nấu món</label>
+            <textarea class="form-control" name="recipe" rows="8" placeholder="Nhập công thức chi tiết cách nấu món ăn này..."><%= cuisine.recipe || '' %></textarea>
+            <div class="form-text">Bao gồm nguyên liệu, cách chế biến, thời gian nấu, lưu ý quan trọng...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Places Management -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Địa điểm phục vụ món</h5>
+        </div>
+        <div class="card-body">
+          <% if (cuisine.places && cuisine.places.length > 0) { %>
+            <div class="row">
+              <% cuisine.places.forEach((place, idx) => { %>
+              <div class="col-md-6 mb-3">
+                <div class="border rounded p-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0"><%= place.name %></h6>
+                    <div class="btn-group btn-group-sm">
+                      <a href="/admin/cuisine/places/<%= place._id %>" class="btn btn-outline-info" title="Xem chi tiết">
+                        <i class="fas fa-eye"></i>
+                      </a>
+                      <a href="/admin/cuisine/places/edit/<%= place._id %>" class="btn btn-outline-warning" title="Chỉnh sửa">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <p class="text-muted mb-1"><%= place.address || 'Chưa có địa chỉ' %></p>
+                  <% if (place.openingHours) { %>
+                    <small class="text-muted"><i class="fas fa-clock me-1"></i><%= place.openingHours %></small>
+                  <% } %>
+                  <% if (place.priceRange) { %>
+                    <small class="text-success d-block"><%= place.priceRange %></small>
+                  <% } %>
+                </div>
+              </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <div class="text-center py-4">
+              <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
+              <h6 class="text-muted">Chưa có địa điểm nào</h6>
+              <p class="text-muted">Hãy thêm địa điểm đầu tiên cho món ăn này</p>
+            </div>
+          <% } %>
+          
+          <div class="d-flex gap-2">
+            <a href="/admin/cuisine/places/create?cuisine=<%= cuisine._id %>" class="btn btn-primary">
+              <i class="fas fa-plus me-2"></i>Thêm địa điểm
+            </a>
+            <a href="/admin/cuisine/places?cuisine=<%= cuisine._id %>" class="btn btn-outline-primary">
+              <i class="fas fa-list me-2"></i>Quản lý địa điểm
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-toggle-on me-2"></i>Trạng thái</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <label class="form-label">Hiển thị</label>
+              <select class="form-select" name="status">
+                <option value="published" <%= cuisine.status==='published'?'selected':'' %>>Công khai</option>
+                <option value="draft" <%= cuisine.status==='draft'?'selected':'' %>>Bản nháp</option>
+                <option value="hidden" <%= cuisine.status==='hidden'?'selected':'' %>>Ẩn</option>
+              </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" name="isActive" <%= cuisine.isActive? 'checked':'' %> >
+                <label class="form-check-label">Kích hoạt</label>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" name="featured" <%= cuisine.featured? 'checked':'' %> >
+                <label class="form-check-label">Nổi bật</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="col-12">
+      <div class="d-flex justify-content-end gap-2">
+        <a href="/admin/cuisines" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Hủy</a>
+        <button class="btn btn-primary"><i class="fas fa-save me-2"></i>Lưu thay đổi</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+function addField(containerId, name, placeholder) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'input-group mb-2';
+  div.innerHTML = `
+    <input type=\"text\" class=\"form-control\" name=\"${name}\" placeholder=\"${placeholder}\"> 
+    <button type=\"button\" class=\"btn btn-outline-danger\" onclick=\"removeField(this)\"><i class=\"fas fa-times\"></i></button>
+  `;
+  container.appendChild(div);
+}
+function removeField(btn){ btn.parentElement.remove(); }
+
+// Places management is now handled separately
+
+</script>
+
+

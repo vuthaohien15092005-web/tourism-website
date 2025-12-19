@@ -1,0 +1,254 @@
+<!-- Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2"><%= pageTitle %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="/admin/cuisine/places" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>Quay lại</a>
+  </div>
+</div>
+
+<!-- Flash -->
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= flash.error[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+<% if (typeof flash !== 'undefined' && flash.success && flash.success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= flash.success[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+
+<form method="POST" action="/admin/cuisine/places/edit/<%= place._id %>?_method=PATCH" enctype="multipart/form-data">
+  <div class="row">
+    <!-- Basic Info -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Thông tin cơ bản</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Tên địa điểm</label>
+                <input type="text" class="form-control" name="name" value="<%= place.name || '' %>">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Món ăn</label>
+                <select class="form-select" name="cuisine">
+                  <option value="">Chọn món ăn</option>
+                  <% cuisines.forEach(cuisine => { %>
+                    <option value="<%= cuisine._id %>" <%= place.cuisine && String(place.cuisine._id) === String(cuisine._id) ? 'selected' : '' %>>
+                      <%= cuisine.name %>
+                    </option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Địa chỉ</label>
+                <input type="text" class="form-control" name="address" value="<%= place.address || '' %>" placeholder="VD: 123 Phố Huế, Phường Phố Huế, Quận Hai Bà Trưng, Hà Nội">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Info -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-store me-2"></i>Thông tin kinh doanh</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Giờ mở cửa</label>
+                <input type="text" class="form-control" name="openingHours" value="<%= place.openingHours || '' %>" placeholder="8:00 - 21:00">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Giá tham khảo</label>
+                <input type="text" class="form-control" name="priceRange" value="<%= place.priceRange || '' %>" placeholder="50.000 - 120.000₫">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Số điện thoại</label>
+                <input type="tel" class="form-control" name="phone" value="<%= place.phone || '' %>" placeholder="0123456789">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Website</label>
+                <input type="url" class="form-control" name="website" value="<%= place.website || '' %>" placeholder="https://example.com">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Link Google Maps</label>
+                <input type="url" class="form-control" name="mapLink" value="<%= place.mapLink || '' %>" placeholder="https://maps.google.com/...">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Vị trí</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Kinh độ (lng)</label>
+                <input type="number" step="any" class="form-control" name="location[coordinates][0]" value="<%= (place.location && place.location.coordinates && place.location.coordinates[0]) || '' %>" placeholder="105.84">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Vĩ độ (lat)</label>
+                <input type="number" step="any" class="form-control" name="location[coordinates][1]" value="<%= (place.location && place.location.coordinates && place.location.coordinates[1]) || '' %>" placeholder="21.03">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Media -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-images me-2"></i>Hình ảnh</h5></div>
+        <div class="card-body">
+          <% if (place.images && place.images.length > 0) { %>
+            <div class="mb-3">
+              <label class="form-label">Hình ảnh hiện tại</label>
+              <div class="d-flex flex-wrap gap-2">
+                <% place.images.forEach((img, imgIdx) => { %>
+                  <div class="position-relative">
+                    <img src="<%= img %>" style="width:100px;height:100px;object-fit:cover;border-radius:4px;">
+                    <label class="form-check position-absolute top-0 end-0 m-1 bg-white p-1 rounded">
+                      <input type="checkbox" class="form-check-input" name="removeImages" value="<%= imgIdx %>"> Xóa
+                    </label>
+                  </div>
+                <% }) %>
+              </div>
+            </div>
+          <% } %>
+          <div class="mb-3">
+            <label class="form-label">Thêm hình ảnh mới</label>
+            <input type="file" class="form-control" name="placeImages" multiple accept="image/*">
+            <div class="form-text">Chọn nhiều ảnh để tải lên cùng lúc</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-toggle-on me-2"></i>Trạng thái</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <label class="form-label">Hiển thị</label>
+              <select class="form-select" name="status">
+                <option value="published" <%= place.status === 'published' ? 'selected' : '' %>>Công khai</option>
+                <option value="draft" <%= place.status === 'draft' ? 'selected' : '' %>>Bản nháp</option>
+                <option value="hidden" <%= place.status === 'hidden' ? 'selected' : '' %>>Ẩn</option>
+              </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" name="isActive" id="isActive" <%= place.isActive ? 'checked' : '' %>>
+                <label class="form-check-label" for="isActive">Kích hoạt</label>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" name="featured" id="featured" <%= place.featured ? 'checked' : '' %>>
+                <label class="form-check-label" for="featured">Nổi bật</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="col-12">
+      <div class="d-flex justify-content-end gap-2">
+        <a href="/admin/cuisine/places" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Hủy</a>
+        <button class="btn btn-primary"><i class="fas fa-save me-2"></i>Cập nhật địa điểm</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+let reviewIndex = <%= (place.reviews && place.reviews.length) || 0 %>;
+
+function addReview() {
+  const container = document.getElementById('reviews');
+  const idx = reviewIndex++;
+  const block = document.createElement('div');
+  block.className = 'border rounded p-3 mb-3';
+  block.innerHTML = `
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6 class="mb-0">Đánh giá #${idx+1}</h6>
+      <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest('.border').remove()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-2">
+        <label class="form-label">Tên người đánh giá</label>
+        <input type="text" class="form-control" name="reviews[${idx}][author]" placeholder="Tên người đánh giá">
+      </div>
+      <div class="col-md-6 mb-2">
+        <label class="form-label">Avatar</label>
+        <input type="file" class="form-control" name="reviews[${idx}][avatar]" accept="image/*">
+        <div class="form-text">Chọn ảnh đại diện cho người đánh giá</div>
+      </div>
+      <div class="col-md-6 mb-2">
+        <label class="form-label">Điểm đánh giá</label>
+        <select class="form-select" name="reviews[${idx}][rating]">
+          <option value="">Chọn điểm</option>
+          <option value="1">1 sao</option>
+          <option value="2">2 sao</option>
+          <option value="3">3 sao</option>
+          <option value="4">4 sao</option>
+          <option value="5">5 sao</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-2">
+        <label class="form-label">Nguồn</label>
+        <select class="form-select" name="reviews[${idx}][source]">
+          <option value="google">Google</option>
+          <option value="facebook">Facebook</option>
+          <option value="tripadvisor">TripAdvisor</option>
+          <option value="other">Khác</option>
+        </select>
+      </div>
+      <div class="col-12 mb-2">
+        <label class="form-label">Nội dung đánh giá</label>
+        <textarea class="form-control" name="reviews[${idx}][text]" rows="3" placeholder="Nội dung đánh giá..."></textarea>
+      </div>
+      <div class="col-md-6">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="reviews[${idx}][verified]" value="true">
+          <label class="form-check-label">Đánh giá đã xác thực</label>
+        </div>
+      </div>
+    </div>
+  `;
+  container.appendChild(block);
+}
+</script>

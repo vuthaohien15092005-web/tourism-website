@@ -1,0 +1,179 @@
+<!-- Page Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2"><%= pageTitle %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="/admin/cuisines" class="btn btn-outline-secondary">
+      <i class="fas fa-arrow-left me-2"></i>
+      Quay lại
+    </a>
+  </div>
+  </div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    <%= flash.error[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% } %>
+
+<!-- Form -->
+<form method="POST" action="/admin/cuisines" enctype="multipart/form-data" id="cuisineForm">
+  <div class="row">
+    <!-- Basic Info -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Thông tin cơ bản</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label class="form-label">Tên món/ẩm thực <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="name" id="name" required>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Mô tả chi tiết <span class="text-danger">*</span></label>
+                <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Media -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-images me-2"></i>Hình ảnh</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Hình ảnh chính</label>
+                <input type="file" class="form-control" name="images" multiple accept="image/*">
+                <div class="form-text">Bạn có thể chọn nhiều ảnh</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Mẹo thưởng thức</h5></div>
+        <div class="card-body">
+          <div id="tips-container">
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" name="tips[]" placeholder="VD: Cách ăn phở đúng cách">
+              <button type="button" class="btn btn-outline-danger" onclick="removeField(this)"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="addField('tips-container','tips[]','VD: Cách ăn phở đúng cách')"><i class="fas fa-plus me-1"></i>Thêm mẹo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-book me-2"></i>Công thức nấu</h5></div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Hướng dẫn nấu món</label>
+            <textarea class="form-control" name="recipe" rows="8" placeholder="Nhập công thức chi tiết cách nấu món ăn này..."></textarea>
+            <div class="form-text">Bao gồm nguyên liệu, cách chế biến, thời gian nấu, lưu ý quan trọng...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Places Info -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Địa điểm phục vụ món</h5></div>
+        <div class="card-body">
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Lưu ý:</strong> Sau khi tạo món ăn, bạn có thể thêm địa điểm phục vụ món ăn trong trang quản lý riêng.
+          </div>
+          <p class="text-muted">Địa điểm sẽ được quản lý riêng biệt với đầy đủ thông tin và đánh giá.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0"><i class="fas fa-toggle-on me-2"></i>Trạng thái</h5></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <label class="form-label">Hiển thị</label>
+              <select class="form-select" name="status">
+                <option value="published">Công khai</option>
+                <option value="draft">Bản nháp</option>
+                <option value="hidden">Ẩn</option>
+              </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" name="isActive" id="isActive" checked>
+                <label class="form-check-label" for="isActive">Kích hoạt</label>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+              <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" name="featured" id="featured">
+                <label class="form-check-label" for="featured">Nổi bật</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="col-12">
+      <div class="d-flex justify-content-end gap-2">
+        <a href="/admin/cuisines" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Hủy</a>
+        <button class="btn btn-primary"><i class="fas fa-save me-2"></i>Lưu ẩm thực</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+function addField(containerId, name, placeholder) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'input-group mb-2';
+  div.innerHTML = `
+    <input type="text" class="form-control" name="${name}" placeholder="${placeholder}">
+    <button type="button" class="btn btn-outline-danger" onclick="removeField(this)"><i class="fas fa-times"></i></button>
+  `;
+  container.appendChild(div);
+}
+function removeField(btn) { btn.parentElement.remove(); }
+
+
+// Places management is now handled separately
+
+// Basic client-side validation
+document.getElementById('cuisineForm').addEventListener('submit', function(e){
+  const name = document.getElementById('name').value.trim();
+  const desc = document.getElementById('description').value.trim();
+  if (!name || !desc) {
+    e.preventDefault();
+    alert('Vui lòng điền đủ tên và mô tả!');
+    return false;
+  }
+});
+</script>
+
+

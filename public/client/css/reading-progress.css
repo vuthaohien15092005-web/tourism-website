@@ -1,0 +1,4 @@
+#reading-progress{position:fixed;top:0;left:0;height:3px;width:var(--progress,0%);background:var(--primary-color);z-index:9999;transition:width .1s ease}
+@media (min-width: 1024px){#reading-progress{height:3px}}
+@media (max-width: 1023.98px){#reading-progress{height:3px}}
+

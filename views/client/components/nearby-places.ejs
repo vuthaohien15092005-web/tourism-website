@@ -1,0 +1,798 @@
+<!-- Nearby Places Component -->
+<section class="nearby-places-section" 
+         data-current-type="<%= currentType %>" 
+         data-current-id="<%= currentId %>">
+    <div class="container">
+        <h2 class="section-title">
+            <i class="fa fa-map-marker"></i>
+            Địa điểm gần đây
+        </h2>
+        <p class="section-subtitle">
+            Khám phá các địa điểm thú vị trong bán kính <span class="radius-info">5km</span> xung quanh khu vực này (khoảng cách tương đối - tham khảo)
+        </p>
+        <p class="section-subtitle click-to-reload">
+            <i class="fa fa-refresh"></i>
+            Click để tải lại dữ liệu ...
+        </p>
+        
+        <!-- Tabs Navigation -->
+        <div class="nearby-tabs">
+            <button class="tab-btn active" data-tab="cuisine">
+                <i class="fa fa-cutlery"></i>
+                Quán ăn (<span class="count" id="cuisine-count">0</span>)
+            </button>
+            <button class="tab-btn" data-tab="accommodation">
+                <i class="fa fa-bed"></i>
+                Khách sạn (<span class="count" id="accommodation-count">0</span>)
+            </button>
+            <button class="tab-btn" data-tab="attraction">
+                <i class="fa fa-camera"></i>
+                Điểm tham quan (<span class="count" id="attraction-count">0</span>)
+            </button>
+            <button class="tab-btn" data-tab="entertainment">
+                <i class="fa fa-music"></i>
+                Giải trí (<span class="count" id="entertainment-count">0</span>)
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="nearby-content">
+            <!-- Cuisine Places Tab -->
+            <div class="tab-content active" id="cuisine-tab">
+                <div class="places-grid" id="cuisine-places">
+                    <div class="loading-placeholder">
+                        <i class="fa fa-spinner fa-spin"></i>
+                        <p>Đang tải quán ăn gần đây...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accommodations Tab -->
+            <div class="tab-content" id="accommodation-tab">
+                <div class="places-grid" id="accommodation-places">
+                    <div class="loading-placeholder">
+                        <i class="fa fa-spinner fa-spin"></i>
+                        <p>Đang tải khách sạn gần đây...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attractions Tab -->
+            <div class="tab-content" id="attraction-tab">
+                <div class="places-grid" id="attraction-places">
+                    <div class="loading-placeholder">
+                        <i class="fa fa-spinner fa-spin"></i>
+                        <p>Đang tải điểm tham quan gần đây...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entertainment Tab -->
+            <div class="tab-content" id="entertainment-tab">
+                <div class="places-grid" id="entertainment-places">
+                    <div class="loading-placeholder">
+                        <i class="fa fa-spinner fa-spin"></i>
+                        <p>Đang tải địa điểm giải trí gần đây...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="no-results" style="display: none;">
+            <i class="fa fa-map-marker"></i>
+            <h3>Không tìm thấy địa điểm gần đây</h3>
+            <p>Hãy thử mở rộng bán kính tìm kiếm hoặc quay lại sau.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Place Card Template (Hidden) -->
+<template id="place-card-template">
+    <div class="place-card">
+        <div class="place-image">
+            <img src="" alt="" loading="lazy">
+            <div class="place-overlay">
+                <button class="view-btn" onclick="viewPlace(this)">
+                    <i class="fa fa-eye"></i>
+                    Xem chi tiết
+                </button>
+            </div>
+        </div>
+        <div class="place-info">
+            <h3 class="place-name"></h3>
+            <p class="place-address"></p>
+        <div class="place-meta">
+            <div class="place-distance">
+                <i class="fa fa-map-marker"></i>
+                <span class="distance-text"></span>
+            </div>
+        </div>
+        </div>
+    </div>
+</template>
+
+<style>
+/* Nearby Places Styles */
+.nearby-places-section {
+    padding: 60px 0;
+    background: #f8f9fa;
+    border-radius: 20px;
+}
+
+.nearby-places-section .section-title {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.nearby-places-section .section-subtitle {
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.radius-info {
+    background: linear-gradient(135deg, #1261A6, #1261A6);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.click-to-reload {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background: rgba(18, 97, 166, 0.1);
+    border: 2px solid transparent;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.click-to-reload:hover {
+    background: rgba(18, 97, 166, 0.2);
+    border-color: #1261A6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(18, 97, 166, 0.2);
+}
+
+.click-to-reload i {
+    margin-right: 8px;
+    color: #1261A6;
+    transition: transform 0.3s ease;
+}
+
+.click-to-reload:hover i {
+    transform: rotate(180deg);
+}
+
+/* Tabs */
+.nearby-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.tab-btn {
+    background: white;
+    border: 2px solid #e9ecef;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    border-color: #1261A6;
+    color: #1261A6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+}
+
+.tab-btn.active {
+    background: #1261A6;
+    border-color: #1261A6;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.tab-btn i {
+    font-size: 1.1rem;
+}
+
+.tab-btn .count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    min-width: 20px;
+    text-align: center;
+}
+
+.tab-btn.active .count {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Places Grid */
+.places-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* Place Card */
+.place-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.place-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.place-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.place-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.place-card:hover .place-image img {
+    transform: scale(1.05);
+}
+
+.place-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.place-card:hover .place-overlay {
+    opacity: 1;
+}
+
+.view-btn {
+    background: #1261A6;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+    background: #1261A6;
+    transform: scale(1.05);
+}
+
+.place-info {
+    padding: 20px;
+}
+
+.place-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.place-address {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.place-meta {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Rating styles removed as requested */
+
+.place-distance {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #28a745;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: rgba(40, 167, 69, 0.1);
+    padding: 4px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+/* Distance Badge */
+.distance-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 123, 255, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    z-index: 2;
+}
+
+.distance-badge i {
+    font-size: 0.8rem;
+}
+
+/* Loading State */
+.loading-placeholder {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.loading-placeholder i {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #1261A6;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.no-results i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #dee2e6;
+}
+
+.no-results h3 {
+    margin-bottom: 10px;
+    color: #495057;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nearby-places-section .section-title {
+        font-size: 2rem;
+    }
+    
+    .nearby-places-section .section-subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+    
+    .nearby-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .tab-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .places-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .place-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+</style>
+
+<script>
+// Nearby Places JavaScript
+class NearbyPlaces {
+    constructor(currentType, currentId) {
+        this.currentType = currentType; // 'accommodation', 'attraction', 'entertainment'
+        this.currentId = currentId;
+        this.radius = 5; // km
+        this.limit = 6;
+        this.loadedTabs = new Set();
+        
+        this.init();
+    }
+    
+    init() {
+        this.bindTabEvents();
+        this.bindReloadEvent();
+        // Load appropriate tab based on current type
+        this.loadAppropriateTab();
+    }
+    
+    loadAppropriateTab() {
+        // Show the same type tab first, then others
+        const tabOrder = {
+            'accommodation': ['accommodation', 'cuisine', 'attraction', 'entertainment'],
+            'attraction': ['attraction', 'cuisine', 'accommodation', 'entertainment'],
+            'entertainment': ['entertainment', 'cuisine', 'accommodation', 'attraction'],
+            'cuisine': ['cuisine', 'accommodation', 'attraction', 'entertainment']
+        };
+        
+        const tabs = tabOrder[this.currentType] || ['cuisine', 'accommodation', 'attraction', 'entertainment'];
+        
+        // Set the appropriate tab as active first
+        this.switchTab(tabs[0]);
+        
+        // Then load the data
+        this.loadTab(tabs[0]);
+    }
+    
+    bindTabEvents() {
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tabName = e.currentTarget.dataset.tab;
+                this.switchTab(tabName);
+                // Load tab data if not already loaded
+                if (!this.loadedTabs.has(tabName)) {
+                    this.loadTab(tabName);
+                }
+            });
+        });
+    }
+    
+    bindReloadEvent() {
+        const reloadElement = document.querySelector('.click-to-reload');
+        if (reloadElement) {
+            reloadElement.addEventListener('click', () => {
+                this.reloadAllData();
+            });
+        }
+    }
+    
+    switchTab(tabName) {
+        // Update active tab button
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        
+        // Update active tab content
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+    }
+    
+    reloadAllData() {
+        // Clear loaded tabs to force reload
+        this.loadedTabs.clear();
+        
+        // Reset all tab counts
+        document.querySelectorAll('.count').forEach(count => {
+            count.textContent = '0';
+        });
+        
+        // Show loading state for all tabs
+        document.querySelectorAll('.places-grid').forEach(grid => {
+            grid.innerHTML = `
+                <div class="loading-placeholder">
+                    <i class="fa fa-spinner fa-spin"></i>
+                    <p>Đang tải lại dữ liệu...</p>
+                </div>
+            `;
+        });
+        
+        // Hide no results message
+        const noResults = document.getElementById('no-results');
+        if (noResults) {
+            noResults.style.display = 'none';
+        }
+        
+        // Reload current active tab
+        const activeTab = document.querySelector('.tab-btn.active');
+        if (activeTab) {
+            const tabName = activeTab.dataset.tab;
+            this.loadTab(tabName);
+        }
+        
+        // Show reload feedback
+        this.showReloadFeedback();
+    }
+    
+    showReloadFeedback() {
+        const reloadElement = document.querySelector('.click-to-reload');
+        if (reloadElement) {
+            const originalText = reloadElement.innerHTML;
+            reloadElement.innerHTML = '<i class="fa fa-check"></i> Đã tải lại dữ liệu!';
+            reloadElement.style.background = 'rgba(40, 167, 69, 0.1)';
+            reloadElement.style.borderColor = '#28a745';
+            reloadElement.style.color = '#28a745';
+            
+            setTimeout(() => {
+                reloadElement.innerHTML = originalText;
+                reloadElement.style.background = 'rgba(18, 97, 166, 0.1)';
+                reloadElement.style.borderColor = 'transparent';
+                reloadElement.style.color = '#7f8c8d';
+            }, 2000);
+        }
+    }
+    
+    async loadTab(tabName) {
+        const container = document.getElementById(`${tabName}-places`);
+        const countElement = document.getElementById(`${tabName}-count`);
+        
+        try {
+            let data = [];
+            
+            switch (tabName) {
+                case 'cuisine':
+                    data = await this.fetchNearbyCuisinePlaces();
+                    break;
+                case 'accommodation':
+                    data = await this.fetchNearbyAccommodations();
+                    break;
+                case 'attraction':
+                    data = await this.fetchNearbyAttractions();
+                    break;
+                case 'entertainment':
+                    data = await this.fetchNearbyEntertainments();
+                    break;
+            }
+            
+            this.renderPlaces(container, data, tabName);
+            countElement.textContent = data.length;
+            this.loadedTabs.add(tabName);
+            
+            // Show no results if empty
+            if (data.length === 0) {
+                this.showNoResults();
+            }
+            
+        } catch (error) {
+            console.error(`Error loading ${tabName}:`, error);
+            this.showError(container, `Không thể tải ${this.getTabLabel(tabName)}`);
+        }
+    }
+    
+    async fetchNearbyCuisinePlaces() {
+        const response = await fetch(`/api/nearby-places/${this.currentType}/${this.currentId}/cuisine?radius=${this.radius}&limit=${this.limit}`);
+        return response.json();
+    }
+    
+    async fetchNearbyAccommodations() {
+        const response = await fetch(`/api/nearby-places/${this.currentType}/${this.currentId}/accommodation?radius=${this.radius}&limit=${this.limit}`);
+        return response.json();
+    }
+    
+    async fetchNearbyAttractions() {
+        const response = await fetch(`/api/nearby-places/${this.currentType}/${this.currentId}/attraction?radius=${this.radius}&limit=${this.limit}`);
+        return response.json();
+    }
+    
+    async fetchNearbyEntertainments() {
+        const response = await fetch(`/api/nearby-places/${this.currentType}/${this.currentId}/entertainment?radius=${this.radius}&limit=${this.limit}`);
+        return response.json();
+    }
+    
+    renderPlaces(container, places, type) {
+        container.innerHTML = '';
+        
+        if (places.length === 0) {
+            container.innerHTML = `
+                <div class="no-results">
+                    <i class="fa fa-${this.getTabIcon(type)}"></i>
+                    <h3>Không có ${this.getTabLabel(type)} gần đây</h3>
+                    <p>Hãy thử mở rộng bán kính tìm kiếm.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        places.forEach(place => {
+            const card = this.createPlaceCard(place, type);
+            container.appendChild(card);
+        });
+    }
+    
+    createPlaceCard(place, type) {
+        const template = document.getElementById('place-card-template');
+        const card = template.content.cloneNode(true);
+        
+        // Set image
+        const img = card.querySelector('.place-image img');
+        img.src = place.mainImage || place.images?.[0] || '/client/img/placeholder.jpg';
+        img.alt = place.name;
+        
+        // Set name
+        card.querySelector('.place-name').textContent = place.name;
+        
+        // Set address
+        card.querySelector('.place-address').textContent = place.address || 'Địa chỉ chưa cập nhật';
+        
+        // Rating removed as requested
+        
+        // Set distance with smart formatting
+        let distanceText = 'N/A';
+        let distanceBadgeText = 'N/A';
+        if (place.distance) {
+            if (place.distance < 1) {
+                // Show in meters for distances less than 1km
+                const meters = Math.round(place.distance * 1000);
+                distanceText = `cách khoảng ${meters}m`;
+                distanceBadgeText = `${meters}m`;
+            } else {
+                // Show in km for distances 1km or more
+                distanceText = `cách khoảng ${place.distance.toFixed(1)} km`;
+                distanceBadgeText = `${place.distance.toFixed(1)} km`;
+            }
+        }
+        
+        card.querySelector('.distance-text').textContent = distanceText;
+        
+        // Add distance badge to image overlay
+        const overlay = card.querySelector('.place-overlay');
+        if (place.distance) {
+            const distanceBadge = document.createElement('div');
+            distanceBadge.className = 'distance-badge';
+            distanceBadge.innerHTML = `<i class="fa fa-location-arrow"></i> ${distanceBadgeText}`;
+            overlay.appendChild(distanceBadge);
+        }
+        
+        // Set click handler
+        const viewBtn = card.querySelector('.view-btn');
+        if (type === 'cuisine' && place.mapLink) {
+            // For cuisine places, show "Xem bản đồ" and link to mapLink
+            viewBtn.innerHTML = '<i class="fa fa-map"></i> Xem bản đồ';
+            viewBtn.onclick = () => window.open(place.mapLink, '_blank');
+        } else {
+            // For other types, show "Xem chi tiết" and link to detail page
+            viewBtn.innerHTML = '<i class="fa fa-eye"></i> Xem chi tiết';
+            viewBtn.onclick = () => this.viewPlace(place, type);
+        }
+        
+        return card;
+    }
+    
+    renderStars(container, rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = (rating % 1) >= 0.5;
+        
+        for (let i = 0; i < 5; i++) {
+            const star = document.createElement('i');
+            if (i < fullStars) {
+                star.className = 'fa fa-star';
+            } else if (i === fullStars && hasHalfStar) {
+                star.className = 'fa fa-star-half-o';
+            } else {
+                star.className = 'fa fa-star-o';
+            }
+            container.appendChild(star);
+        }
+    }
+    
+    viewPlace(place, type) {
+        let url = '';
+        switch (type) {
+            case 'cuisine':
+                url = `/cuisine-place/${place._id}`;
+                break;
+            case 'accommodation':
+                url = `/accommodation/${place.slug || place._id}`;
+                break;
+            case 'attraction':
+                url = `/attraction/${place.slug || place._id}`;
+                break;
+            case 'entertainment':
+                url = `/entertainment/${place.slug || place._id}`;
+                break;
+        }
+        window.open(url, '_blank');
+    }
+    
+    showNoResults() {
+        document.getElementById('no-results').style.display = 'block';
+    }
+    
+    showError(container, message) {
+        container.innerHTML = `
+            <div class="no-results">
+                <i class="fa fa-exclamation-triangle"></i>
+                <h3>Lỗi tải dữ liệu</h3>
+                <p>${message}</p>
+            </div>
+        `;
+    }
+    
+    getTabLabel(type) {
+        const labels = {
+            cuisine: 'quán ăn',
+            accommodation: 'khách sạn',
+            attraction: 'điểm tham quan',
+            entertainment: 'địa điểm giải trí'
+        };
+        return labels[type] || type;
+    }
+    
+    getTabIcon(type) {
+        const icons = {
+            cuisine: 'cutlery',
+            accommodation: 'bed',
+            attraction: 'camera',
+            entertainment: 'music'
+        };
+        return icons[type] || 'map-marker';
+    }
+}
+
+// Global function for template onclick
+function viewPlace(button) {
+    // This will be handled by the card click event
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Get current page type and ID from data attributes
+    const nearbySection = document.querySelector('.nearby-places-section');
+    if (nearbySection) {
+        const currentType = nearbySection.dataset.currentType;
+        const currentId = nearbySection.dataset.currentId;
+        
+        if (currentType && currentId) {
+            new NearbyPlaces(currentType, currentId);
+        }
+    }
+});
+</script>

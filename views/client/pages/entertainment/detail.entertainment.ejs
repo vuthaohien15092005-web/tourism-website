@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= pageTitle %> | Hà Nội Vibes</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/client/css/style.css" />
+        <link rel="stylesheet" href="/client/css/responsive.css" />
+        <link rel="stylesheet" href="/client/css/harmony.css" />
+        <link rel="stylesheet" href="/client/css/entertainment-detail.css" />
+        <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+        <link rel="manifest" href="/client/img/site.webmanifest" />
+    </head>
+    <body>
+        <%- include('../../partials/header') %>
+
+        <!-- Banner -->
+        <header class="page-header entertainment-banner" style="background-image: url('<%= detail.heroImage %>');">
+            <div class="header-content">
+                <h1><%= detail.title %></h1>
+                <p class="font-color" style="text-align: center;">Trải nghiệm nghệ thuật giữa lòng Thủ đô Hà Nội</p>
+            </div>
+        </header>
+        <section class="detail-container">
+            <!-- Quick Info -->
+            <div class="quick-info">
+                <% (detail.quickInfo || []).forEach(function(info){ %>
+                    <article class="info-card">
+                        <div class="info-card-icon"><%= info.icon %></div>
+                        <h3><%= info.label %></h3>
+                        <p class="font-color" style="white-space: pre-line;"><%= info.value %></p>
+                    </article>
+                <% }) %>
+            </div>
+
+            <!-- Intro -->
+            <section class="content-section">
+                <h2 class="dark"><%= detail.intro.title %></h2>
+                <% (detail.intro.paragraphs || []).forEach(function(p){ %>
+                    <p class="font-color" style="white-space: pre-line;"><%= p %></p>
+                <% }) %>
+
+                <% (detail.sections || []).forEach(function(sec){ %>
+                    <h3 class="dark"><%= sec.title %></h3>
+                    <% (sec.paragraphs || []).forEach(function(p){ %>
+                        <p class="font-color" style="white-space: pre-line;"><%= p %></p>
+                    <% }) %>
+                    <% if (sec.bullets && sec.bullets.length) { %>
+                        <ul>
+                            <% sec.bullets.forEach(function(b){ %>
+                                <li class="font-color"><%= b %></li>
+                            <% }) %>
+                        </ul>
+                    <% } %>
+                <% }) %>
+
+                <% if (detail.highlight) { %>
+                    <div class="highlight-box">
+                        <h4 class="dark">💡 <%= detail.highlight.title %></h4>
+                        <p class="font-color" style="white-space: pre-line;"><%= detail.highlight.content %></p>
+                    </div>
+                <% } %>
+            </section>
+
+            <!-- Media Showcase Section (Hero + Thumbnails) -->
+            <section id="media-showcase" class="content-section media-showcase">
+                <% 
+                    const mediaImages = (entertainment && entertainment.images) || []; 
+                    const mediaHero = mediaImages[0] && mediaImages[0].url ? mediaImages[0].url : '/client/img/carousel-img3.jpg';
+                    const mediaThumbs = mediaImages.slice(0, 6);
+                %>
+                <div class="media-hero-wrapper">
+                <div class="media-hero" style="background-image: url('<%= mediaHero %>');" data-images='[<%=(mediaImages && mediaImages.length ? mediaImages.map(i=>`"${i.url}"`).join(',') : '')%>]' data-index="0">
+                    <div class="media-hero__overlay"></div>
+                    <div class="media-hero__content">
+                        <h2 class="media-hero__title">Hình ảnh</h2>
+                    </div>
+                    <button class="media-hero__nav prev" type="button" aria-label="Ảnh trước"><i class="fa fa-chevron-left"></i></button>
+                    <button class="media-hero__nav next" type="button" aria-label="Ảnh sau"><i class="fa fa-chevron-right"></i></button>
+                    <button class="media-hero__zoom" type="button" aria-label="Phóng to"><i class="fa fa-search-plus"></i></button>
+                </div>
+                </div>
+                <div class="media-thumbs__grid">
+                    <% if (mediaThumbs.length > 0) { %>
+                        <% mediaThumbs.forEach(function(img){ %>
+                            <button class="thumb" type="button" data-src="<%= img.url %>">
+                                <span class="thumb__img" style="background-image:url('<%= img.url %>')"></span>
+                            </button>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="no-gallery"><p>Hình ảnh đang được cập nhật</p></div>
+                    <% } %>
+                </div>
+            </section>
+
+            <!-- Activities -->
+            <% if (entertainment.activities && entertainment.activities.length > 0) { %>
+                <section class="content-section">
+                    <h2 class="dark">Hoạt động của du khách</h2>
+                    <div class="highlight-box">
+                        <ul>
+                            <% entertainment.activities.forEach(function(activity){ %>
+                                <li class="font-color">
+                                    <i class="fa fa-play text-success me-2"></i>
+                                    <%= activity %>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </section>
+            <% } %>
+
+            <!-- Target Audience -->
+            <% if (entertainment.targetAudience && entertainment.targetAudience.length > 0) { %>
+                <section class="content-section">
+                    <h2 class="dark">Đối tượng khách hàng</h2>
+                    <div class="highlight-box">
+                        <ul>
+                            <% entertainment.targetAudience.forEach(function(audience){ %>
+                                <li class="font-color">
+                                    <i class="fa fa-users text-primary me-2"></i>
+                                    <%= audience %>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </section>
+            <% } %>
+
+            <!-- Notes -->
+            <% if (entertainment.notes && entertainment.notes.length > 0) { %>
+                <section class="content-section">
+                    <h2 class="dark">Lưu ý khi tham quan</h2>
+                    <div class="highlight-box">
+                        <ul>
+                            <% entertainment.notes.forEach(function(note){ %>
+                                <li class="font-color"><%= note %></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </section>
+            <% } %>
+
+             <!-- Reviews -->
+             <!-- Reviews will be added here in next step -->
+        </section>
+
+        
+
+        <section class="detail-container">
+            <!-- CTA -->
+            <section class="cta-section">
+                <h2 class="dark"><%= detail.cta.title %></h2>
+                <p class="font-color" style="margin-bottom: 16px; white-space: pre-line;"><%= detail.cta.subtitle %></p>
+                <% (detail.cta.actions || []).forEach(function(act){ %>
+                    <a href="<%= act.href %>" class="btn"><%= act.label %></a>
+                <% }) %>
+            </section>
+        </section>
+
+        <!-- Gallery Modal -->
+        <div class="gallery-modal" id="galleryModal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" type="button">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="modal-nav">
+                    <button class="nav-prev" type="button">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-next" type="button">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="modal-image">
+                    <img src="" alt="Gallery image" />
+                </div>
+                <div class="modal-info">
+                    <span class="image-counter">1 / 4</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===========================================
+             NEARBY PLACES SECTION
+             =========================================== -->
+        <% if (entertainment && entertainment._id) { %>
+          <%- include('../../components/nearby-places', { 
+              currentType: 'entertainment',
+              currentId: entertainment._id
+          }) %>
+        <% } %>
+
+        <!-- ===========================================
+             MAP SECTION (Full Width)
+             =========================================== -->
+        <section class="map-container">
+            <h2 class="section-title">Vị trí trên bản đồ</h2>
+            <div class="itinerary-overview__map-container">
+                <div class="itinerary-overview__map-inner">
+                    <div id="entMap"
+                         class="itinerary-overview__map"
+                         data-lat="<%= (entertainment && entertainment.map && entertainment.map.lat) || 21.028511 %>"
+                         data-lng="<%= (entertainment && entertainment.map && entertainment.map.lng) || 105.804817 %>"
+                         data-zoom="<%= (detail && detail.mapZoom) || 14 %>"
+                         data-name="<%= entertainment && entertainment.name %>"
+                         data-address="<%= entertainment && entertainment.address %>"
+                         data-image="<%= (entertainment && entertainment.images && entertainment.images[0] && entertainment.images[0].url) || '' %>"
+                         data-url="<%= (entertainment && ('/entertainment/' + (entertainment.slug || entertainment._id))) || '' %>"></div>
+                </div>
+                <div class="itinerary-overview__map-gradient-vertical"></div>
+                <div class="itinerary-overview__map-gradient-horizontal"></div>
+            </div>
+            <% if (entertainment && entertainment.address) { %>
+            <p class="map-address">
+                <strong>Địa chỉ:</strong> <%= entertainment.address %>
+            </p>
+            <% } %>
+        </section>
+
+        <!-- ===========================================
+             REVIEWS SECTION
+             =========================================== -->
+        <% if (entertainment && entertainment._id) { %>
+            <%- include('../../components/reviews-section', { 
+                targetType: 'entertainment',
+                targetId: entertainment._id,
+                title: 'Đánh giá từ khách hàng',
+                showForm: true,
+                currentUrl: '/entertainment/' + (entertainment.slug || entertainment._id)
+            }) %>
+        <% } %>
+
+        <!-- Contact Section -->
+        <%- include('../../components/contact-section', { sectionId: 'contact-entertainment-detail' }) %>
+
+        <!-- up scroll -->
+        <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+        <!--footer-->
+        <%- include('../../partials/footer') %>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/client/js/includes.js"></script>
+        <script src="/client/js/script.js"></script>
+        <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
+        <script src="/client/js/entertainment-detail.js"></script>
+
+        <!-- Media Showcase JS -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function(){
+          var heroEl = document.querySelector('#media-showcase .media-hero');
+          if(!heroEl) return;
+          var images = (heroEl.getAttribute('data-images')||'').replace(/&quot;/g,'"');
+          try { images = JSON.parse(images); } catch(e){ images = []; }
+          var idx = 0;
+          function setHero(src){ heroEl.style.transition = 'background-image .35s ease'; heroEl.style.backgroundImage = 'url("'+src+'")'; }
+          function show(i){ if(!images.length) return; idx = (i+images.length)%images.length; setHero(images[idx]); }
+          document.querySelectorAll('#media-showcase .thumb').forEach(function(btn){
+            btn.addEventListener('click', function(){ var s=this.getAttribute('data-src'); var i = images.indexOf(s); if(i>-1){ show(i); } else { setHero(s); } });
+          });
+          var prevBtn = document.querySelector('#media-showcase .media-hero__nav.prev');
+          var nextBtn = document.querySelector('#media-showcase .media-hero__nav.next');
+          if(prevBtn) prevBtn.addEventListener('click', function(){ show(idx-1); });
+          if(nextBtn) nextBtn.addEventListener('click', function(){ show(idx+1); });
+          var zoomBtn = document.querySelector('#media-showcase .media-hero__zoom');
+          var modal = document.getElementById('galleryModal');
+          var modalImg = modal ? modal.querySelector('.modal-image img') : null;
+          var modalClose = modal ? modal.querySelector('.modal-close') : null;
+          var modalPrev = modal ? modal.querySelector('.nav-prev') : null;
+          var modalNext = modal ? modal.querySelector('.nav-next') : null;
+          var modalCounter = modal ? modal.querySelector('.image-counter') : null;
+          function srcFromBg(){ var s = heroEl.style.backgroundImage || ''; return s.replace(/^url\("|"\)$/g,''); }
+          function openModal(){ if(!modal || !modalImg) return; if(!images.length){ modalImg.src = srcFromBg(); } else { modalImg.src = images[idx]; } if(modalCounter){ modalCounter.textContent = (idx+1)+' / '+(images.length||1); } modal.classList.add('active'); }
+          function closeModal(){ if(modal) modal.classList.remove('active'); }
+          if(zoomBtn) zoomBtn.addEventListener('click', openModal);
+          if(modalClose) modalClose.addEventListener('click', closeModal);
+          if(modalPrev) modalPrev.addEventListener('click', function(){ show(idx-1); if(modalImg){ modalImg.src = images[idx]; if(modalCounter){ modalCounter.textContent = (idx+1)+' / '+images.length; } } });
+          if(modalNext) modalNext.addEventListener('click', function(){ show(idx+1); if(modalImg){ modalImg.src = images[idx]; if(modalCounter){ modalCounter.textContent = (idx+1)+' / '+images.length; } } });
+        });
+        </script>
+
+        <!-- Fix scroll to top on page load -->
+        <script>
+          // Force scroll to top when page loads
+          window.addEventListener('load', function() {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+          });
+          
+          // Also scroll to top on DOM ready
+          document.addEventListener('DOMContentLoaded', function() {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+          });
+        </script>
+    </body>
+    </html>

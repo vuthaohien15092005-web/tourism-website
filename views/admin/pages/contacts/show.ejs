@@ -1,0 +1,698 @@
+<!-- Contact Detail View -->
+<div class="admin-content">
+    <div class="admin-header">
+        <div class="header-left">
+            <div class="breadcrumb">
+                <a href="/admin/contacts">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+            <h1 class="page-title">Chi tiết liên hệ</h1>
+            <p class="page-subtitle">Thông tin chi tiết tin nhắn từ khách hàng</p>
+        </div>
+        <div class="header-right">
+            <div class="contact-status-info">
+                <span class="status-badge <%= contact.status %>">
+                    <i class="fa fa-circle"></i>
+                    <%= contact.statusText %>
+                </span>
+                <div class="contact-time">
+                    <i class="fa fa-clock-o"></i>
+                    <%= contact.timeAgo %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-detail-container">
+        <!-- Contact Information -->
+        <div class="detail-section">
+            <div class="section-header">
+                <h3><i class="fa fa-user"></i> Thông tin liên hệ</h3>
+            </div>
+            <div class="section-content">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Tên:</label>
+                        <span><%= contact.name %></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <span>
+                            <a href="mailto:<%= contact.email %>">
+                                <i class="fa fa-envelope"></i>
+                                <%= contact.email %>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <label>Quốc gia:</label>
+                        <span class="country-badge">
+                            <i class="fa fa-globe"></i>
+                            <%= contact.country %>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <label>Thời gian gửi:</label>
+                        <span>
+                            <i class="fa fa-calendar"></i>
+                            <%= new Date(contact.createdAt).toLocaleString('vi-VN') %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Content -->
+        <div class="detail-section">
+            <div class="section-header">
+                <h3><i class="fa fa-comment"></i> Nội dung tin nhắn</h3>
+            </div>
+            <div class="section-content">
+                <div class="message-content">
+                    <%= contact.message.replace(/\n/g, '<br>') %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Information -->
+        <div class="detail-section">
+            <div class="section-header">
+                <h3><i class="fa fa-info-circle"></i> Thông tin trạng thái</h3>
+            </div>
+            <div class="section-content">
+                <div class="info-grid">
+                    <% if (contact.readAt) { %>
+                        <div class="info-item">
+                            <label>Đã đọc lúc:</label>
+                            <span>
+                                <i class="fa fa-eye"></i>
+                                <%= new Date(contact.readAt).toLocaleString('vi-VN') %>
+                            </span>
+                        </div>
+                    <% } %>
+                    <% if (contact.repliedAt) { %>
+                        <div class="info-item">
+                            <label>Đã trả lời lúc:</label>
+                            <span>
+                                <i class="fa fa-reply"></i>
+                                <%= new Date(contact.repliedAt).toLocaleString('vi-VN') %>
+                            </span>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="detail-actions">
+            <div class="action-buttons">
+                <% if (contact.status === 'new') { %>
+                    <a href="/admin/contacts/<%= contact._id %>/mark-read" 
+                       class="btn btn-warning"
+                       onclick="return confirm('Đánh dấu đã đọc?')">
+                        <i class="fa fa-check"></i> Đánh dấu đã đọc
+                    </a>
+                <% } %>
+                
+                <% if (contact.status === 'read') { %>
+                    <a href="/admin/contacts/<%= contact._id %>/mark-replied" 
+                       class="btn btn-success"
+                       onclick="return confirm('Đánh dấu đã trả lời?')">
+                        <i class="fa fa-reply"></i> Đánh dấu đã trả lời
+                    </a>
+                <% } %>
+                
+                <button onclick="openReplyModal()" class="btn btn-primary">
+                    <i class="fa fa-envelope"></i> Trả lời email
+                </button>
+                
+                <a href="/admin/contacts/<%= contact._id %>/delete" 
+                   class="btn btn-danger"
+                   onclick="return confirm('Bạn có chắc muốn xóa liên hệ này? Hành động này không thể hoàn tác.')">
+                    <i class="fa fa-trash"></i> Xóa liên hệ
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reply Email Modal -->
+<div id="replyModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fa fa-envelope"></i> Trả lời email</h3>
+            <button onclick="closeReplyModal()" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="replyForm" onsubmit="submitReply(event)">
+                <div class="form-group">
+                    <label for="replySubject">Tiêu đề email:</label>
+                    <input type="text" id="replySubject" name="subject" class="form-control" 
+                           placeholder="Nhập tiêu đề email..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="replyMessage">Nội dung trả lời:</label>
+                    <textarea id="replyMessage" name="message" class="form-control" rows="8" 
+                              placeholder="Nhập nội dung trả lời..." required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" onclick="closeReplyModal()" class="btn btn-secondary">
+                        <i class="fa fa-times"></i> Hủy
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-paper-plane"></i> Gửi email
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Modal functions
+function openReplyModal() {
+    document.getElementById('replyModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeReplyModal() {
+    document.getElementById('replyModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    // Clear form
+    document.getElementById('replyForm').reset();
+}
+
+// Submit reply form
+async function submitReply(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const subject = formData.get('subject');
+    const message = formData.get('message');
+    
+    if (!subject || !message) {
+        showNotification('Vui lòng điền đầy đủ thông tin', 'error');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/admin/contacts/reply/<%= contact._id %>`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ subject, message })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('Email trả lời đã được gửi thành công!', 'success');
+            closeReplyModal();
+            // Reload page to update status
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        } else {
+            showNotification('Có lỗi xảy ra: ' + result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('Có lỗi xảy ra khi gửi email', 'error');
+    }
+}
+
+// Show notification function
+function showNotification(message, type) {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('replyModal');
+    if (event.target === modal) {
+        closeReplyModal();
+    }
+}
+</script>
+
+<style>
+/* Contact Detail Styles */
+.admin-content {
+    padding: 20px;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.breadcrumb {
+    margin-bottom: 10px;
+}
+
+.breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #0056b3;
+}
+
+.header-left .page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 5px 0;
+}
+
+.header-left .page-subtitle {
+    color: #6c757d;
+    margin: 0;
+    font-size: 14px;
+}
+
+.contact-status-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.status-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-badge.new {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-badge.read {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.replied {
+    background: #d4edda;
+    color: #155724;
+}
+
+.contact-time {
+    color: #6c757d;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.contact-detail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-section {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.section-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-content {
+    padding: 20px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-item label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-item span {
+    color: #2c3e50;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-item a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.info-item a:hover {
+    color: #0056b3;
+}
+
+.country-badge {
+    background: #e9ecef;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.message-content {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #2c3e50;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+.detail-actions {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.btn-warning {
+    background: #ffc107;
+    color: #212529;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .contact-status-info {
+        align-items: flex-start;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        justify-content: center;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+    background: #f8f9fa;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.modal-close:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-control[type="text"] {
+    height: 45px;
+}
+
+.form-control[rows] {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 15px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease-out;
+    max-width: 400px;
+}
+
+.notification-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.notification-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.notification-content i {
+    font-size: 18px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-content {
+        padding: 10px;
+    }
+    
+    .section-content {
+        padding: 15px;
+    }
+    
+    .message-content {
+        padding: 15px;
+        font-size: 14px;
+    }
+}
+</style>

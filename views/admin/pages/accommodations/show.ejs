@@ -1,0 +1,384 @@
+<!-- Page Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><%= pageTitle %></h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="/admin/accommodations" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-arrow-left me-2"></i>
+            Quay lại
+        </a>
+        <a href="/admin/accommodations/edit/<%= accommodation._id %>" class="btn btn-primary">
+            <i class="fas fa-edit me-2"></i>
+            Chỉnh sửa
+        </a>
+    </div>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.success && flash.success.length > 0) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <%= flash.success[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <%= flash.error[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<div class="row">
+    <!-- === THÔNG TIN CƠ BẢN === -->
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Thông tin cơ bản
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 class="mb-3">
+                            <%= accommodation.name %>
+                            <% if (accommodation.featured) { %>
+                                <span class="badge bg-warning ms-2">Nổi bật</span>
+                            <% } %>
+                            <% if (accommodation.star) { %>
+                                <div class="mt-2">
+                                    <% for (let i = 1; i <= 5; i++) { %>
+                                        <i class="fas fa-star <%= i <= accommodation.star ? 'text-warning' : 'text-muted' %>"></i>
+                                    <% } %>
+                                    <span class="ms-2 text-muted">(<%= accommodation.star %> sao)</span>
+                                </div>
+                            <% } %>
+                        </h3>
+                        <p class="text-muted mb-3"><%= accommodation.description %></p>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6><i class="fas fa-money-bill-wave me-2"></i>Giá từ:</h6>
+                                <p class="text-success h5"><%= new Intl.NumberFormat('vi-VN').format(accommodation.priceFrom) %>đ</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <% if (accommodation.images && accommodation.images.length > 0) { %>
+                                <img src="<%= accommodation.images[0] %>" 
+                                     alt="<%= accommodation.name %>" 
+                                     class="img-fluid rounded mb-3" 
+                                     style="max-height: 200px; object-fit: cover;">
+                            <% } else { %>
+                                <div class="bg-light rounded d-flex align-items-center justify-content-center mb-3" 
+                                     style="height: 200px;">
+                                    <i class="fas fa-bed fa-3x text-muted"></i>
+                                </div>
+                            <% } %>
+                            
+                            <div class="d-flex justify-content-center gap-2">
+                                <% if (accommodation.isActive) { %>
+                                    <span class="badge bg-success">Hoạt động</span>
+                                <% } else { %>
+                                    <span class="badge bg-secondary">Tạm dừng</span>
+                                <% } %>
+                                
+                                <% if (accommodation.status === 'public') { %>
+                                    <span class="badge bg-primary">Công khai</span>
+                                <% } else if (accommodation.status === 'draft') { %>
+                                    <span class="badge bg-warning">Bản nháp</span>
+                                <% } else if (accommodation.status === 'hidden') { %>
+                                    <span class="badge bg-dark">Ẩn</span>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === ĐỊA CHỈ & BẢN ĐỒ === -->
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Địa chỉ & Vị trí
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-location-dot me-2"></i>Địa chỉ:</h6>
+                        <p><%= accommodation.address %></p>
+                        
+                        <h6><i class="fas fa-map-marker-alt me-2"></i>Quận/Huyện:</h6>
+                        <p><span class="badge bg-info"><%= accommodation.district %></span></p>
+                        
+                        <% if (accommodation.map?.locationText) { %>
+                            <h6><i class="fas fa-info-circle me-2"></i>Mô tả vị trí:</h6>
+                            <p><%= accommodation.map.locationText %></p>
+                        <% } %>
+                    </div>
+                    <div class="col-md-6">
+                        <% if (accommodation.map?.coordinates && accommodation.map.coordinates.length === 2) { %>
+                            <h6><i class="fas fa-map me-2"></i>Tọa độ:</h6>
+                            <p>
+                                <strong>Kinh độ:</strong> <%= accommodation.map.coordinates[0] %><br>
+                                <strong>Vĩ độ:</strong> <%= accommodation.map.coordinates[1] %>
+                            </p>
+                        <% } %>
+                        
+                        <% if (accommodation.map?.mapEmbed) { %>
+                            <h6><i class="fas fa-map me-2"></i>Bản đồ:</h6>
+                            <div class="ratio ratio-16x9">
+                                <iframe src="<%= accommodation.map.mapEmbed %>" 
+                                        style="border:0;" 
+                                        allowfullscreen="" 
+                                        loading="lazy" 
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === HÌNH ẢNH === -->
+    <% if (accommodation.images && accommodation.images.length > 0) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-images me-2"></i>
+                    Hình ảnh (<%= accommodation.images.length %>)
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <% accommodation.images.forEach((image, index) => { %>
+                        <div class="col-md-3 mb-3">
+                            <img src="<%= image %>" 
+                                 alt="<%= accommodation.name %> - Hình <%= index + 1 %>" 
+                                 class="img-fluid rounded" 
+                                 style="width: 100%; height: 200px; object-fit: cover; cursor: pointer;"
+                                 data-bs-toggle="modal" 
+                                 data-bs-target="#imageModal"
+                                 onclick="showImageModal('<%= image %>', '<%= accommodation.name %> - Hình <%= index + 1 %>')">
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === TIỆN NGHI === -->
+    <% if (accommodation.amenities && accommodation.amenities.length > 0) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-concierge-bell me-2"></i>
+                    Tiện nghi
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-unstyled">
+                            <% accommodation.amenities.forEach(amenity => { %>
+                                <li><i class="fas fa-check text-success me-2"></i><%= amenity %></li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === REVIEWS === -->
+    <% if (accommodation.reviews && accommodation.reviews.length > 0) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-star me-2"></i>
+                    Đánh giá & Nhận xét (<%= accommodation.reviews.length %>)
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <% accommodation.reviews.forEach((review, index) => { %>
+                    <div class="col-md-6 mb-3">
+                        <div class="border rounded p-3">
+                            <div class="d-flex align-items-start mb-2">
+                                <% if (review.avatar) { %>
+                                    <img src="<%= review.avatar %>" alt="<%= review.author %>" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                                <% } else { %>
+                                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-user text-white"></i>
+                                    </div>
+                                <% } %>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <strong><%= review.author || 'Anonymous' %></strong>
+                                        <% if (review.verified) { %>
+                                            <span class="badge bg-success ms-2">Đã xác minh</span>
+                                        <% } %>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <% for (let i = 1; i <= 5; i++) { %>
+                                            <i class="fas fa-star <%= i <= review.rating ? 'text-warning' : 'text-muted' %>"></i>
+                                        <% } %>
+                                        <span class="ms-2 text-muted">
+                                            <%= review.date ? new Date(review.date).toLocaleDateString('vi-VN') : 'Chưa có ngày' %>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <% if (review.text) { %>
+                                <p class="mb-2"><%= review.text %></p>
+                            <% } %>
+                            <div class="text-muted small">
+                                <i class="fas fa-tag me-1"></i>Nguồn: <%= review.source || 'google' %>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === LIÊN HỆ & THÔNG TIN KHÁC === -->
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-phone me-2"></i>
+                    Liên hệ & Thông tin khác
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <% if (accommodation.contact?.phone || accommodation.contact?.email) { %>
+                        <h6><i class="fas fa-phone me-2"></i>Thông tin liên hệ:</h6>
+                        <ul class="list-unstyled">
+                            <% if (accommodation.contact.phone) { %>
+                                <li><i class="fas fa-phone text-primary me-2"></i><%= accommodation.contact.phone %></li>
+                            <% } %>
+                            <% if (accommodation.contact.email) { %>
+                                <li><i class="fas fa-envelope text-primary me-2"></i><%= accommodation.contact.email %></li>
+                            <% } %>
+                        </ul>
+                        <% } %>
+                        
+                        <% if (accommodation.website) { %>
+                        <h6><i class="fas fa-globe me-2"></i>Website:</h6>
+                        <p><a href="<%= accommodation.website %>" target="_blank" class="text-decoration-none"><%= accommodation.website %></a></p>
+                        <% } %>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        
+                        <h6><i class="fas fa-chart-line me-2"></i>Thống kê:</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-star text-warning me-2"></i>Đánh giá trung bình: <strong><%= accommodation.avgRating || 0 %></strong></li>
+                            <li><i class="fas fa-comments text-info me-2"></i>Số đánh giá: <strong><%= accommodation.reviewCount || 0 %></strong></li>
+                            <li><i class="fas fa-calendar text-success me-2"></i>Ngày tạo: <strong><%= new Date(accommodation.createdAt).toLocaleDateString('vi-VN') %></strong></li>
+                            <li><i class="fas fa-edit text-warning me-2"></i>Cập nhật lần cuối: <strong><%= new Date(accommodation.updatedAt).toLocaleDateString('vi-VN') %></strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Actions -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <a href="/admin/accommodations" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Quay lại danh sách
+                    </a>
+                    <div>
+                        <a href="/admin/accommodations/edit/<%= accommodation._id %>" class="btn btn-primary me-2">
+                            <i class="fas fa-edit me-2"></i>
+                            Chỉnh sửa
+                        </a>
+                        <button type="button" class="btn btn-danger" onclick="accommodationAdmin.confirmDelete('<%= accommodation._id %>', '<%= accommodation.name %>')">
+                            <i class="fas fa-trash me-2"></i>
+                            Xóa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa lưu trú <strong id="deleteName"></strong>?</p>
+                    <p class="text-danger"><small>Hành động này không thể hoàn tác!</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <form id="deleteForm" method="POST" style="display: inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Xóa sử dụng accommodationAdmin.confirmDelete để tránh xung đột với confirmDelete mặc định trong admin.js
+</script>
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalTitle">Hình ảnh</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showImageModal(imageSrc, imageAlt) {
+    document.getElementById('modalImage').src = imageSrc;
+    document.getElementById('modalImage').alt = imageAlt;
+    document.getElementById('imageModalTitle').textContent = imageAlt;
+}
+</script>

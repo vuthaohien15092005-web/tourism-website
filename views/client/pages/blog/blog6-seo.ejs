@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Hanoi Nightlife: Best Things to Do After Dark' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Khám phá cuộc sống về đêm Hà Nội với những hoạt động thú vị từ bia hơi, rooftop bar đến chợ đêm và nhạc jazz.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'Hanoi nightlife, cuộc sống về đêm Hà Nội, bia hơi Tạ Hiện, rooftop bar Hà Nội, chợ đêm Hà Nội, nhạc jazz Hà Nội, Hà Nội Vibes' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Hanoi Nightlife"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Hanoi Nightlife: Best Things to Do After Dark",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-12-22') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/hanoi-nightlife.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Khám phá cuộc sống về đêm Hà Nội với những hoạt động thú vị từ bia hơi, rooftop bar đến chợ đêm và nhạc jazz.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/hanoi-nightlife.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Hanoi Nightlife</span></div>
+        <h1 class="post-title">Hanoi Nightlife: Best Things to Do After Dark</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '22/12/2024' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Giải trí</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <div class="article-cover">
+          <img src="/client/img/hanoi-nightlife.jpg" alt="Hanoi Nightlife" />
+          <figcaption>Hà Nội về đêm – thành phố lung linh ánh đèn và sôi động</figcaption>
+        </div>
+
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>Hanoi Nightlife: Best Things to Do After Dark</h2>
+          <p><strong>Hà Nội</strong> — thủ đô nghìn năm văn hiến của Việt Nam — cũng quyến rũ về đêm như ban ngày. Khi mặt trời lặn sau những mái ngói đỏ và đền chùa cổ kính, thành phố biến đổi thành một thế giới ánh sáng lấp lánh, nhạc sống, ẩm thực đường phố sôi sục và tiếng cười vang lên từ những con ngõ hẹp.</p>
+          
+          <p>Điều tuyệt vời nhất? <strong>Cuộc sống về đêm của Hà Nội đa dạng như chính con người nơi đây</strong>. Bạn có thể nhấm nháp bia rẻ tiền trên ghế nhựa ở góc phố, nhảy múa trong quán bar rooftop thời thượng, khám phá chợ đêm, hoặc du thuyền trên hồ yên bình — tất cả trong cùng một đêm.</p>
+          
+          <p>Hãy để <strong>"Hà Nội Vibes"</strong> dẫn đường cho bạn đến những trải nghiệm tuyệt vời nhất ở Hà Nội về đêm, với những gợi ý thực tế từ người dân địa phương và những trải nghiệm khó quên.</p>
+        </section>
+
+
+        <!-- Section 1: Why Love Hanoi at Night -->
+        <section class="article-section" id="tai-sao-yeu">
+          <h2>1. Tại sao bạn sẽ yêu Hà Nội về đêm</h2>
+          <p>Về đêm, Hà Nội trở thành một thành phố hoàn toàn khác. Sự hỗn loạn ban ngày dịu đi thành bầu không khí ấm áp, rực rỡ, nơi truyền thống và hiện đại song hành.</p>
+          
+          <p>Bạn sẽ tìm thấy:</p>
+          <ul>
+            <li>Biểu diễn dân gian hòa quyện với nhạc jazz sống</li>
+            <li>Người bán hàng rong bên cạnh quán bar rượu vang kiểu Pháp</li>
+            <li>Những hồ nước yên bình chỉ cách khu vực cuộc sống về đêm sôi động vài phút</li>
+          </ul>
+          
+          <p>Dù bạn là người tìm kiếm văn hóa, người sành ăn, hay đơn giản là du khách yêu thích việc lang thang, <strong>Hà Nội về đêm mời gọi bạn cảm nhận nhịp điệu của tâm hồn nó</strong> — thư giãn, sôi động và chân thực không thể nhầm lẫn.</p>
+        </section>
+
+        <!-- Section 2: Activities -->
+        <section class="article-section" id="ho-hoan-kiem">
+          <h2>2.1. Dạo quanh Hồ Hoàn Kiếm và phố đi bộ</h2>
+          <p><strong>Hồ Hoàn Kiếm</strong> (Hồ Gươm) là trái tim tâm linh của Hà Nội, và về đêm, nó trở thành vòng tròn rực rỡ của sự sống và màu sắc. Người dân địa phương và du khách cùng tụ tập ở đây để đi bộ, trò chuyện, nhảy múa và thư giãn.</p>
+          
+          <p>Từ thứ Sáu đến Chủ nhật, các con phố xung quanh hồ — Hàng Đào, Đinh Liệt, Hàng Khay, và Lê Thái Tổ — đóng cửa giao thông và biến thành lễ hội phố đi bộ với nhạc sống, nghệ thuật pop-up và hoạt động gia đình.</p>
+          
+          <p>Bạn sẽ thấy trẻ em chơi các trò chơi truyền thống Việt Nam như nhảy dây hoặc đánh chuyền, trong khi các cặp đôi dạo bộ tay trong tay quanh mặt hồ như gương.</p>
+          
+          <p><strong>Đừng bỏ lỡ:</strong></p>
+          <ul>
+            <li>Cầu Thê Húc đỏ rực phản chiếu trên mặt nước</li>
+            <li>Nghệ sĩ đường phố và triển lãm nghệ thuật địa phương gần tượng Lý Thái Tổ</li>
+            <li>Kem Tràng Tiền (35 Tràng Tiền) — cổ điển Hà Nội mở đến nửa đêm</li>
+            <li>The Note Coffee (64 Lương Văn Can) — quán cà phê ấm cúng phủ đầy hàng nghìn ghi chú viết tay từ du khách khắp thế giới</li>
+          </ul>
+          
+          <p><strong>Mẹo:</strong> Ghé thăm khoảng 7-8 giờ tối để bắt được bầu không khí tốt nhất. Khu vực hồ được chiếu sáng tốt và an toàn cho việc đi bộ buổi tối.</p>
+        </section>
+
+        <section class="article-section" id="ta-hien">
+          <h2>2.2. Nhấm nháp bia địa phương tại phố Tạ Hiện – "Phố bia" nổi tiếng</h2>
+          <p>Chuyến đi Hà Nội sẽ không hoàn chỉnh nếu không có một đêm trên phố Tạ Hiện, được yêu mến gọi là <strong>"Phố Bia"</strong>.</p>
+          
+          <p>Nằm trong khu phố cổ, con ngõ hẹp này bùng nổ sự sống mỗi buổi tối với hàng trăm người dân địa phương và du khách ba lô ngồi trên ghế nhựa thấp, cười đùa, chạm ly và tận hưởng tinh thần Hà Nội vô tư lự.</p>
+          
+          <p>Bạn có thể có một ly <strong>"Bia Hơi"</strong> (bia tươi Việt Nam) chỉ với 20.000 VND (0,80 USD) và chia sẻ đồ ăn nướng hoặc đậu phộng với những người bạn mới từ khắp thế giới.</p>
+          
+          <p>Khi đêm sâu, các quán bar gần đó bắt đầu phát nhạc pop, EDM và hit Việt Nam — biến con phố thành một lễ hội mini.</p>
+          
+          <p><strong>Nơi nên đến:</strong></p>
+          <ul>
+            <li>1900 Le Théâtre – 8 Tạ Hiện (câu lạc bộ đêm biểu tượng, DJ set sôi động)</li>
+            <li>Local Ta Hien Pub – không khí thân thiện và chỗ ngồi view phố</li>
+            <li>Beer Corner Hanoi – tuyệt vời để ngắm người và trò chuyện với người dân địa phương</li>
+          </ul>
+          
+          <p><strong>Mẹo:</strong> Đến trước 8 giờ tối để có chỗ ngồi tốt. Con phố đóng cửa lúc nửa đêm, nhưng các quán bar gần đó mở muộn hơn.</p>
+        </section>
+
+        <section class="article-section" id="cho-dem">
+          <h2>2.3. Khám phá chợ đêm Hà Nội</h2>
+          <p>Chợ đêm Hà Nội nắm bắt tâm hồn của thành phố — sôi động, đầy màu sắc và tràn ngập mùi hương không thể cưỡng lại.</p>
+          
+          <h3>Chợ đêm phố cổ</h3>
+          <p>Được tổ chức mỗi cuối tuần, chợ này kéo dài từ phố Hàng Đào đến chợ Đồng Xuân, đầy ắp các gian hàng bán quần áo, thủ công mỹ nghệ, đồ lưu niệm và đồ ăn vặt địa phương.</p>
+          
+          <p>Bạn có thể thử ngô nướng, xôi, hoặc nem chua rán (thịt lên men chiên) trong khi mặc cả cho đồ trang sức. Các nhạc sĩ đường phố thường biểu diễn trực tiếp, khiến toàn bộ khung cảnh trở nên lễ hội.</p>
+          
+          <h3>Chợ hoa Quảng Bá</h3>
+          <p>Để có trải nghiệm yên tĩnh và chân thực hơn, hãy ghé thăm chợ hoa Quảng Bá trên phố Âu Cơ, Tây Hồ.</p>
+          
+          <p>Nó mở từ nửa đêm đến 6 giờ sáng, phục vụ người bán buôn và người yêu hoa. Những hàng hoa hồng, lan và lily tươi ngát hương trong không khí mát mẻ — hoàn hảo cho nhiếp ảnh đêm hoặc đi bộ yên bình.</p>
+          
+          <p><strong>Mẹo:</strong> Mang tiền mặt (hầu hết người bán không chấp nhận thẻ) và tôn trọng khi chụp ảnh.</p>
+        </section>
+
+        <section class="article-section" id="rooftop">
+          <h2>2.4. Thưởng thức cocktail trên rooftop với view thành phố</h2>
+          <p>Đối với những ai thích sự thanh lịch hơn năng lượng, các quán bar rooftop của Hà Nội mang đến sự tinh tế và tầm nhìn ngoạn mục.</p>
+          
+          <p>Hãy tưởng tượng nhấm nháp cocktail dưới ánh sao trong khi thành phố lấp lánh bên dưới — một sự tương phản lãng mạn với những con phố hỗn loạn.</p>
+          
+          <p><strong>Các quán bar rooftop hàng đầu ở Hà Nội:</strong></p>
+          <ul>
+            <li><strong>Skyline Hanoi</strong> – 38 Gia Ngư, Hoàn Kiếm. Tầm nhìn toàn cảnh tuyệt vời của phố cổ và Hồ Hoàn Kiếm</li>
+            <li><strong>The Summit Bar</strong> – Pan Pacific Hotel, 1 Thanh Niên. Cocktail thanh lịch và view hoàng hôn trên Hồ Tây</li>
+            <li><strong>Terrace Bar</strong> – La Siesta Premium Hotel, 27 Hàng Bè. Lounge thanh lịch hoàn hảo cho các cặp đôi</li>
+            <li><strong>Cloud Nine Bar</strong> – Hotel Peridot, 52 Hàng Trống. Thiết kế hiện đại và không khí thư giãn</li>
+          </ul>
+          
+          <p><strong>Mẹo:</strong> Đến trong khoảng 5-7 giờ tối để có happy hour và view hoàng hôn hoàn hảo.</p>
+        </section>
+
+        <section class="article-section" id="mua-roi-nuoc">
+          <h2>2.5. Xem múa rối nước – Truyền thống Việt Nam</h2>
+          <p>Nhà hát múa rối nước Thăng Long, ngay bên cạnh Hồ Hoàn Kiếm, mang đến một trong những buổi biểu diễn văn hóa được yêu thích nhất của Việt Nam.</p>
+          
+          <p>Bắt nguồn từ ruộng lúa vào thế kỷ 11, loại hình nghệ thuật này kể những câu chuyện dân gian và truyền thuyết lịch sử thông qua những con rối gỗ nhảy múa trên nước, kèm theo nhạc cụ truyền thống và ca sĩ trực tiếp. Đây là trải nghiệm mê hoặc cho du khách mọi lứa tuổi.</p>
+          
+          <p><strong>Chi tiết:</strong></p>
+          <ul>
+            <li><strong>Địa chỉ:</strong> 57B Đinh Tiên Hoàng, Quận Hoàn Kiếm</li>
+            <li><strong>Giờ biểu diễn:</strong> 17:20 | 18:30 | 20:00</li>
+            <li><strong>Vé:</strong> 100.000–200.000 VND (đặt trước vào cuối tuần)</li>
+          </ul>
+          
+          <p><strong>Mẹo:</strong> Ngồi gần hàng ghế đầu để có view tốt nhất, nhưng tránh hàng đầu nếu bạn không muốn bị nước bắn nhẹ!</p>
+        </section>
+
+        <section class="article-section" id="jazz">
+          <h2>2.6. Khám phá các quán bar jazz và nhạc sống ẩn mình</h2>
+          <p>Xa khỏi sự hỗn loạn của bia, Hà Nội ẩn giấu một mặt thanh lịch — thế giới của nhạc sống, jazz và biểu diễn acoustic.</p>
+          
+          <p>Những người yêu nhạc có thể tìm thấy không gian thân mật nơi các nghệ sĩ Việt Nam và quốc tế tài năng biểu diễn hàng đêm.</p>
+          
+          <p><strong>Các địa điểm nhạc sống hàng đầu:</strong></p>
+          <ul>
+            <li><strong>Bình Minh Jazz Club</strong> – 1 Tràng Tiền. Thành lập bởi huyền thoại jazz Việt Nam Quyền Văn Minh; mở đến muộn</li>
+            <li><strong>The Hanoi Social Club</strong> – 6 Hội Vũ. Vibe indie, đêm open-mic và đồ ăn chay tuyệt vời</li>
+            <li><strong>Swing Lounge</strong> – 21 Tràng Tiền. Trang trí thanh lịch, cocktail và giai điệu big-band</li>
+            <li><strong>Tadioto</strong> – 24B Tông Đản. Không gian nghệ thuật, bohemian với sự kết hợp sáng tạo giữa âm nhạc và nghệ thuật</li>
+          </ul>
+          
+          <p><strong>Mẹo:</strong> Hầu hết các buổi biểu diễn bắt đầu khoảng 8:30 tối. Đặt trước cho các buổi biểu diễn cuối tuần.</p>
+        </section>
+
+        <section class="article-section" id="street-food">
+          <h2>2.7. Thưởng thức ẩm thực đường phố Hà Nội lúc nửa đêm</h2>
+          <p>Nếu bạn yêu thích ẩm thực, Hà Nội không bao giờ ngủ — và những món ăn đường phố đêm muộn của nó đã trở thành huyền thoại.</p>
+          
+          <p>Sau 10 giờ tối, hương thơm của thịt nướng và nước dùng mì phở tràn ngập các con phố hẹp của phố cổ.</p>
+          
+          <p><strong>Những địa điểm phải thử:</strong></p>
+          <ul>
+            <li><strong>Phở Bát Đàn</strong> – 49 Bát Đàn. Nổi tiếng với món phở bò truyền thống (mở đến 11 giờ tối)</li>
+            <li><strong>Bún Chả Hàng Quạt</strong> – 74 Hàng Quạt. Thịt heo nướng khói</li>
+            <li><strong>Xôi Yến</strong> – 35B Nguyễn Hữu Huân. Xôi với hành phi và pâté, mở đến 2 giờ sáng</li>
+            <li><strong>Kem Tràng Tiền</strong> – 35 Tràng Tiền. Biểu tượng ngọt ngào của Hà Nội từ năm 1958</li>
+          </ul>
+          
+          <p><strong>Mẹo:</strong> Bắt đầu hành trình ẩm thực từ phố Tạ Hiện và hướng về Hàng Buồm — mỗi góc phố đều có thứ gì đó ngon miệng.</p>
+        </section>
+
+        <section class="article-section" id="spa">
+          <h2>2.8. Thư giãn với spa đêm hoặc massage chân</h2>
+          <p>Sau nhiều giờ đi bộ, không gì bằng một buổi massage thư giãn trước khi ngủ.</p>
+          
+          <p>Nhiều spa trong phố cổ Hà Nội mở muộn, cung cấp massage chân, đá nóng, hoặc liệu pháp thảo dược.</p>
+          
+          <p><strong>Các spa được đánh giá cao:</strong></p>
+          <ul>
+            <li><strong>Serene Spa</strong> – 68 Mã Mây (mở đến nửa đêm)</li>
+            <li><strong>MF Spa Hanoi</strong> – 15 Ngõ Huyện (liệu pháp hương thơm & dịch vụ chuyên nghiệp)</li>
+            <li><strong>La Belle Vie Spa</strong> – 10 Lý Quốc Sư (điều trị sang trọng, không gian yên bình)</li>
+          </ul>
+          
+          <p><strong>Mẹo:</strong> Mong đợi giá từ 250.000–450.000 VND/giờ. Đặt trước trong cuối tuần.</p>
+        </section>
+
+        <section class="article-section" id="photography">
+          <h2>2.9. Chụp ảnh ma thuật Hà Nội với tour nhiếp ảnh đêm</h2>
+          <p>Hà Nội là một trong những thành phố đẹp nhất châu Á về đêm. Sự kết hợp giữa kiến trúc Pháp, chùa chiền và cuộc sống đường phố khiến mỗi góc phố trở thành một shot hoàn hảo.</p>
+          
+          <p><strong>Các địa điểm chụp ảnh hàng đầu:</strong></p>
+          <ul>
+            <li><strong>Cầu Long Biên</strong> – cây cầu Pháp lịch sử rực sáng dưới ánh đèn vàng mờ</li>
+            <li><strong>Nhà thờ Lớn Hà Nội</strong> – mặt tiền Gothic được chiếu sáng đẹp mắt về đêm</li>
+            <li><strong>Phố tàu hỏa</strong> – đường sắt hẹp với các quán cà phê (ghé thăm đoạn trên Trần Phú để an toàn)</li>
+            <li><strong>Hồ Hoàn Kiếm</strong> – phản chiếu của những cây cầu đỏ và đền chùa cổ kính</li>
+          </ul>
+          
+          <p><strong>Mẹo:</strong> Tham gia tour nhiếp ảnh địa phương (như Hanoi Photo Walks) để có góc chụp ẩn và câu chuyện nội bộ.</p>
+        </section>
+
+        <section class="article-section tips">
+          <h2>Mẹo nhỏ cho trải nghiệm đêm Hà Nội hoàn hảo</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-clock-o"></i> <strong>Thời gian tốt nhất:</strong> 7-9 giờ tối cho bầu không khí sôi động nhất</div>
+            <div class="tip"><i class="fa fa-map-marker"></i> <strong>Di chuyển:</strong> Đi bộ hoặc xe máy để dễ dàng khám phá các con ngõ</div>
+            <div class="tip"><i class="fa fa-camera"></i> <strong>Chụp ảnh:</strong> Mang theo đèn pin nhỏ cho ảnh đêm đẹp hơn</div>
+            <div class="tip"><i class="fa fa-shield"></i> <strong>An toàn:</strong> Giữ đồ đạc cẩn thận và đi theo nhóm khi có thể</div>
+            <div class="tip"><i class="fa fa-money"></i> <strong>Tiền mặt:</strong> Mang đủ tiền mặt vì nhiều nơi không chấp nhận thẻ</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>3. Cảm nhận nhịp đập của Hà Nội về đêm</h2>
+          <p>Sức quyến rũ của Hà Nội không phai nhạt khi mặt trời lặn — nó tỏa sáng rực rỡ hơn.</p>
+          
+          <p>Từ những góc phố khiêm tốn đến sân thượng thanh lịch, từ các hình thức nghệ thuật cổ xưa đến nhịp điệu hiện đại, mỗi đêm ở đây kể một câu chuyện mới.</p>
+          
+          <p>Dù bạn đang nhấm nháp bia hơi với những người bạn mới, lướt qua Hồ Tây dưới ánh trăng, hay đắm mình trong âm nhạc tại quán bar jazz, <strong>cuộc sống về đêm của Hà Nội là tất cả về sự kết nối</strong> — với con người, văn hóa và tâm hồn của chính thành phố.</p>
+          
+          <p>Vậy nên khi ngày kết thúc, đừng quay về khách sạn. Bước ra ngoài, hít thở không khí đêm, và để <strong>"Hà Nội Vibes"</strong> dẫn bạn qua trái tim của những buổi tối quyến rũ nhất của thủ đô Việt Nam.</p>
+          
+          <p><em>"Hà Nội Vibes – Khám phá nhịp đập của thủ đô Việt Nam về đêm."</em></p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-2">Top 10 quán cafe view đẹp Hà Nội</a></li>
+            <li><a href="/blog/bai-4">Khám phá ẩm thực sáng Hà Nội</a></li>
+            <li><a href="/blog/bai-5">Khám phá phố cổ Hà Nội</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>

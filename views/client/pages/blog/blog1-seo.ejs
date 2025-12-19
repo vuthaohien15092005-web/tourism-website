@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Top 10 địa điểm du lịch Hà Nội đẹp và hấp dẫn' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || '' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || '' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Top 10 địa điểm du lịch Hà Nội"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Khám phá 10 địa điểm du lịch Hà Nội đẹp và hấp dẫn nhất",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-01-15') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/hotay.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Top 10 địa điểm du lịch Hà Nội hấp dẫn nhất cho chuyến đi trọn vẹn.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/banner-attraction.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Top 10 địa điểm du lịch Hà Nội</span></div>
+        <h1 class="post-title">Khám phá 10 địa điểm du lịch Hà Nội đẹp và hấp dẫn nhất cho chuyến đi trọn vẹn</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '15/01/2024' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Cẩm nang</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>BÀI 1 – Khám phá 10 địa điểm du lịch Hà Nội đẹp và hấp dẫn nhất</h2>
+          <p>Hà Nội cuốn hút với vẻ đẹp văn hóa, lịch sử và ẩm thực đặc sắc. Khám phá ngay top 10 địa điểm du lịch Hà Nội hấp dẫn nhất cùng “Hà Nội Vibes” để trải nghiệm hành trình khám phá thủ đô trọn vẹn.</p>
+          <p>Hà Nội – thủ đô ngàn năm văn hiến – từ lâu đã trở thành điểm đến mơ ước của du khách trong và ngoài nước. Không chỉ nổi bật bởi bề dày văn hóa – lịch sử, nơi đây còn gây thương nhớ bởi những hồ nước thơ mộng, phố cổ sầm uất và nền ẩm thực phong phú.</p>
+          <p>Nếu bạn còn băn khoăn không biết đi đâu, ăn gì, trải nghiệm thế nào thì cẩm nang du lịch Hà Nội “Hà Nội Vibes” sẽ là người bạn đồng hành đáng tin cậy. Ngay sau đây, hãy cùng “Hà Nội Vibes” điểm danh 10 địa điểm du lịch Hà Nội hấp dẫn nhất để giúp bạn dễ dàng lên lịch trình, vừa tiết kiệm thời gian vừa tận hưởng trọn vẹn tinh hoa Thủ đô.</p>
+        </section>
+        <!-- Sections: Top 10 -->
+        <section class="article-section" id="lang-bac">
+          <h2>1. Lăng Chủ tịch Hồ Chí Minh & Quảng trường Ba Đình</h2>
+          <div class="location-image">
+            <img src="/client/img/lang-bac.jpg" alt="Lăng Chủ tịch Hồ Chí Minh" />
+            <figcaption>Lăng Bác - nơi linh thiêng và trang nghiêm</figcaption>
+          </div>
+          <p>Đây là trái tim lịch sử của Hà Nội, nơi gắn liền với những sự kiện trọng đại của dân tộc. Lăng Bác – nơi an nghỉ của Chủ tịch Hồ Chí Minh – là điểm đến linh thiêng, được nhiều du khách trong và ngoài nước ghé thăm. Xung quanh còn có Phủ Chủ tịch, Bảo tàng Hồ Chí Minh và Chùa Một Cột – tạo thành quần thể kiến trúc – lịch sử đặc biệt.</p>
+          <p><strong>Lưu ý:</strong> Khi viếng Lăng Bác, bạn nên ăn mặc trang trọng, giữ thái độ nghiêm túc và tham khảo lịch mở cửa trước khi đến.</p>
+        </section>
+
+        <section class="article-section" id="ho-hoan-kiem">
+          <h2>2. Hồ Hoàn Kiếm & Tháp Rùa</h2>
+          <div class="location-image">
+            <img src="/client/img/banner-home.jpg" alt="Hồ Hoàn Kiếm và Tháp Rùa" />
+            <figcaption>Tháp Rùa - biểu tượng nổi tiếng nhất của Hà Nội</figcaption>
+          </div>
+          <p>Là biểu tượng nổi tiếng nhất của thủ đô, hồ Hoàn Kiếm mang vẻ đẹp bình yên giữa trung tâm nhộn nhịp. Du khách có thể tản bộ quanh hồ, ngắm nhìn Tháp Rùa uy nghiêm, cầu Thê Húc đỏ son cong cong dẫn vào đền Ngọc Sơn. Vào cuối tuần, phố đi bộ quanh hồ trở thành không gian văn hóa – giải trí sôi động, thu hút đông đảo khách du lịch.</p>
+        </section>
+
+        <section class="article-section" id="pho-co">
+          <h2>3. Phố cổ Hà Nội (36 phố phường)</h2>
+          <div class="location-image">
+            <img src="/client/img/pho-co-ha-noi.jpg" alt="Phố cổ Hà Nội 36 phố phường" />
+            <figcaption>Phố cổ Hà Nội - bảo tàng sống của thủ đô</figcaption>
+          </div>
+          <p>Được ví như "bảo tàng sống" của thủ đô, phố cổ Hà Nội lưu giữ trọn vẹn nét đẹp của kinh thành xưa. Những con phố nhỏ hẹp với tên gọi gắn liền nghề truyền thống như Hàng Bạc, Hàng Mã, Hàng Đào… chính là nơi bạn có thể cảm nhận rõ nhịp sống Hà Nội. Đừng quên thưởng thức các món ăn đặc sản như phở, bún chả, bánh cuốn hay nhâm nhi cà phê trứng tại một quán nhỏ xinh trong ngõ.</p>
+        </section>
+
+        <section class="article-section" id="van-mieu">
+          <h2>4. Văn Miếu – Quốc Tử Giám</h2>
+          <div class="location-image">
+            <img src="/client/img/van-mieu-quoc-tu-giam.jpg" alt="Văn Miếu Quốc Tử Giám" />
+            <figcaption>Văn Miếu - trường đại học đầu tiên của Việt Nam</figcaption>
+          </div>
+          <p>Là trường đại học đầu tiên của Việt Nam, Văn Miếu – Quốc Tử Giám không chỉ là di tích lịch sử mà còn là biểu tượng hiếu học của dân tộc. Khuôn viên yên tĩnh với hồ Văn, bia Tiến sĩ, cùng những mái ngói rêu phong khiến nơi đây trở thành điểm check-in lý tưởng. Đây cũng là điểm đến linh thiêng mà nhiều sĩ tử thường lui tới cầu may trước kỳ thi.</p>
+        </section>
+
+        <section class="article-section" id="tran-quoc">
+          <h2>5. Chùa Trấn Quốc (Hồ Tây)</h2>
+          <div class="location-image">
+            <img src="/client/img/chua-tran-quoc.jpg" alt="Chùa Trấn Quốc bên bờ Hồ Tây" />
+            <figcaption>Chùa Trấn Quốc - ngôi chùa cổ hơn 1.500 năm tuổi</figcaption>
+          </div>
+          <p>Tọa lạc bên bờ Hồ Tây, chùa Trấn Quốc là ngôi chùa cổ hơn 1.500 năm tuổi, nổi bật với kiến trúc tinh xảo và tháp nhiều tầng uy nghi. Đến đây, du khách sẽ cảm nhận sự thanh tịnh, an yên giữa khung cảnh thiên nhiên thơ mộng. Vào buổi chiều, chùa Trấn Quốc trở nên đặc biệt đẹp khi ánh hoàng hôn phản chiếu xuống mặt nước Hồ Tây.</p>
+        </section>
+
+        <section class="article-section" id="ho-tay">
+          <h2>6. Hồ Tây</h2>
+          <div class="location-image">
+            <img src="/client/img/hotay.jpg" alt="Hồ Tây - lá phổi xanh của Hà Nội" />
+            <figcaption>Hồ Tây - lá phổi xanh của thủ đô</figcaption>
+          </div>
+          <p>Với diện tích rộng lớn và cảnh quan lãng mạn, Hồ Tây được ví như "lá phổi xanh" của thủ đô. Đây là nơi lý tưởng để đi dạo, đạp xe quanh hồ, ngắm hoàng hôn hay dừng chân tại một quán cà phê ven hồ. Ngoài ra, bạn cũng nên thử đặc sản bánh tôm Hồ Tây – món ăn dân dã đã trở thành thương hiệu của vùng đất này.</p>
+        </section>
+
+        <section class="article-section" id="nha-hat-lon">
+          <h2>7. Nhà hát Lớn Hà Nội</h2>
+          <div class="location-image">
+            <img src="/client/img/nha-hat-lon-ha-noi.jpg" alt="Nhà hát Lớn Hà Nội" />
+            <figcaption>Nhà hát Lớn Hà Nội - kiến trúc Gothic Pháp cổ</figcaption>
+          </div>
+          <p>Được xây dựng theo kiến trúc Gothic Pháp cổ, Nhà hát Lớn Hà Nội là công trình văn hóa – nghệ thuật nổi bật nằm giữa trung tâm thành phố. Ban ngày, bạn có thể chiêm ngưỡng vẻ đẹp của công trình từ bên ngoài, còn buổi tối có thể mua vé xem những buổi biểu diễn nhạc cổ điển, opera hay múa truyền thống. Đây là nơi lý tưởng để cảm nhận "hồn nghệ thuật" của thủ đô.</p>
+        </section>
+
+        <section class="article-section" id="hoa-lo">
+          <h2>8. Nhà tù Hỏa Lò</h2>
+          <div class="location-image">
+            <img src="/client/img/nha-tu-hoa-lo.jpg" alt="Nhà tù Hỏa Lò" />
+            <figcaption>Nhà tù Hỏa Lò - di tích lịch sử quan trọng</figcaption>
+          </div>
+          <p>Được mệnh danh là "địa ngục trần gian" trong thời kỳ chiến tranh, Nhà tù Hỏa Lò nay trở thành một di tích lịch sử quan trọng. Tại đây, du khách sẽ được tận mắt thấy những hình ảnh, hiện vật tái hiện sự kiên cường, bất khuất của các chiến sĩ cách mạng. Đây là một điểm đến giàu giá trị lịch sử, giúp bạn hiểu rõ hơn về quá khứ đau thương nhưng hào hùng của dân tộc.</p>
+        </section>
+
+        <section class="article-section" id="hoang-thanh">
+          <h2>9. Hoàng thành Thăng Long</h2>
+          <div class="location-image">
+            <img src="/client/img/hoang-thanh-thang-long.jpg" alt="Hoàng thành Thăng Long" />
+            <figcaption>Hoàng thành Thăng Long - Di sản Văn hóa Thế giới UNESCO</figcaption>
+          </div>
+          <p>Là Di sản Văn hóa Thế giới được UNESCO công nhận, Hoàng thành Thăng Long lưu giữ dấu tích của nhiều triều đại phong kiến Việt Nam. Du khách có thể tham quan Đoan Môn, Điện Kính Thiên, khu khảo cổ 18 Hoàng Diệu để cảm nhận sự uy nghi của một kinh đô xưa. Đây là điểm đến hấp dẫn cho những ai yêu thích lịch sử và khảo cổ.</p>
+        </section>
+
+        <section class="article-section" id="cho-dong-xuan">
+          <h2>10. Chợ Đồng Xuân</h2>
+          <div class="location-image">
+            <img src="/client/img/cho-dong-xuan.jpg" alt="Chợ Đồng Xuân" />
+            <figcaption>Chợ Đồng Xuân - khu chợ lớn và lâu đời nhất thủ đô</figcaption>
+          </div>
+          <p>Nếu muốn hòa mình vào không khí sầm uất của đời sống Hà Nội, hãy đến chợ Đồng Xuân – khu chợ lớn và lâu đời nhất thủ đô. Chợ bán đủ loại hàng hóa từ quần áo, vải vóc, đồ lưu niệm cho đến ẩm thực đường phố. Buổi tối, khu vực quanh chợ trở thành thiên đường ẩm thực với các món ngon truyền thống như bún chả, phở cuốn, nem rán… khiến bất kỳ du khách nào cũng khó lòng cưỡng lại.</p>
+        </section>
+
+        <section class="article-section tips">
+          <h2>Mẹo nhỏ khi tham quan</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-map-marker"></i> Di chuyển linh hoạt: đi bộ, xe đạp, xe bus 2 tầng.</div>
+            <div class="tip"><i class="fa fa-cutlery"></i> Thưởng thức phở, bún chả, cà phê trứng, bánh tôm Hồ Tây.</div>
+            <div class="tip"><i class="fa fa-camera"></i> Thời điểm chụp đẹp: sáng sớm và hoàng hôn.</div>
+            <div class="tip"><i class="fa fa-info-circle"></i> Tôn trọng nếp sống địa phương, giữ gìn vệ sinh công cộng.</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>Kết luận</h2>
+          <p>Trên đây là 10 địa điểm du lịch Hà Nội hấp dẫn nhất mà bất cứ ai cũng nên một lần ghé thăm. Tuy nhiên, hành trình khám phá Hà Nội không chỉ dừng lại ở đó – còn vô vàn góc phố, món ăn, trải nghiệm thú vị đang chờ bạn.</p>
+          <p>Để chuyến đi thêm trọn vẹn, đừng quên ghé thăm cẩm nang du lịch Hà Nội “Hà Nội Vibes” – nơi cập nhật đầy đủ điểm đến, lịch trình, kinh nghiệm thực tế và gợi ý ẩm thực. Đây chính là trợ thủ đắc lực giúp bạn khám phá Hà Nội một cách dễ dàng và đáng nhớ nhất.</p>
+          <p><em>“Hà Nội Vibes – Cùng bạn tận hưởng trọn vẹn hơi thở Hà Nội.”</em></p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-10">Hồ Hoàn Kiếm - Trái tim của Hà Nội</a></li>
+            <li><a href="/blog/bai-4">Hành trình ẩm thực Hà Nội</a></li>
+            <li><a href="/blog/bai-11">Hoàng Thành Thăng Long</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>
+
+

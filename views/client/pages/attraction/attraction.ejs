@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Điểm tham quan Hà Nội | Hà Nội Vibes</title>
+        <meta name="description" content="Khám phá các điểm tham quan nổi bật ở Hà Nội: di tích lịch sử, bảo tàng, phố cổ, làng nghề, khu vui chơi, lễ hội. Lọc theo nhóm hoặc tìm kiếm nhanh." />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/client/css/style.css" />
+        <link rel="stylesheet" href="/client/css/responsive.css" />
+        <link rel="stylesheet" href="/client/css/harmony.css" />
+        <link rel="stylesheet" href="/client/css/attraction.css" />
+        <link rel="stylesheet" href="/client/css/components/pagination.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+        <link rel="manifest" href="/client/img/site.webmanifest" />
+    </head>
+    <body>
+        <%- include('../../partials/header') %>
+
+        <!-- Banner -->
+        <header class="page-header attraction-banner" style="background-image: url('/client/img/banner-attraction.jpg');">
+            <div class="header-content">
+                <h1>Điểm tham quan</h1>
+                <p class="font-color">Khám phá Hà Nội – Di sản và nhịp sống</p>
+                
+                <!-- Search Bar Component -->
+                <div class="hero-search-container">
+                    <form class="hero-search-form" role="search" aria-label="Tìm kiếm điểm tham quan">
+                        <div class="search-field">
+                            <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                            <input 
+                                type="text" 
+                                id="hero-search-input" 
+                                class="search-input" 
+                                placeholder="Bạn muốn đi đâu?" 
+                                aria-label="Nhập tên điểm tham quan"
+                                autocomplete="off"
+                            />
+                            <button type="button" class="search-clear" aria-label="Xóa tìm kiếm">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Popular section removed for cleaner mobile UI -->
+                        
+                        <div class="search-suggestions" id="search-suggestions" role="listbox" aria-label="Gợi ý tìm kiếm">
+                            <!-- Suggestions will be populated by JavaScript -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filters -->
+        <section class="attraction-page">
+            <div class="attraction-filters" aria-label="Bộ lọc điểm tham quan">
+                <div class="filter-row">
+                    <div class="category-select">
+                        <select id="attraction-category" aria-label="Chọn nhóm điểm tham quan">
+                            <option value="all">Tất cả thể loại</option>
+                            <% if (categories && categories.length > 0) { %>
+                                <% categories.forEach(category => { %>
+                                    <option value="<%= category %>" <%= filters.category === category ? 'selected' : '' %>>
+                                        <%= 
+                                            category === 'tu-nhien' ? 'Điểm tham quan tự nhiên' :
+        										category === 'nhan-van' ? 'Điểm tham quan nhân văn' : category %>
+                                    </option>
+                                <% }); %>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Grid -->
+            <section class="attraction-grid" aria-label="Danh sách điểm tham quan">
+                <% if (attractions && attractions.length > 0) { %>
+                    <% attractions.forEach(attraction => { %>
+                        <article class="attraction-card" 
+                                data-title="<%= attraction.name %>" 
+                                data-category="<%= attraction.category %>" 
+                                data-slug="<%= attraction.slug %>">
+                            <div class="thumb">
+                                <% if (attraction.images && attraction.images.length > 0) { %>
+                                    <img src="<%= attraction.images[0].url %>" 
+                                         alt="<%= attraction.images[0].alt || attraction.name %>" 
+                                         loading="lazy" />
+                                <% } else { %>
+                                    <img src="/client/img/hotay.jpg" 
+                                         alt="<%= attraction.name %>" 
+                                         loading="lazy" />
+                                <% } %>
+                                <% if (attraction.featured) { %>
+                                    <div class="featured-badge">
+                                        <i class="fa fa-star"></i>
+                                        <span>Nổi bật</span>
+                                    </div>
+                                <% } %>
+                            </div>
+                            <div class="content">
+                                <h3 class="title dark"><%= attraction.name %></h3>
+                                <p class="desc font-color">
+                                    <%= attraction.shortDescription || attraction.description || 'Khám phá điểm tham quan thú vị tại Hà Nội' %>
+                                </p>
+                                <div class="actions">
+                                    <a class="ctn" href="/attraction/<%= attraction.slug %>">Xem chi tiết</a>
+                                </div>
+                            </div>
+                        </article>
+                    <% }); %>
+                <% } else { %>
+                    <div class="no-results">
+                        <div class="no-results-content">
+                            <i class="fa fa-search fa-3x"></i>
+                            <h3>Không tìm thấy điểm tham quan</h3>
+                            <p>Hãy thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác</p>
+                            <button class="btn-primary" onclick="clearFilters()">Xóa bộ lọc</button>
+                        </div>
+                    </div>
+                <% } %>
+            </section>
+
+            <!-- Pagination Component -->
+            <%- include('../../components/pagination', {
+                pagination: pagination,
+                queryString: (() => {
+                    const params = [];
+                    if (filters.category && filters.category !== 'all') params.push(`category=${filters.category}`);
+                    if (filters.search) params.push(`search=${encodeURIComponent(filters.search)}`);
+                    if (filters.sort) params.push(`sort=${filters.sort}`);
+                    return params.length > 0 ? '&' + params.join('&') : '';
+                })()
+            }) %>
+        </section>
+
+        <!-- Contact Section (inserted after main content; no explicit reviews block found) -->
+        <%- include('../../components/contact-section', { sectionId: 'contact-attraction', title: 'LIÊN HỆ', heading: 'Gửi tin nhắn cho chúng tôi', action: '/contact', method: 'post' }) %>
+
+        <!-- up scroll -->
+        <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+        <!--footer-->
+        <%- include('../../partials/footer') %>
+
+        <!-- Inject all attractions data for search -->
+        <div id="attractions-data" data-json="<%= allAttractionsForSearch %>" style="display: none;"></div>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/client/js/includes.js"></script>
+        <script src="/client/js/script.js"></script>
+        <script src="/client/js/attraction.js"></script>
+        <script src="/client/js/components/pagination.js"></script>
+        <!--footer-->
+    </body>
+</html>

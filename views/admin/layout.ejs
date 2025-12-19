@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %> - Hà Nội Vibes Admin</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Iconly CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/iconly@1.0.0/dist/iconly.css" rel="stylesheet">
+    <!-- Dashboard CSS -->
+    <link href="/admin/css/dashboard.css" rel="stylesheet">
+    <!-- Admin CSS -->
+    <link href="/admin/css/admin.css" rel="stylesheet">
+    <!-- Attractions CSS -->
+    <link href="/admin/css/attractions.css" rel="stylesheet">
+    <!-- Accommodations CSS -->
+    <link href="/admin/css/accommodations.css" rel="stylesheet">
+    <!-- Entertainments CSS -->
+    <link href="/admin/css/entertainments.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #1261A6;
+            --secondary-color: #1261A6;
+            --sidebar-bg: #ffffff;
+            --sidebar-text: #6c757d;
+            --sidebar-active: #1261A6;
+            --main-bg: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--main-bg);
+        }
+        
+        .sidebar {
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            z-index: 1000;
+        }
+        
+        .sidebar .brand {
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .sidebar .brand h4 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .sidebar .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 20px;
+            margin: 1rem;
+        }
+        
+        .sidebar .theme-toggle .form-check-input {
+            margin: 0;
+        }
+        
+        .sidebar .nav-link {
+            color: var(--sidebar-text);
+            border-radius: 8px;
+            margin: 2px 8px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .sidebar .nav-link:hover {
+            color: var(--sidebar-active);
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .sidebar .nav-link.active {
+            color: white;
+            background: var(--sidebar-active);
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+        }
+        
+        .sidebar .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            background-color: var(--main-bg);
+            min-height: 100vh;
+        }
+        
+        .main-content .content-wrapper {
+            padding: 2rem;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            border-radius: 10px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .stats-icon.purple {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .stats-icon.blue {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+        
+        .stats-icon.green {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .stats-icon.red {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+        }
+        
+        .stats-icon.orange {
+            background: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+        }
+        
+        .stats-icon.teal {
+            background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+        }
+        
+        .stats-icon.pink {
+            background: linear-gradient(135deg, #e83e8c 0%, #fd7e14 100%);
+        }
+        
+        .stats-icon.indigo {
+            background: linear-gradient(135deg, #6f42c1 0%, #6610f2 100%);
+        }
+        
+        .stats-icon.dark {
+            background: linear-gradient(135deg, #343a40 0%, #495057 100%);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="brand">
+            <div class="d-flex align-items-center">
+                <img src="/client/img/logo.jpg" alt="Hà Nội Vibes" style="width: 40px; height: 40px; margin-right: 10px;">
+                <h4>Hà Nội Vibes</h4>
+            </div>
+        </div>
+        
+        <!-- Menu -->
+        <div class="px-3">
+            <h6 class="text-muted text-uppercase fw-bold mb-3">Menu</h6>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-primary border border-primary rounded" href="/">
+                        <i class="fas fa-home"></i>
+                        Quay về trang chủ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= pageTitle === 'Dashboard' ? 'active' : '' %>" href="/admin/dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= pageTitle.includes('Điểm tham quan') ? 'active' : '' %>" href="/admin/attractions">
+                        <i class="fas fa-landmark"></i>
+                        Điểm tham quan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= pageTitle.includes('Lưu trú') ? 'active' : '' %>" href="/admin/accommodations">
+                        <i class="fas fa-bed"></i>
+                        Lưu trú
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (pageTitle && pageTitle.includes('Ẩm thực')) ? 'active' : '' %>" href="/admin/cuisines">
+                        <i class="fas fa-utensils"></i>
+                        Ẩm thực
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (pageTitle && pageTitle.includes('Địa điểm Ẩm thực')) ? 'active' : '' %>" href="/admin/cuisine/places">
+                        <i class="fas fa-store"></i>
+                        Địa điểm Ẩm thực
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (pageTitle && pageTitle.includes('Giải trí')) ? 'active' : '' %>" href="/admin/entertainments">
+                        <i class="fas fa-theater-masks"></i>
+                        Giải trí
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (pageTitle && pageTitle.includes('Liên hệ')) ? 'active' : '' %>" href="/admin/contacts">
+                        <i class="fas fa-envelope"></i>
+                        Liên hệ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= (pageTitle && pageTitle.includes('Người dùng')) ? 'active' : '' %>" href="/admin/users">
+                        <i class="fas fa-users"></i>
+                        Người dùng
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <h1 class="page-title"><%= pageTitle || 'Thống kê du lịch Hà Nội' %></h1>
+
+            <!-- Flash messages -->
+            <% if (typeof flash !== 'undefined') { %>
+                <% if (flash.success && flash.success.length > 0) { %>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <%= flash.success[0] %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+                <% if (flash.error && flash.error.length > 0) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        <%= flash.error[0] %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+                <% if (flash.warning && flash.warning.length > 0) { %>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <%= flash.warning[0] %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+                <% if (flash.info && flash.info.length > 0) { %>
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <%= flash.info[0] %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+            <% } %>
+
+            <!-- Page content -->
+            <% if (page === 'dashboard') { %>
+                <%- include('pages/dashboard') %>
+            <% } else if (body) { %>
+                <%- include('../' + body) %>
+            <% } else { %>
+                <%- body %>
+            <% } %>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <!-- Admin JS -->
+    <script src="/admin/js/admin.js"></script>
+    <!-- Dashboard JS -->
+    <script src="/admin/js/dashboard.js"></script>
+    <!-- Accommodations JS -->
+    <script src="/admin/js/accommodations.js"></script>
+    <!-- TinyMCE -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="/admin/js/tinymce-config.js"></script>
+</body>
+</html>

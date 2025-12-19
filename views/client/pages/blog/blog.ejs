@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | Hà Nội Vibes</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/client/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/client/img/logo.jpg"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/client/img/logo.jpg"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Blog Banner -->
+    <header id="blog-banner">
+      <div class="header-content">
+        <h2 id="quote" style="color: #fff;">Khám phá Hà Nội qua những câu chuyện</h2>
+        <div class="line"></div>
+        <h1>BLOG DU LỊCH HÀ NỘI</h1>
+        <a href="#blog-content" class="ctn">Đọc ngay</a>
+      </div>
+    </header>
+
+    <!-- Blog Content -->
+    <section id="blog-content" class="blog-section">
+      <div class="container">
+        <div class="title">
+          <h1 class="font-color">BÀI VIẾT MỚI NHẤT</h1>
+          <div class="line"></div>
+        </div>
+
+        <!-- Enhanced Blog Search -->
+        <div class="blog-search-container">
+          <input type="text" id="blog-search" placeholder="Tìm kiếm bài viết..." />
+        </div>
+
+        <!-- Category Filters -->
+        <div class="blog-filters">
+          <button class="filter-btn active" data-category="all">Tất cả</button>
+          <button class="filter-btn" data-category="Du lịch">Du lịch</button>
+          <button class="filter-btn" data-category="Cafe">Cafe</button>
+          <button class="filter-btn" data-category="Check-in">Check-in</button>
+          <button class="filter-btn" data-category="Ẩm thực">Ẩm thực</button>
+          <button class="filter-btn" data-category="Văn hóa">Văn hóa</button>
+          <button class="filter-btn" data-category="Giải trí">Giải trí</button>
+          <button class="filter-btn" data-category="Lịch sử">Lịch sử</button>
+        </div>
+
+        <div class="blog-grid">
+          <!-- BÀI 1 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/hotay.jpg" alt="Top 10 địa điểm du lịch Hà Nội" />
+              <div class="blog-category">Du lịch</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 15/01/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Top 10 địa điểm du lịch Hà Nội đẹp và hấp dẫn</h3>
+              <p class="blog-excerpt">
+                Hà Nội cuốn hút với vẻ đẹp văn hóa, lịch sử và ẩm thực đặc sắc. Cùng Hà Nội Vibes khám phá 10 điểm đến hấp dẫn nhất cho chuyến đi trọn vẹn.
+              </p>
+              <a href="/blog/bai-1" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 2 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/cafe-hanoi-banner.jpg" alt="Top 10 quán cafe view đẹp ở Hà Nội" />
+              <div class="blog-category">Cafe</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 15/02/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">10 quán cafe Hà Nội view siêu đẹp, chill hết nấc</h3>
+              <p class="blog-excerpt">
+                Từ rooftop lung linh đến góc nhỏ vintage, đây là 10 tọa độ cafe có view đẹp, không gian độc đáo và đồ uống chất lượng.
+              </p>
+              <a href="/blog/bai-2" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 3 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/carousel-img4.jpg" alt="Top 10 địa điểm sống ảo Hà Nội" />
+              <div class="blog-category">Check-in</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 01/03/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">10 địa điểm sống ảo hot nhất Hà Nội cho giới trẻ</h3>
+              <p class="blog-excerpt">
+                Từ phố cổ rêu phong đến góc hiện đại đầy nghệ thuật, đây là danh sách check-in mới lạ và đầy cảm hứng.
+              </p>
+              <a href="/blog/bai-3" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 4 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/pho-ha-noi-banner.jpg" alt="Khám phá ẩm thực sáng Hà Nội" />
+              <div class="blog-category">Ẩm thực</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 20/12/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Khám phá ẩm thực sáng của Thủ đô - Hương sáng Hà Nội</h3>
+              <p class="blog-excerpt">
+                Hà Nội không chỉ níu chân du khách bằng những góc phố cổ kính mà còn khiến người ta say mê bởi nền ẩm thực sáng sớm đầy tinh tế và giàu bản sắc.
+              </p>
+              <a href="/blog/bai-4" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 5 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/old-quarter-hanoi.jpg" alt="Khám phá phố cổ Hà Nội" />
+              <div class="blog-category">Văn hóa</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 21/12/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Khám phá phố cổ Hà Nội – Linh hồn nghìn năm văn hiến</h3>
+              <p class="blog-excerpt">
+                Hà Nội – mảnh đất nghìn năm văn hiến với phố cổ được ví như "linh hồn" của Thủ đô, nơi lưu giữ kiến trúc cổ kính và nếp sống thanh lịch.
+              </p>
+              <a href="/blog/bai-5" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 6 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/hanoi-nightlife.jpg" alt="Hanoi Nightlife" />
+              <div class="blog-category">Giải trí</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 22/12/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Hanoi Nightlife: Best Things to Do After Dark</h3>
+              <p class="blog-excerpt">
+                Khám phá cuộc sống về đêm Hà Nội với những hoạt động thú vị từ bia hơi, rooftop bar đến chợ đêm và nhạc jazz.
+              </p>
+              <a href="/blog/bai-6" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 7 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/tet.jpg" alt="Khám phá Hà Nội ngày Tết" />
+              <div class="blog-category">Văn hóa</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 23/12/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Khám phá Hà Nội ngày Tết: Hương vị truyền thống và nét đẹp văn hóa xưa</h3>
+              <p class="blog-excerpt">
+                Khám phá Hà Nội ngày Tết với hương vị truyền thống, phong tục cổ truyền và những trải nghiệm văn hóa đặc sắc của Thủ đô.
+              </p>
+              <a href="/blog/bai-7" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 8 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/chodem.png" alt="Chợ đêm phố cổ Hà Nội" />
+              <div class="blog-category">Văn hóa</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 23/12/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Chợ đêm phố cổ – Nơi lưu giữ nét văn hóa Thủ đô</h3>
+              <p class="blog-excerpt">
+                Khám phá Chợ đêm phố cổ Hà Nội - thiên đường mua sắm và ẩm thực, nơi lưu giữ hồn văn hóa Thủ đô.
+              </p>
+              <a href="/blog/bai-8" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 9 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/ptdc.jpg" alt="Phương tiện di chuyển ở Hà Nội" />
+              <div class="blog-category">Du lịch</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 23/12/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Hà Nội đi lại bằng gì? Từ xe bus, taxi đến xe điện phố cổ</h3>
+              <p class="blog-excerpt">
+                Khám phá các phương tiện di chuyển phổ biến ở Hà Nội như xe bus, taxi, xe công nghệ và xe điện phố cổ.
+              </p>
+              <a href="/blog/bai-9" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 10 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/banner-home.jpg" alt="Hồ Hoàn Kiếm Hà Nội" />
+              <div class="blog-category">Du lịch</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 23/12/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Hồ Hoàn Kiếm – Biểu tượng trái tim Thủ đô</h3>
+              <p class="blog-excerpt">
+                Khám phá Hồ Hoàn Kiếm – biểu tượng văn hóa, lịch sử và du lịch của Hà Nội. Cùng Hà Nội Vibes dạo quanh hồ, ngắm Tháp Rùa, cầu Thê Húc.
+              </p>
+              <a href="/blog/bai-10" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+
+          <!-- BÀI 11 -->
+          <article class="blog-card">
+            <div class="blog-image">
+              <img src="/client/img/hoang-thanh-thang-long.jpg" alt="Hoàng Thành Thăng Long Hà Nội" />
+              <div class="blog-category">Lịch sử</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">
+                  <i class="fa fa-calendar"></i> 23/12/2024
+                </span>
+                <span class="blog-author">
+                  <i class="fa fa-user"></i> Admin
+                </span>
+              </div>
+              <h3 class="blog-title">Khám phá di sản Hoàng Thành Thăng Long – Trái tim lịch sử của Hà Nội</h3>
+              <p class="blog-excerpt">
+                Khám phá Hoàng Thành Thăng Long - Di sản Văn hóa Thế giới UNESCO, trái tim lịch sử của Hà Nội với hơn 1.300 năm lịch sử.
+              </p>
+              <a href="/blog/bai-11" class="blog-read-more">Đọc tiếp <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </article>
+        </div>
+
+        
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog' }) %>
+
+    <!-- up scroll -->
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <!-- end -->
+
+    <!--footer-->
+    <%- include('../../partials/footer') %>
+    <!--footer-->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    
+    <!-- Enhanced Blog Functionality -->
+    <script>
+      // Category filtering functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+        
+        filterButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            const category = this.dataset.category;
+            
+            blogCards.forEach(card => {
+              if (category === 'all') {
+                card.style.display = 'block';
+              } else {
+                const cardCategory = card.querySelector('.blog-category').textContent;
+                card.style.display = cardCategory === category ? 'block' : 'none';
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

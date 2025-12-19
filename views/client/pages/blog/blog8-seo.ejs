@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Chợ đêm phố cổ Hà Nội: Nơi lưu giữ nét văn hóa Thủ đô' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Khám phá Chợ đêm phố cổ Hà Nội - thiên đường mua sắm và ẩm thực, nơi lưu giữ hồn văn hóa Thủ đô.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'chợ đêm phố cổ Hà Nội, mua sắm phố cổ, ẩm thực đường phố Hà Nội, du lịch đêm Hà Nội, văn hóa Hà Nội, Hồ Gươm, phố cổ' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Chợ đêm phố cổ Hà Nội"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Chợ đêm phố cổ Hà Nội: Nơi lưu giữ nét văn hóa Thủ đô",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-12-23') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/Overview-1.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Khám phá Chợ đêm phố cổ Hà Nội - thiên đường mua sắm và ẩm thực, nơi lưu giữ hồn văn hóa Thủ đô.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/Overview-1.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Chợ đêm phố cổ Hà Nội</span></div>
+        <h1 class="post-title">Chợ đêm phố cổ Hà Nội: Nơi lưu giữ nét văn hóa Thủ đô</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '23/12/2024' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Văn hóa</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <div class="article-cover">
+          <img src="/client/img/chodem.png" alt="Chợ đêm phố cổ Hà Nội" />
+          <figcaption>Chợ đêm phố cổ Hà Nội - nơi lưu giữ hồn văn hóa Thủ đô</figcaption>
+        </div>
+
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>BÀI 8 – Chợ đêm phố cổ Hà Nội: Nơi lưu giữ nét văn hóa Thủ đô</h2>
+          <p>Chợ đêm phố cổ Hà Nội là một trong những điểm đến không thể bỏ qua khi khám phá Thủ đô về đêm. Đây không chỉ là nơi mua sắm, thưởng thức ẩm thực mà còn là không gian văn hóa đặc sắc, lưu giữ hồn cốt của Hà Nội xưa.</p>
+          <p>Khi màn đêm buông xuống, phố cổ Hà Nội bừng sáng với ánh đèn vàng ấm áp, tạo nên một không gian vừa cổ kính vừa hiện đại. Chợ đêm phố cổ chính là nơi hội tụ của những giá trị văn hóa truyền thống và nếp sống đương đại của người Hà Nội.</p>
+        </section>
+
+
+        <!-- Sections -->
+        <section class="article-section" id="vi-tri">
+          <h2>1. Vị trí và thời gian hoạt động</h2>
+          <p>Chợ đêm phố cổ Hà Nội tập trung chủ yếu tại khu vực phố đi bộ quanh Hồ Gươm và các con phố cổ như Hàng Đào, Hàng Ngang, Hàng Mã. Thời gian hoạt động thường từ 19h đến 23h các ngày trong tuần, đặc biệt sôi động vào cuối tuần.</p>
+          <p><strong>Lưu ý:</strong> Nên đến sớm để tránh đông đúc và có thể thưởng thức ẩm thực một cách thoải mái nhất.</p>
+        </section>
+
+        <section class="article-section" id="am-thuc">
+          <h2>2. Ẩm thực đường phố đặc sắc</h2>
+          <p>Chợ đêm phố cổ là thiên đường ẩm thực với vô số món ăn truyền thống và hiện đại. Từ phở, bún chả, nem rán đến các món ăn vặt như bánh tráng nướng, chè, kem tươi - tất cả đều được chế biến tươi ngon ngay tại chỗ.</p>
+          <p>Đặc biệt, đây là nơi lý tưởng để thưởng thức cà phê trứng - thức uống đặc trưng của Hà Nội, hay nhâm nhi ly trà đá bên vỉa hè trong không khí mát mẻ của đêm thu.</p>
+        </section>
+
+        <section class="article-section" id="mua-sam">
+          <h2>3. Mua sắm và đồ lưu niệm</h2>
+          <p>Chợ đêm phố cổ cũng là nơi lý tưởng để mua sắm đồ lưu niệm, quà tặng với giá cả phải chăng. Từ áo dài, nón lá, đồ thủ công mỹ nghệ đến các sản phẩm văn hóa đặc trưng của Hà Nội.</p>
+          <p>Nhiều gian hàng còn bán các sản phẩm handmade độc đáo, phù hợp làm quà tặng cho bạn bè, người thân sau chuyến du lịch Hà Nội.</p>
+        </section>
+
+        <section class="article-section" id="van-hoa">
+          <h2>4. Trải nghiệm văn hóa đặc sắc</h2>
+          <p>Chợ đêm phố cổ không chỉ là nơi mua sắm, ăn uống mà còn là không gian văn hóa sống động. Du khách có thể thưởng thức các tiết mục biểu diễn nghệ thuật truyền thống như hát xẩm, múa rối nước, hay các hoạt động văn hóa đương đại.</p>
+          <p>Đây cũng là nơi để tìm hiểu về lịch sử, văn hóa Hà Nội thông qua các câu chuyện của người dân địa phương và các hoạt động tương tác thú vị.</p>
+        </section>
+
+        <section class="article-section tips">
+          <h2>Mẹo nhỏ khi tham quan chợ đêm</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-clock-o"></i> Thời gian tốt nhất: 19h-21h để tránh đông đúc</div>
+            <div class="tip"><i class="fa fa-money"></i> Mang tiền mặt, nhiều quán không nhận thẻ</div>
+            <div class="tip"><i class="fa fa-camera"></i> Chụp ảnh đẹp nhất vào giờ hoàng hôn</div>
+            <div class="tip"><i class="fa fa-map-marker"></i> Đi bộ để khám phá hết các ngõ nhỏ</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>Kết luận</h2>
+          <p>Chợ đêm phố cổ Hà Nội là một trải nghiệm không thể bỏ qua khi đến với Thủ đô. Đây không chỉ là nơi mua sắm, thưởng thức ẩm thực mà còn là cầu nối giữa quá khứ và hiện tại, giữa truyền thống và hiện đại.</p>
+          <p>Với "Hà Nội Vibes", bạn sẽ có cơ hội khám phá chợ đêm phố cổ một cách trọn vẹn nhất, từ những món ăn ngon đến những trải nghiệm văn hóa đặc sắc. Hãy để chúng tôi đồng hành cùng bạn trong hành trình khám phá Hà Nội về đêm.</p>
+          <p><em>"Hà Nội Vibes – Cùng bạn tận hưởng trọn vẹn hơi thở Hà Nội."</em></p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-5">Phố cổ Hà Nội - Linh hồn nghìn năm</a></li>
+            <li><a href="/blog/bai-4">Ẩm thực đường phố Hà Nội</a></li>
+            <li><a href="/blog/bai-6">Văn hóa Hà Nội về đêm</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>

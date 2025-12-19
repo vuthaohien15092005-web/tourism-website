@@ -1,0 +1,1519 @@
+<%
+// =================================================================
+// REVIEW FORM COMPONENT
+// =================================================================
+// Props:
+// - targetType: 'attraction', 'accommodation', 'food', 'entertainment', 'tour'
+// - targetId: ID của đối tượng
+// - user: User object
+// =================================================================
+
+const _targetType = targetType || 'attraction';
+const _targetId = targetId || '';
+const _user = user || null;
+%>
+
+<div class="review-form-wrapper" id="reviewFormWrapper">
+  <div class="review-form-header">
+    <h3 class="form-title" style="color: #fff;">Gửi bình luận</h3>
+    <!-- Rating stars trong header, căn giữa -->
+    <div class="rating-input" id="ratingInput">
+      <input type="hidden" name="rating" id="ratingValue" required>
+      <div class="star-buttons">
+        <button type="button" class="star-btn" data-rating="1">
+          <span class="star-icon">★</span>
+        </button>
+        <button type="button" class="star-btn" data-rating="2">
+          <span class="star-icon">★</span>
+        </button>
+        <button type="button" class="star-btn" data-rating="3">
+          <span class="star-icon">★</span>
+        </button>
+        <button type="button" class="star-btn" data-rating="4">
+          <span class="star-icon">★</span>
+        </button>
+        <button type="button" class="star-btn" data-rating="5">
+          <span class="star-icon">★</span>
+        </button>
+      </div>
+      <div class="rating-label" id="ratingLabel"></div>
+    </div>
+  </div>
+
+  <form id="reviewForm" class="review-form" enctype="multipart/form-data">
+    <!-- =================================================================
+         CONTENT với EMOJI + UPLOAD bên trong
+         ================================================================= -->
+    <div class="form-group">
+      <div class="content-input-wrapper">
+        <textarea 
+          id="reviewContent" 
+          name="content" 
+          class="form-control"
+          rows="5"
+          placeholder="Chia sẻ trải nghiệm của bạn..."
+          required
+        ></textarea>
+        
+        <!-- Toolbar với emoji + upload -->
+        <div class="content-toolbar">
+          <!-- Emoji picker -->
+          <div class="emoji-toolbar">
+            <button type="button" class="emoji-picker-btn" id="emojiPickerBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+              </svg>
+              <span>Emoji</span>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Upload button below emoji -->
+        <div class="upload-section">
+          <input 
+            type="file" 
+            id="reviewImages" 
+            name="images" 
+            accept="image/*"
+            multiple
+            class="file-input"
+            style="display: none;"
+          >
+          <label for="reviewImages" class="upload-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>Thêm ảnh</span>
+          </label>
+        </div>
+        
+        <!-- Image previews -->
+        <div class="image-previews" id="imagePreviews"></div>
+      </div>
+    </div>
+
+    <!-- Hidden title field -->
+    <input type="hidden" id="reviewTitle" name="title" value="">
+
+    <!-- =================================================================
+         SUBMIT BUTTONS
+         ================================================================= -->
+    <div class="form-actions">
+      <button type="submit" class="btn-submit" id="btnSubmit">
+        <span class="btn-text">Gửi bình luận</span>
+        <span class="btn-loading" style="display: none;">
+          Đang gửi...
+        </span>
+      </button>
+    </div>
+  </form>
+
+  <!-- =================================================================
+       SUCCESS MESSAGE
+       ================================================================= -->
+  <div class="success-message" id="successMessage" style="display: none;">
+    <div class="success-icon">✓</div>
+    <h3>Cảm ơn bạn đã đánh giá!</h3>
+    <p>Đánh giá của bạn sẽ được kiểm duyệt và hiển thị sớm nhất.</p>
+    <button type="button" class="btn-primary" onclick="location.reload()">
+      Xem đánh giá
+    </button>
+  </div>
+</div>
+
+<!-- =================================================================
+     STYLES
+     ================================================================= -->
+<style>
+/* ==========================
+   FORM WRAPPER
+   ========================== */
+/* Override any external CSS that might interfere */
+.review-form-wrapper * {
+  box-sizing: border-box !important;
+}
+
+.review-form-wrapper {
+  position: relative !important;
+  z-index: 1 !important;
+  isolation: isolate !important;
+}
+
+/* Prevent external CSS from affecting our components */
+.review-form-wrapper .rating-input,
+.review-form-wrapper .star-buttons,
+.review-form-wrapper .star-btn,
+.review-form-wrapper .star-icon {
+  all: unset !important;
+  display: revert !important;
+  box-sizing: border-box !important;
+}
+
+/* Force all 5 stars to be visible */
+.review-form-wrapper .star-buttons {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow: visible !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.review-form-wrapper .star-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 11 !important;
+}
+
+/* Ensure all 5 stars are always visible */
+.review-form-wrapper .star-btn:nth-child(1),
+.review-form-wrapper .star-btn:nth-child(2),
+.review-form-wrapper .star-btn:nth-child(3),
+.review-form-wrapper .star-btn:nth-child(4),
+.review-form-wrapper .star-btn:nth-child(5) {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.review-form-wrapper {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 24px !important;
+  margin: 0 auto 24px !important;
+  width: 100% !important;
+  max-width: 1000px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.review-form-wrapper .review-form-header {
+  margin-bottom: 24px;
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.review-form-wrapper .form-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
+  font-family: var(--ff-heading);
+}
+
+/* ==========================
+   FORM GROUPS
+   ========================== */
+.review-form-wrapper .form-group {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-form-wrapper .form-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+  font-family: var(--ff-primary);
+}
+
+/* Content Input Wrapper */
+.review-form-wrapper .content-input-wrapper {
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  transition: all 0.2s !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  max-width: 900px !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-rows: auto auto auto !important;
+  min-height: 200px !important;
+}
+
+.review-form-wrapper .content-input-wrapper:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.review-form-wrapper .form-control {
+  grid-column: 1 / 2 !important;
+  grid-row: 1 / 3 !important;
+  width: 100% !important;
+  padding: 16px 18px !important;
+  border: none !important;
+  border-right: 1px solid #e5e7eb !important;
+  border-radius: 0 !important;
+  font-size: 0.875rem !important;
+  font-family: var(--ff-primary) !important;
+  background: transparent !important;
+  resize: none !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  line-height: 1.5 !important;
+  min-height: 200px !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+}
+
+.review-form-wrapper .form-control:focus {
+  outline: none;
+}
+
+/* ==========================
+   RATING INPUT - In Header, Centered
+   ========================== */
+/* Force 5 stars to always be visible */
+.review-form-wrapper .rating-input {
+  position: relative !important;
+  z-index: 10 !important;
+  overflow: visible !important;
+}
+
+.review-form-wrapper .rating-input::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  /* background: #f8fafc !important; */
+  border-radius: 8px !important;
+  z-index: -1 !important;
+}
+
+/* Ensure all 5 stars are always visible */
+.review-form-wrapper .star-buttons {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 5 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.review-form-wrapper .star-btn {
+  position: relative !important;
+  z-index: 6 !important;
+  flex: 0 0 auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 28px !important;
+  max-width: 40px !important;
+}
+.review-form-wrapper .rating-input {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 12px auto 0 !important;
+    max-width: 900px !important;
+    padding: 16px 8px !important;
+    /* background: #f8fafc !important; */
+    border-radius: 8px !important;
+    /* border: 1px solid #e2e8f0 !important; */
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+.review-form-wrapper .star-buttons {
+    display: flex !important;
+    gap: 8px !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 8px !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 4px !important;
+  }
+
+.review-form-wrapper .star-btn {
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+    transition: all 0.2s !important;
+    line-height: 1 !important;
+    border-radius: 4px !important;
+    flex-shrink: 0 !important;
+    min-width: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+.review-form-wrapper .star-btn:hover {
+  transform: scale(1.1);
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.review-form-wrapper .star-icon {
+    font-size: 1.75rem !important;
+    color: #d1d5db !important;
+    transition: color 0.2s !important;
+    display: block !important;
+    line-height: 1 !important;
+  }
+
+/* Force star colors to display properly */
+.review-form-wrapper .star-btn.active .star-icon,
+.review-form-wrapper .star-btn:hover .star-icon {
+  color: #fbbf24 !important;
+}
+
+.review-form-wrapper .star-btn:not(.active):not(:hover) .star-icon {
+  color: #d1d5db !important;
+}
+
+
+.review-form-wrapper .rating-label {
+  font-size: 0.875rem;
+  color: var(--primary-color);
+  font-weight: 500;
+  min-height: 20px;
+  margin-top: 4px;
+  font-family: var(--ff-primary);
+}
+
+.review-form-wrapper .rating-label:empty {
+  display: none;
+}
+
+/* ==========================
+   CONTENT TOOLBAR - Emoji bên phải
+   ========================== */
+.content-toolbar {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  padding: 16px 12px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emoji-toolbar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  align-items: center;
+  justify-items: center;
+}
+
+.emoji-picker-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #ffffff;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: var(--ff-primary);
+}
+
+.emoji-picker-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+}
+
+.emoji-picker-btn svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================
+   EMOJI PICKER MODAL
+   ========================== */
+.emoji-picker-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.emoji-picker-content {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: emojiModalSlide 0.3s ease;
+}
+
+@keyframes emojiModalSlide {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.emoji-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.emoji-picker-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.emoji-picker-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.emoji-picker-close:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.emoji-picker-body {
+  padding: 16px 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.emoji-categories {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.emoji-category-btn {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.emoji-category-btn:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.emoji-category-btn.active {
+  background: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.emoji-item {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.emoji-item:hover {
+  background: #f3f4f6;
+  transform: scale(1.1);
+}
+
+/* ==========================
+   UPLOAD SECTION - Bên phải dưới emoji
+   ========================== */
+.upload-section {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  padding: 12px;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  background: #ffffff;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: var(--ff-primary);
+}
+
+.upload-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+  border-color: #9ca3af;
+  transform: translateY(-2px);
+}
+
+.upload-btn svg {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+/* ==========================
+   IMAGE PREVIEWS
+   ========================== */
+.image-previews {
+  grid-column: 1 / 3;
+  grid-row: 3 / 4;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 18px 12px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.image-previews:empty {
+  display: none;
+}
+
+.image-preview-item {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+  transition: all 0.2s;
+}
+
+.image-preview-item:hover {
+  border-color: var(--primary-color);
+  transform: scale(1.02);
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-image {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background: rgba(239, 68, 68, 0.95);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  line-height: 1;
+  padding: 0;
+  font-weight: bold;
+}
+
+.remove-image:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+/* ==========================
+   FORM ACTIONS
+   ========================== */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 24px auto 0;
+  max-width: 900px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn-submit {
+  padding: 14px 36px;
+  background: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--ff-primary);
+  min-width: 160px;
+}
+
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  background: #2563eb;
+}
+
+.btn-submit:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.spinner-small {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================
+   SUCCESS MESSAGE
+   ========================== */
+.success-message {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: #10b981;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin: 0 auto 20px;
+  animation: successPop 0.5s ease;
+}
+
+@keyframes successPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.success-message h3 {
+  font-size: 1.5rem;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.success-message p {
+  font-size: 0.9375rem;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* ==========================
+   DESKTOP SPECIFIC
+   ========================== */
+@media (min-width: 769px) {
+  .review-form-wrapper .content-input-wrapper {
+    grid-template-columns: 1fr 180px !important;
+    margin: 0 auto 16px !important;
+  }
+}
+
+/* ==========================
+   RESPONSIVE
+   ========================== */
+@media (max-width: 768px) {
+  .review-form-wrapper {
+    padding: 20px 16px !important;
+    margin: 0 auto 20px !important;
+    max-width: 100% !important;
+  }
+
+  .form-title {
+    font-size: 1.125rem;
+  }
+
+  .rating-input {
+    padding: 14px 10px;
+    margin: 8px auto 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .star-buttons {
+    gap: 6px !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    padding: 0 8px !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+
+  .star-btn {
+    padding: 4px !important;
+    flex: 0 0 auto !important;
+    min-width: 24px !important;
+    max-width: 32px !important;
+    position: relative !important;
+    z-index: 11 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .star-icon {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Mobile: Đưa emoji và upload xuống dưới */
+  .content-input-wrapper {
+    display: grid !important;
+    max-width: 100% !important;
+    min-height: 150px !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto auto auto !important;
+    margin: 0 !important;
+  }
+  
+  .form-control {
+    width: 100% !important;
+    border: none !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    min-height: 120px !important;
+    font-size: 0.875rem !important;
+    padding: 12px 16px !important;
+    line-height: 1.5 !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / 2 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .content-toolbar {
+    padding: 12px 16px !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    grid-column: 1 / 2 !important;
+    grid-row: 2 / 3 !important;
+  }
+  
+  .emoji-toolbar {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .emoji-btn {
+    font-size: 1.125rem;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
+
+  .emoji-picker-content {
+    width: 85%;
+    max-width: 420px;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  
+  .upload-section {
+    padding: 12px 16px !important;
+    grid-column: 1 / 2 !important;
+    grid-row: 3 / 4 !important;
+  }
+  
+  .upload-btn {
+    flex-direction: row;
+    padding: 10px 20px;
+    font-size: 0.8125rem;
+  }
+  
+  .upload-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .form-actions {
+    justify-content: center;
+    margin: 20px auto 0;
+    max-width: 100%;
+    padding-top: 16px;
+  }
+
+  .btn-submit {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 24px;
+  }
+
+  .image-preview-item {
+    width: 80px;
+    height: 80px;
+  }
+
+  .image-previews {
+    gap: 8px !important;
+    padding: 12px 16px 8px !important;
+    grid-column: 1 / 2 !important;
+    grid-row: 4 / 5 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .review-form-wrapper {
+    padding: 16px 12px !important;
+    margin: 0 auto 16px !important;
+    max-width: 100% !important;
+  }
+
+  .form-title {
+    font-size: 1rem;
+  }
+
+  .rating-input {
+    padding: 12px 8px;
+    width: 100%;
+  }
+
+  .star-buttons {
+    gap: 4px !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    padding: 0 4px !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+  }
+
+  .star-btn {
+    padding: 2px !important;
+    flex: 0 0 auto !important;
+    min-width: 20px !important;
+    max-width: 28px !important;
+  }
+
+  .star-icon {
+    font-size: 1.25rem !important;
+  }
+
+  .emoji-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .emoji-picker-content {
+    width: 95%;
+    max-width: 350px;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .emoji-categories {
+    gap: 4px;
+  }
+
+  .emoji-category-btn {
+    padding: 6px 8px;
+    font-size: 0.875rem;
+  }
+
+  .form-control {
+    padding: 12px 14px !important;
+    min-height: 100px !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .image-preview-item {
+    width: 70px;
+    height: 70px;
+  }
+
+  .emoji-picker-content {
+    width: 95%;
+    max-width: 350px;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .emoji-categories {
+    gap: 4px;
+  }
+
+  .emoji-category-btn {
+    padding: 6px 8px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .rating-input {
+    padding: 10px 6px;
+    width: 100%;
+  }
+
+  .star-buttons {
+    gap: 3px !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    padding: 0 2px !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+  }
+
+  .star-btn {
+    padding: 1px !important;
+    flex: 0 0 auto !important;
+    min-width: 18px !important;
+    max-width: 24px !important;
+  }
+
+  .star-icon {
+    font-size: 1.125rem !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .rating-input {
+    padding: 10px 4px;
+  }
+
+  .star-buttons {
+    gap: 2px !important;
+    justify-content: space-between !important;
+    padding: 0 1px !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+  }
+
+  .star-btn {
+    padding: 0 !important;
+    min-width: 16px !important;
+    max-width: 20px !important;
+  }
+
+  .star-icon {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .review-form-wrapper {
+    padding: 12px 8px !important;
+    margin: 0 auto 12px !important;
+  }
+
+  .star-buttons {
+    gap: 1px !important;
+    padding: 0 1px !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+  }
+
+  .star-btn {
+    padding: 0 !important;
+    min-width: 14px !important;
+    max-width: 18px !important;
+  }
+
+  .star-icon {
+    font-size: 0.875rem !important;
+  }
+
+  .form-control {
+    padding: 10px 12px !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.5 !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    min-height: 80px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .emoji-picker-content {
+    width: 98%;
+    max-width: 320px;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .emoji-categories {
+    gap: 2px;
+  }
+
+  .emoji-category-btn {
+    padding: 4px 6px;
+    font-size: 0.75rem;
+  }
+
+  .emoji-picker-content {
+    width: 98%;
+    max-width: 300px;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .emoji-categories {
+    gap: 1px;
+  }
+
+  .emoji-picker-content {
+    width: 98%;
+    max-width: 300px;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+</style>
+
+<!-- =================================================================
+     SCRIPT
+     ================================================================= -->
+<script>
+(function() {
+  const form = document.getElementById('reviewForm');
+  const ratingInput = document.getElementById('ratingInput');
+  const ratingValue = document.getElementById('ratingValue');
+  const ratingLabel = document.getElementById('ratingLabel');
+  const titleInput = document.getElementById('reviewTitle');
+  const contentInput = document.getElementById('reviewContent');
+  const imagesInput = document.getElementById('reviewImages');
+  const imagePreviews = document.getElementById('imagePreviews');
+  const btnSubmit = document.getElementById('btnSubmit');
+  const successMessage = document.getElementById('successMessage');
+  
+  const targetType = '<%= _targetType %>';
+  const targetId = '<%= _targetId %>';
+  
+  let selectedRating = 0;
+  let selectedImages = [];
+
+  // =================================================================
+  // RATING STARS
+  // =================================================================
+  const starButtons = ratingInput.querySelectorAll('.star-btn');
+  starButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      selectedRating = parseInt(this.dataset.rating);
+      ratingValue.value = selectedRating;
+      
+      // Update UI
+      starButtons.forEach((b, idx) => {
+        if (idx < selectedRating) {
+          b.classList.add('active');
+          b.querySelector('.star-icon').style.color = '#fbbf24';
+        } else {
+          b.classList.remove('active');
+          b.querySelector('.star-icon').style.color = '#d1d5db';
+        }
+      });
+    });
+
+    btn.addEventListener('mouseenter', function() {
+      const rating = parseInt(this.dataset.rating);
+      starButtons.forEach((b, idx) => {
+        if (idx < rating) {
+          b.querySelector('.star-icon').style.color = '#fbbf24';
+        } else {
+          b.querySelector('.star-icon').style.color = '#d1d5db';
+        }
+      });
+    });
+
+    btn.addEventListener('mouseleave', function() {
+      starButtons.forEach((b, idx) => {
+        if (idx < selectedRating) {
+          b.classList.add('active');
+          b.querySelector('.star-icon').style.color = '#fbbf24';
+        } else {
+          b.classList.remove('active');
+          b.querySelector('.star-icon').style.color = '#d1d5db';
+        }
+      });
+    });
+  });
+
+  // =================================================================
+  // EMOJI PICKER
+  // =================================================================
+  const emojiPickerBtn = document.getElementById('emojiPickerBtn');
+  
+  emojiPickerBtn.addEventListener('click', function() {
+    // Tạo emoji picker modal
+    const emojiPicker = document.createElement('div');
+    emojiPicker.className = 'emoji-picker-modal';
+    emojiPicker.innerHTML = `
+      <div class="emoji-picker-content">
+        <div class="emoji-picker-header">
+          <h4>Chọn emoji</h4>
+          <button type="button" class="emoji-picker-close">&times;</button>
+        </div>
+        <div class="emoji-picker-body">
+          <div class="emoji-categories">
+            <button type="button" class="emoji-category-btn active" data-category="smileys">😊</button>
+            <button type="button" class="emoji-category-btn" data-category="people">👥</button>
+            <button type="button" class="emoji-category-btn" data-category="animals">🐶</button>
+            <button type="button" class="emoji-category-btn" data-category="food">🍕</button>
+            <button type="button" class="emoji-category-btn" data-category="travel">✈️</button>
+            <button type="button" class="emoji-category-btn" data-category="activities">⚽</button>
+            <button type="button" class="emoji-category-btn" data-category="objects">📱</button>
+            <button type="button" class="emoji-category-btn" data-category="symbols">❤️</button>
+            <button type="button" class="emoji-category-btn" data-category="flags">🏳️</button>
+          </div>
+          <div class="emoji-grid" id="emojiGrid">
+            <!-- Emojis will be loaded here -->
+          </div>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(emojiPicker);
+    
+    // Load emojis
+    loadEmojis('smileys');
+    
+    // Category switching
+    emojiPicker.querySelectorAll('.emoji-category-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Remove active class from all buttons
+        emojiPicker.querySelectorAll('.emoji-category-btn').forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+        // Load emojis for selected category
+        loadEmojis(this.dataset.category);
+      });
+    });
+    
+    // Close modal
+    emojiPicker.querySelector('.emoji-picker-close').addEventListener('click', () => {
+      document.body.removeChild(emojiPicker);
+    });
+    
+    // Close on outside click
+    emojiPicker.addEventListener('click', (e) => {
+      if (e.target === emojiPicker) {
+        document.body.removeChild(emojiPicker);
+      }
+    });
+  });
+  
+  function loadEmojis(category) {
+    const emojiGrid = document.getElementById('emojiGrid');
+    const emojis = getEmojisByCategory(category);
+    
+    emojiGrid.innerHTML = emojis.map(emoji => 
+      `<button type="button" class="emoji-item" data-emoji="${emoji}">${emoji}</button>`
+    ).join('');
+    
+    // Add click handlers
+    emojiGrid.querySelectorAll('.emoji-item').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const emoji = this.dataset.emoji;
+        const cursorPos = contentInput.selectionStart;
+        const textBefore = contentInput.value.substring(0, cursorPos);
+        const textAfter = contentInput.value.substring(cursorPos);
+        contentInput.value = textBefore + emoji + textAfter;
+        contentInput.focus();
+        contentInput.selectionStart = contentInput.selectionEnd = cursorPos + emoji.length;
+        
+        // Close modal
+        const modal = document.querySelector('.emoji-picker-modal');
+        if (modal) {
+          document.body.removeChild(modal);
+        }
+      });
+    });
+  }
+  
+  function getEmojisByCategory(category) {
+    const emojiData = {
+      smileys: ['😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', '🙃', '😉', '😊', '😇', '🥰', '😍', '🤩', '😘', '😗', '😚', '😙', '😋', '😛', '😜', '🤪', '😝', '🤑', '🤗', '🤭', '🤫', '🤔', '🤐', '🤨', '😐', '😑', '😶', '😏', '😒', '🙄', '😬', '🤥', '😔', '😪', '🤤', '😴', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '🥵', '🥶', '🥴', '😵', '🤯', '🤠', '🥳', '😎', '🤓', '🧐'],
+      people: ['👶', '🧒', '👦', '👧', '🧑', '👨', '👩', '🧓', '👴', '👵', '👱', '👨‍🦰', '👩‍🦰', '👨‍🦱', '👩‍🦱', '👨‍🦳', '👩‍🦳', '👨‍🦲', '👩‍🦲', '🧔', '👨‍💼', '👩‍💼', '👨‍💻', '👩‍💻', '👨‍🎓', '👩‍🎓', '👨‍🎤', '👩‍🎤', '👨‍🏫', '👩‍🏫', '👨‍🏭', '👩‍🏭', '👨‍💼', '👩‍💼', '👨‍🔬', '👩‍🔬', '👨‍💻', '👩‍💻', '👨‍🎨', '👩‍🎨', '👨‍🚒', '👩‍🚒', '👨‍✈️', '👩‍✈️', '👨‍🚀', '👩‍🚀', '👨‍⚖️', '👩‍⚖️', '👨‍🌾', '👩‍🌾', '👨‍🍳', '👩‍🍳', '👨‍🔧', '👩‍🔧', '👨‍🏭', '👩‍🏭', '👨‍💼', '👩‍💼', '👨‍🔬', '👩‍🔬', '👨‍💻', '👩‍💻', '👨‍🎨', '👩‍🎨', '👨‍🚒', '👩‍🚒', '👨‍✈️', '👩‍✈️', '👨‍🚀', '👩‍🚀', '👨‍⚖️', '👩‍⚖️', '👨‍🌾', '👩‍🌾', '👨‍🍳', '👩‍🍳', '👨‍🔧', '👩‍🔧'],
+      animals: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🙈', '🙉', '🙊', '🐒', '🦍', '🦧', '🐕', '🐩', '🐺', '🦊', '🦝', '🐱', '🦁', '🐯', '🐅', '🐆', '🐴', '🦄', '🦓', '🦌', '🐮', '🐂', '🐃', '🐄', '🐷', '🐖', '🐗', '🐽', '🐏', '🐑', '🐐', '🐪', '🐫', '🦙', '🦒', '🐘', '🦏', '🦛', '🐭', '🐁', '🐀', '🐹', '🐰', '🐇', '🐿️', '🦔', '🦇', '🐻', '🐨', '🐼', '🦥', '🦦', '🦨', '🦡', '🦃', '🐔', '🐓', '🐣', '🐤', '🐥', '🐦', '🐧', '🕊️', '🦅', '🦆', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐞', '🐜', '🦟', '🦗', '🕷️', '🕸️', '🦂', '🐢', '🐍', '🦎', '🦖', '🦕', '🐙', '🦑', '🦐', '🦞', '🦀', '🐡', '🐠', '🐟', '🐬', '🐳', '🐋', '🦈', '🐊', '🐅', '🐆', '🦓', '🦍', '🦧', '🐘', '🦛', '🦏', '🐪', '🐫', '🦒', '🐃', '🐂', '🐄', '🐎', '🐖', '🐏', '🐑', '🦙', '🐐', '🦌', '🐕', '🐩', '🦮', '🐕‍🦺', '🐈', '🐓', '🦃', '🦚', '🦜', '🦢', '🦩', '🕊️', '🐇', '🦝', '🦨', '🦡', '🦦', '🦥', '🐁', '🐀', '🐿️', '🦔'],
+      food: ['🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝', '🍅', '🍆', '🥑', '🥦', '🥬', '🥒', '🌶️', '🫑', '🌽', '🥕', '🫒', '🧄', '🧅', '🥔', '🍠', '🥐', '🥖', '🍞', '🥨', '🥯', '🧀', '🥚', '🍳', '🧈', '🥞', '🧇', '🥓', '🥩', '🍗', '🍖', '🦴', '🌭', '🍔', '🍟', '🍕', '🫓', '🥙', '🌮', '🌯', '🫔', '🥗', '🥘', '🫕', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🦪', '🍤', '🍙', '🍚', '🍘', '🍥', '🥠', '🥮', '🍢', '🍡', '🍧', '🍨', '🍦', '🥧', '🧁', '🍰', '🎂', '🍮', '🍭', '🍬', '🍫', '🍿', '🍩', '🍪', '🌰', '🥜', '🍯'],
+      travel: ['✈️', '🛫', '🛬', '🛩️', '💺', '🛰️', '🚀', '🛸', '🚁', '🛶', '⛵', '🚤', '🛥️', '🛳️', '⛴️', '🚢', '⚓', '🚧', '⛽', '🚏', '🚦', '🚥', '🗺️', '🗿', '🗽', '🗼', '🏰', '🏯', '🏟️', '🎡', '🎢', '🎠', '⛲', '⛱️', '🏖️', '🏝️', '🏔️', '⛰️', '🌋', '🗻', '🏕️', '⛺', '🛖', '🏠', '🏡', '🏘️', '🏚️', '🏗️', '🏭', '🏢', '🏬', '🏣', '🏤', '🏥', '🏦', '🏨', '🏪', '🏫', '🏩', '💒', '🏛️', '⛪', '🕌', '🛕', '🕍', '🕋', '⛩️', '🛤️', '🛣️', '🗾', '🎑', '🏞️', '🌅', '🌄', '🌠', '🎇', '🎆', '🌇', '🌆', '🏙️', '🌃', '🌌', '🌉', '🌁'],
+      activities: ['⚽', '🏀', '🏈', '⚾', '🥎', '🎾', '🏐', '🏉', '🎱', '🪀', '🏓', '🏸', '🏒', '🏑', '🥍', '🏏', '🪃', '🥅', '⛳', '🪁', '🏹', '🎣', '🤿', '🥊', '🥋', '🎽', '🛹', '🛷', '⛸️', '🥌', '🎿', '⛷️', '🏂', '🪂', '🏋️‍♀️', '🏋️', '🏋️‍♂️', '🤼‍♀️', '🤼', '🤼‍♂️', '🤸‍♀️', '🤸', '🤸‍♂️', '⛹️‍♀️', '⛹️', '⛹️‍♂️', '🤺', '🤾‍♀️', '🤾', '🤾‍♂️', '🏌️‍♀️', '🏌️', '🏌️‍♂️', '🏇', '🧘‍♀️', '🧘', '🧘‍♂️', '🏄‍♀️', '🏄', '🏄‍♂️', '🏊‍♀️', '🏊', '🏊‍♂️', '🤽‍♀️', '🤽', '🤽‍♂️', '🚣‍♀️', '🚣', '🚣‍♂️', '🧗‍♀️', '🧗', '🧗‍♂️', '🚵‍♀️', '🚵', '🚵‍♂️', '🚴‍♀️', '🚴', '🚴‍♂️', '🏆', '🥇', '🥈', '🥉', '🏅', '🎖️', '🏵️', '🎗️', '🎫', '🎟️', '🎪', '🤹', '🤹‍♀️', '🤹‍♂️', '🎭', '🩰', '🎨', '🎬', '🎤', '🎧', '🎼', '🎵', '🎶', '🪘', '🥁', '🪗', '🎸', '🪕', '🎺', '🎷', '🪗', '🎹', '🎻', '🪕', '🎸', '🎺', '🎷', '🪗', '🎹', '🎻'],
+      objects: ['📱', '📲', '☎️', '📞', '📟', '📠', '🔋', '🔌', '💻', '🖥️', '🖨️', '⌨️', '🖱️', '🖲️', '💽', '💾', '💿', '📀', '🧮', '🎥', '📷', '📸', '📹', '📼', '🔍', '🔎', '🕯️', '💡', '🔦', '🏮', '🪔', '📔', '📕', '📖', '📗', '📘', '📙', '📚', '📓', '📒', '📃', '📜', '📄', '📰', '🗞️', '📑', '🔖', '🏷️', '💰', '💴', '💵', '💶', '💷', '💸', '💳', '💎', '⚖️', '🧰', '🔧', '🔨', '⚒️', '🛠️', '⛏️', '🔩', '⚙️', '🧱', '⛓️', '🧲', '🔫', '💣', '🧨', '🪓', '🔪', '🗡️', '⚔️', '🛡️', '🚬', '⚰️', '🪦', '⚱️', '🏺', '🔮', '📿', '🧿', '💈', '⚗️', '🔭', '🔬', '🕳️', '🩹', '🩺', '💊', '💉', '🧬', '🦠', '🧫', '🧪', '🌡️', '🧹', '🧺', '🧻', '🚽', '🚰', '🚿', '🛁', '🛀', '🧴', '🧷', '🧸', '🧵', '🧶', '🪡', '🪢', '🧦', '🧤', '🧥', '🦺', '👕', '👖', '🩱', '🩲', '🩳', '👔', '👗', '👙', '👚', '👛', '👜', '👝', '🛍️', '🎒', '👞', '👟', '🥾', '🥿', '👠', '👡', '🩰', '👢', '👑', '👒', '🎩', '🎓', '🧢', '⛑️', '📿', '💄', '💍', '💎'],
+      symbols: ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔', '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '☮️', '✝️', '☪️', '🕉️', '☸️', '✡️', '🔯', '🕎', '☯️', '☦️', '🛐', '⛎', '♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓', '🆔', '⚛️', '🉑', '☢️', '☣️', '📴', '📳', '🈶', '🈚', '🈸', '🈺', '🈷️', '✴️', '🆚', '💮', '🉐', '㊙️', '㊗️', '🈴', '🈵', '🈹', '🈲', '🅰️', '🅱️', '🆎', '🆑', '🅾️', '🆘', '❌', '⭕', '🛑', '⛔', '📛', '🚫', '💯', '💢', '♨️', '🚷', '🚯', '🚳', '🚱', '🔞', '📵', '🚭', '❗', '❕', '❓', '❔', '‼️', '⁉️', '🔅', '🔆', '〽️', '⚠️', '🚸', '🔱', '⚜️', '🔰', '♻️', '✅', '🈯', '💹', '❇️', '✳️', '❎', '🌐', '💠', 'Ⓜ️', '🌀', '💤', '🏧', '🚾', '♿', '🅿️', '🈳', '🈂️', '🛂', '🛃', '🛄', '🛅', '🚹', '🚺', '🚼', '⚧', '🚻', '🚮', '🎦', '📶', '🈁', '🔣', '🔤', 'ℹ️', '🔢', '🔡', '🆕', '🆓', '🆒', '🆑', '🆔', '🆗', '🆙', '🆚', '🈁', '🈂️', '🈷️', '🈶', '🈯', '🉐', '㊗️', '㊙️', '🈺', '🈵', '🈴', '🈲', '🉑', '🈸', '🈹', '🈚', '📶', '🈁', '🔣', '🔤', 'ℹ️', '🔢', '🔡', '🆕', '🆓', '🆒', '🆑', '🆔', '🆗', '🆙', '🆚', '🈁', '🈂️', '🈷️', '🈶', '🈯', '🉐', '㊗️', '㊙️', '🈺', '🈵', '🈴', '🈲', '🉑', '🈸', '🈹', '🈚'],
+      flags: ['🏳️', '🏴', '🏁', '🚩', '🏳️‍🌈', '🏳️‍⚧️', '🏴‍☠️', '🇦🇨', '🇦🇩', '🇦🇪', '🇦🇫', '🇦🇬', '🇦🇮', '🇦🇱', '🇦🇲', '🇦🇴', '🇦🇶', '🇦🇷', '🇦🇸', '🇦🇹', '🇦🇺', '🇦🇼', '🇦🇽', '🇦🇿', '🇧🇦', '🇧🇧', '🇧🇩', '🇧🇪', '🇧🇫', '🇧🇬', '🇧🇭', '🇧🇮', '🇧🇯', '🇧🇱', '🇧🇲', '🇧🇳', '🇧🇴', '🇧🇶', '🇧🇷', '🇧🇸', '🇧🇹', '🇧🇻', '🇧🇼', '🇧🇾', '🇧🇿', '🇨🇦', '🇨🇨', '🇨🇩', '🇨🇫', '🇨🇬', '🇨🇭', '🇨🇮', '🇨🇰', '🇨🇱', '🇨🇲', '🇨🇳', '🇨🇴', '🇨🇵', '🇨🇷', '🇨🇺', '🇨🇻', '🇨🇼', '🇨🇽', '🇨🇾', '🇨🇿', '🇩🇪', '🇩🇬', '🇩🇯', '🇩🇰', '🇩🇲', '🇩🇴', '🇩🇿', '🇪🇦', '🇪🇨', '🇪🇪', '🇪🇬', '🇪🇭', '🇪🇷', '🇪🇸', '🇪🇹', '🇪🇺', '🇫🇮', '🇫🇯', '🇫🇰', '🇫🇲', '🇫🇴', '🇫🇷', '🇬🇦', '🇬🇧', '🇬🇩', '🇬🇪', '🇬🇫', '🇬🇬', '🇬🇭', '🇬🇮', '🇬🇱', '🇬🇲', '🇬🇳', '🇬🇵', '🇬🇶', '🇬🇷', '🇬🇸', '🇬🇹', '🇬🇺', '🇬🇼', '🇬🇾', '🇭🇰', '🇭🇲', '🇭🇳', '🇭🇷', '🇭🇹', '🇭🇺', '🇮🇨', '🇮🇩', '🇮🇪', '🇮🇱', '🇮🇲', '🇮🇳', '🇮🇴', '🇮🇶', '🇮🇷', '🇮🇸', '🇮🇹', '🇯🇪', '🇯🇲', '🇯🇴', '🇯🇵', '🇰🇪', '🇰🇬', '🇰🇭', '🇰🇮', '🇰🇲', '🇰🇳', '🇰🇵', '🇰🇷', '🇰🇼', '🇰🇾', '🇰🇿', '🇱🇦', '🇱🇧', '🇱🇨', '🇱🇮', '🇱🇰', '🇱🇷', '🇱🇸', '🇱🇹', '🇱🇺', '🇱🇻', '🇱🇾', '🇲🇦', '🇲🇨', '🇲🇩', '🇲🇪', '🇲🇫', '🇲🇬', '🇲🇭', '🇲🇰', '🇲🇱', '🇲🇲', '🇲🇳', '🇲🇴', '🇲🇵', '🇲🇶', '🇲🇷', '🇲🇸', '🇲🇹', '🇲🇺', '🇲🇻', '🇲🇼', '🇲🇽', '🇲🇾', '🇲🇿', '🇳🇦', '🇳🇨', '🇳🇪', '🇳🇫', '🇳🇬', '🇳🇮', '🇳🇱', '🇳🇴', '🇳🇵', '🇳🇷', '🇳🇺', '🇳🇿', '🇴🇲', '🇵🇦', '🇵🇪', '🇵🇫', '🇵🇬', '🇵🇭', '🇵🇰', '🇵🇱', '🇵🇲', '🇵🇳', '🇵🇷', '🇵🇸', '🇵🇹', '🇵🇼', '🇵🇾', '🇶🇦', '🇷🇪', '🇷🇴', '🇷🇸', '🇷🇺', '🇷🇼', '🇸🇦', '🇸🇧', '🇸🇨', '🇸🇩', '🇸🇪', '🇸🇬', '🇸🇭', '🇸🇮', '🇸🇯', '🇸🇰', '🇸🇱', '🇸🇲', '🇸🇳', '🇸🇴', '🇸🇷', '🇸🇸', '🇸🇹', '🇸🇻', '🇸🇽', '🇸🇾', '🇸🇿', '🇹🇦', '🇹🇨', '🇹🇩', '🇹🇫', '🇹🇬', '🇹🇭', '🇹🇯', '🇹🇰', '🇹🇱', '🇹🇲', '🇹🇳', '🇹🇴', '🇹🇷', '🇹🇹', '🇹🇻', '🇹🇼', '🇹🇿', '🇺🇦', '🇺🇬', '🇺🇲', '🇺🇳', '🇺🇸', '🇺🇾', '🇺🇿', '🇻🇦', '🇻🇨', '🇻🇪', '🇻🇬', '🇻🇮', '🇻🇳', '🇻🇺', '🇼🇫', '🇼🇸', '🇽🇰', '🇾🇪', '🇾🇹', '🇿🇦', '🇿🇲', '🇿🇼']
+    };
+    
+    return emojiData[category] || emojiData.smileys;
+  }
+
+  // =================================================================
+  // IMAGE UPLOAD
+  // =================================================================
+  imagesInput.addEventListener('change', function(e) {
+    const files = Array.from(e.target.files);
+    
+    // Limit to 5 images
+    if (selectedImages.length + files.length > 5) {
+      alert('Bạn chỉ có thể tải lên tối đa 5 ảnh');
+      return;
+    }
+
+    files.forEach(file => {
+      if (file.type.startsWith('image/')) {
+        selectedImages.push(file);
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const div = document.createElement('div');
+          div.className = 'image-preview-item';
+          div.innerHTML = `
+            <img src="${e.target.result}" alt="Preview" class="preview-image">
+            <button type="button" class="remove-image" onclick="removeImage(${selectedImages.length - 1})">×</button>
+          `;
+          imagePreviews.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Clear input
+    imagesInput.value = '';
+  });
+
+  window.removeImage = function(index) {
+    selectedImages.splice(index, 1);
+    renderImagePreviews();
+  };
+
+  function renderImagePreviews() {
+    imagePreviews.innerHTML = '';
+    selectedImages.forEach((file, index) => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const div = document.createElement('div');
+        div.className = 'image-preview-item';
+        div.innerHTML = `
+          <img src="${e.target.result}" alt="Preview" class="preview-image">
+          <button type="button" class="remove-image" onclick="removeImage(${index})">×</button>
+        `;
+        imagePreviews.appendChild(div);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // No cancel button in simple form
+
+  // =================================================================
+  // FORM SUBMIT
+  // =================================================================
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Validation
+    if (!selectedRating) {
+      alert('Vui lòng chọn số sao đánh giá');
+      return;
+    }
+
+    if (!contentInput.value.trim()) {
+      alert('Vui lòng nhập nội dung đánh giá');
+      return;
+    }
+
+    // Show loading
+    btnSubmit.disabled = true;
+    btnSubmit.querySelector('.btn-text').style.display = 'none';
+    btnSubmit.querySelector('.btn-loading').style.display = 'inline-flex';
+
+    try {
+      const formData = new FormData();
+      formData.append('rating', selectedRating);
+      formData.append('title', titleInput.value);
+      formData.append('content', contentInput.value);
+      
+      // Add images
+      selectedImages.forEach(file => {
+        formData.append('images', file);
+      });
+
+      // Debug logging
+      console.log('=== FORM DATA DEBUG ===');
+      console.log('Rating:', selectedRating);
+      console.log('Title:', titleInput.value);
+      console.log('Content:', contentInput.value);
+      console.log('Images:', selectedImages.length);
+      for (let pair of formData.entries()) {
+        console.log(pair[0], ':', pair[1]);
+      }
+
+      const response = await fetch(`/api/reviews/${targetType}/${targetId}`, {
+        method: 'POST',
+        body: formData
+      });
+
+      // Check if response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        // Not JSON, probably redirected to login
+        throw new Error('Vui lòng đăng nhập để đánh giá');
+      }
+
+      const data = await response.json();
+
+      if (response.status === 401) {
+        // Unauthorized - need login
+        throw new Error(data.message || 'Vui lòng đăng nhập để đánh giá');
+      }
+
+      if (data.success) {
+        // Show success message
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+      } else {
+        throw new Error(data.message || 'Có lỗi xảy ra');
+      }
+    } catch (error) {
+      console.error('Submit error:', error);
+      
+      // If it's a login error, offer to redirect
+      if (error.message.includes('đăng nhập')) {
+        const shouldRedirect = confirm(error.message + '\n\nBạn có muốn đến trang đăng nhập không?');
+        if (shouldRedirect) {
+          window.location.href = '/auth/login?redirect=' + encodeURIComponent(window.location.pathname);
+          return;
+        }
+      } else {
+        alert(error.message || 'Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại.');
+      }
+      
+      // Reset loading state
+      btnSubmit.disabled = false;
+      btnSubmit.querySelector('.btn-text').style.display = 'inline';
+      btnSubmit.querySelector('.btn-loading').style.display = 'none';
+    }
+  });
+})();
+</script>
+

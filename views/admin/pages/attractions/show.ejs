@@ -1,0 +1,398 @@
+<!-- Page Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><%= pageTitle %></h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="/admin/attractions" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-arrow-left me-2"></i>
+            Quay lại
+        </a>
+        <a href="/admin/attractions/<%= attraction._id %>/edit" class="btn btn-primary">
+            <i class="fas fa-edit me-2"></i>
+            Chỉnh sửa
+        </a>
+    </div>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.success && flash.success.length > 0) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <%= flash.success[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<div class="row">
+    <!-- === THÔNG TIN CƠ BẢN === -->
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Thông tin cơ bản
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tên điểm tham quan:</label>
+                            <p class="mb-0"><%= attraction.name %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Danh mục:</label>
+                    <p class="mb-0">
+                                <% 
+                                    const categoryLabels = {
+                                        'nhan-van': 'Điểm tham quan nhân văn',
+                                        'tu-nhien': 'Điểm đến tham quan tự nhiên'
+                                    };
+                                %>
+                                <span class="badge bg-info">
+                                    <%= categoryLabels[attraction.category] || attraction.category %>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Địa chỉ:</label>
+                            <p class="mb-0"><%= attraction.address %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Quận/Huyện:</label>
+                            <p class="mb-0"><%= attraction.district %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Giờ mở cửa:</label>
+                            <p class="mb-0"><%= attraction.opening_hours || 'Chưa có' %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Trạng thái:</label>
+                            <p class="mb-0">
+                                <% if (attraction.isActive) { %>
+                                    <span class="badge bg-success">Hoạt động</span>
+                                <% } else { %>
+                                    <span class="badge bg-secondary">Tạm dừng</span>
+                                <% } %>
+                                <% if (attraction.featured) { %>
+                                    <span class="badge bg-warning ms-1">Nổi bật</span>
+                                <% } %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === GIÁ VÉ === -->
+    <% if (attraction.ticket_info) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-ticket-alt me-2"></i>
+                    Thông tin giá vé
+                </h5>
+            </div>
+            <div class="card-body">
+                <pre class="mb-0" style="white-space: pre-wrap;"><%= attraction.ticket_info %></pre>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === NỘI DUNG === -->
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-file-alt me-2"></i>
+                    Nội dung
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Giới thiệu:</label>
+                            <p class="mb-0"><%= attraction.intro || 'Chưa có' %></p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Mô tả chi tiết:</label>
+                            <p class="mb-0"><%= attraction.description %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === ĐIỂM NỔI BẬT === -->
+    <% if (attraction.highlights && attraction.highlights.length > 0) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-star me-2"></i>
+                    Điểm nổi bật
+                </h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <% attraction.highlights.forEach(highlight => { %>
+                        <li><i class="fas fa-check text-success me-2"></i><%= highlight %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === LƯU Ý KHÁCH DU LỊCH === -->
+    <% if (attraction.visitor_notes && attraction.visitor_notes.length > 0) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Lưu ý cho khách du lịch
+                </h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <% attraction.visitor_notes.forEach(note => { %>
+                        <li><i class="fas fa-info-circle text-info me-2"></i><%= note %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === HÌNH ẢNH === -->
+    <% if (attraction.images && attraction.images.length > 0) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-images me-2"></i>
+                    Hình ảnh (<%= attraction.images.length %>)
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <% attraction.images.forEach((image, index) => { %>
+                        <div class="col-md-3 mb-3">
+                            <div class="card">
+                                <img src="<%= image %>" class="card-img-top" alt="<%= attraction.name %>" style="height: 200px; object-fit: cover;">
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === BẢN ĐỒ === -->
+    <% if (attraction.map && (attraction.map.lat || attraction.map.lng || attraction.map.link)) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Thông tin bản đồ
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <% if (attraction.map.lat && attraction.map.lng) { %>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Tọa độ:</label>
+                                <p class="mb-0"><%= attraction.map.lat %>, <%= attraction.map.lng %></p>
+                            </div>
+                        </div>
+                    <% } %>
+                    <% if (attraction.map.link) { %>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Link bản đồ:</label>
+                                <p class="mb-0"><a href="<%= attraction.map.link %>" target="_blank"><%= attraction.map.link %></a></p>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === ĐÁNH GIÁ === -->
+    <% if (attraction.reviews && attraction.reviews.length > 0) { %>
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-star me-2"></i>
+                    Đánh giá (<%= attraction.reviews.length %>)
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">Đánh giá trung bình:</span>
+                            <div class="rating me-2">
+                                <% for (let i = 1; i <= 5; i++) { %>
+                                    <i class="fas fa-star <%= i <= attraction.averageRating ? 'text-warning' : 'text-muted' %>"></i>
+                                <% } %>
+                            </div>
+                            <strong><%= attraction.averageRating %></strong>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-muted">Tổng số đánh giá: <%= attraction.reviews.length %></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <% attraction.reviews.slice(0, 3).forEach(review => { %>
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="rating me-2">
+                                            <% for (let i = 1; i <= 5; i++) { %>
+                                                <i class="fas fa-star <%= i <= review.rating ? 'text-warning' : 'text-muted' %>" style="font-size: 0.8em;"></i>
+                                            <% } %>
+                                        </div>
+                                        <small class="text-muted"><%= new Date(review.date).toLocaleDateString('vi-VN') %></small>
+                                    </div>
+                                    <p class="mb-1"><strong><%= review.user %></strong></p>
+                                    <% if (review.comment) { %>
+                                        <p class="mb-0"><%= review.comment %></p>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+                <% if (attraction.reviews.length > 3) { %>
+                    <div class="text-center">
+                        <small class="text-muted">Và <%= attraction.reviews.length - 3 %> đánh giá khác...</small>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- === THÔNG TIN HỆ THỐNG === -->
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-cog me-2"></i>
+                    Thông tin hệ thống
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">ID:</label>
+                            <p class="mb-0"><%= attraction._id %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Slug:</label>
+                            <p class="mb-0"><%= attraction.slug || 'Chưa có' %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ngày tạo:</label>
+                            <p class="mb-0"><%= new Date(attraction.createdAt).toLocaleString('vi-VN') %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Cập nhật lần cuối:</label>
+                            <p class="mb-0"><%= new Date(attraction.updatedAt).toLocaleString('vi-VN') %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actions -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <a href="/admin/attractions" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Quay lại danh sách
+                    </a>
+                    <div>
+                        <a href="/admin/attractions/<%= attraction._id %>/edit" class="btn btn-primary me-2">
+                            <i class="fas fa-edit me-2"></i>
+                            Chỉnh sửa
+                        </a>
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete('<%= attraction._id %>', '<%= attraction.name %>')">
+                            <i class="fas fa-trash me-2"></i>
+                            Xóa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa điểm tham quan <strong id="deleteName"></strong>?</p>
+                <p class="text-danger"><small>Hành động này không thể hoàn tác!</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <form id="deleteForm" method="POST" style="display: inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDelete(id, name) {
+    document.getElementById('deleteName').textContent = name;
+    document.getElementById('deleteForm').action = '/admin/attractions/delete/' + id;
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+</script>

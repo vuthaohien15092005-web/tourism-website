@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Top 10 địa điểm sống ảo hot ở Hà Nội' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Khám phá 10 địa điểm sống ảo hot nhất Hà Nội dành cho giới trẻ.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'địa điểm sống ảo Hà Nội, check-in Hà Nội, chụp ảnh Hà Nội, Hà Nội Vibes' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Top 10 địa điểm sống ảo Hà Nội"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Khám phá 10 địa điểm sống ảo hot nhất Hà Nội dành cho giới trẻ",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-03-01') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/instagram-spots-hanoi.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Top 10 địa điểm check-in đẹp, mới lạ ở Hà Nội cho giới trẻ.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/instagram-spots-hanoi.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Top 10 địa điểm sống ảo Hà Nội</span></div>
+        <h1 class="post-title">Khám phá 10 địa điểm sống ảo hot nhất Hà Nội dành cho giới trẻ</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '01/03/2024' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Cẩm nang</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>BÀI 3 – Khám phá 10 địa điểm sống ảo hot nhất Hà Nội</h2>
+          <p>Hà Nội không chỉ là thủ đô nghìn năm văn hiến với nhiều di tích lịch sử, mà còn là “thiên đường sống ảo” dành cho giới trẻ. Từ những con phố cổ rêu phong, mái ngói xưa cũ đến những góc hiện đại đầy nghệ thuật, mỗi nơi đều mang một vẻ đẹp riêng biệt, lý tưởng để bạn lưu giữ khoảnh khắc đáng nhớ. Nếu bạn đang tìm kiếm những địa điểm check-in đẹp, mới lạ và đầy cảm hứng tại Hà Nội - “Hà Nội Vibes” chính là gợi ý lý tưởng.</p>
+          <p>Hà Nội là cái tên chưa bao giờ hết hot trong bản đồ du lịch Việt Nam. Không chỉ sở hữu vẻ đẹp sầm uất, hiện đại chốn thủ đô, nơi đây còn mang trong mình nét nhẹ nhàng, cổ kính hiếm thấy. Vậy đến Hà Nội nên chụp ảnh sống ảo ở đâu? Trong bài viết sau đây, Hà Nội Vibes sẽ bật mí cho bạn danh sách các địa điểm check in Hà Nội hot nhất nhất định không nên bỏ qua.</p>
+        </section>
+
+
+        <!-- Sections: Top 10 -->
+        <section class="article-section" id="pho-co">
+          <h2>1. Phố cổ Hà Nội – Nét đẹp thời gian giữa lòng Thủ đô</h2>
+          <div class="location-image">
+            <img src="/client/img/pho-co-ha-noi.jpg" alt="Phố cổ Hà Nội" />
+            <figcaption>Phố cổ Hà Nội - nét đẹp rêu phong của thời gian</figcaption>
+          </div>
+          <p>Phố cổ là biểu tượng của Hà Nội, nơi lưu giữ vẻ đẹp rêu phong của những ngôi nhà cổ, những con ngõ nhỏ và hàng quán dân dã. Tới đây, bạn có thể chụp ảnh giữa những con phố như Hàng Mã, Hàng Đào, hay quanh hồ Hoàn Kiếm – nơi nào cũng mang nét cổ kính và "vintage" hoàn hảo cho bộ ảnh sống ảo.</p>
+        </section>
+
+        <section class="article-section" id="ho-hoan-kiem">
+          <h2>2. Hồ Hoàn Kiếm – Trái tim của Hà Nội</h2>
+          <div class="location-image">
+            <img src="/client/img/banner-home.jpg" alt="Hồ Hoàn Kiếm và Tháp Rùa" />
+            <figcaption>Hồ Hoàn Kiếm - trái tim của thủ đô</figcaption>
+          </div>
+          <p>Là biểu tượng nổi tiếng nhất Thủ đô, hồ Hoàn Kiếm mang vẻ đẹp vừa thơ mộng vừa lịch sử. Những bức ảnh check-in bên Tháp Rùa, Cầu Thê Húc đỏ rực hay Đền Ngọc Sơn đều khiến ai nhìn cũng phải "say lòng".</p>
+        </section>
+
+        <section class="article-section" id="long-bien">
+          <h2>3. Cầu Long Biên – Chứng nhân lịch sử trăm năm</h2>
+          <div class="location-image">
+            <img src="/client/img/cau-long-bien.jpg" alt="Cầu Long Biên" />
+            <figcaption>Cầu Long Biên - chứng nhân lịch sử trăm năm</figcaption>
+          </div>
+          <p>Cầu Long Biên mang nét đẹp bụi bặm, hoài cổ rất riêng, là địa điểm quen thuộc cho những ai yêu phong cách retro. Đứng trên cầu ngắm sông Hồng lúc bình minh hay hoàng hôn, bạn sẽ có ngay những khung hình "nghệ thuật" đầy cảm xúc.</p>
+        </section>
+
+        <section class="article-section" id="phung-hung">
+          <h2>4. Phố Bích Họa Phùng Hưng – Không gian nghệ thuật giữa phố cổ</h2>
+          <div class="location-image">
+            <img src="/client/img/pho-bich-hoa-phung-hung.jpg" alt="Phố Bích Họa Phùng Hưng" />
+            <figcaption>Phố Bích Họa Phùng Hưng - không gian nghệ thuật</figcaption>
+          </div>
+          <p>Phố Phùng Hưng gây ấn tượng với dãy bức tranh tường tái hiện hình ảnh Hà Nội xưa: gánh hàng rong, tàu điện, chợ hoa… Mỗi góc nhỏ đều là "background triệu like" cho những ai đam mê sáng tạo ảnh.</p>
+        </section>
+
+        <section class="article-section" id="nha-tho-lon">
+          <h2>5. Nhà Thờ Lớn Hà Nội – Biểu tượng Châu Âu giữa lòng phố cổ</h2>
+          <div class="location-image">
+            <img src="/client/img/nha-tho-lon-ha-noi.jpg" alt="Nhà Thờ Lớn Hà Nội" />
+            <figcaption>Nhà Thờ Lớn Hà Nội - kiến trúc Gothic phương Tây</figcaption>
+          </div>
+          <p>Được xây dựng theo kiến trúc Gothic phương Tây, Nhà Thờ Lớn là điểm đến cực "hot" cho giới trẻ và khách du lịch. Dù là chụp ảnh buổi sáng với ánh nắng nhẹ hay buổi tối lung linh ánh đèn, nơi đây đều mang lại khung hình đẹp mê mẩn.</p>
+        </section>
+
+        <section class="article-section" id="lotte">
+          <h2>6. Lotte Observation Deck – Rooftop ngắm trọn Hà Nội</h2>
+          <div class="location-image">
+            <img src="/client/img/lotte-observation-deck.jpg" alt="Lotte Observation Deck" />
+            <figcaption>Lotte Observation Deck - view toàn cảnh Hà Nội từ trên cao</figcaption>
+          </div>
+          <p>Từ tầng 65 của tòa nhà Lotte Center, bạn có thể chiêm ngưỡng toàn cảnh Hà Nội từ trên cao. Đây là nơi lý tưởng để "săn" hoàng hôn, chụp ảnh đêm và trải nghiệm cảm giác sang chảnh giữa không trung.</p>
+        </section>
+
+        <section class="article-section" id="cat-linh">
+          <h2>7. Ga Cát Linh – Hà Đông – Check-in phong cách hiện đại</h2>
+          <div class="location-image">
+            <img src="/client/img/ga-cat-linh.jpg" alt="Ga Cát Linh - Hà Đông" />
+            <figcaption>Ga Cát Linh - Hà Đông - phong cách hiện đại</figcaption>
+          </div>
+          <p>Với thiết kế mang đậm hơi thở đô thị mới, tuyến đường sắt trên cao Cát Linh – Hà Đông đang trở thành "tọa độ sống ảo" yêu thích của giới trẻ. Nhiều bạn trẻ chọn ga tàu làm bối cảnh cho ảnh street style năng động, cá tính.</p>
+        </section>
+
+        <section class="article-section" id="pho-di-bo">
+          <h2>8. Phố đi bộ Hồ Gươm – Không gian trẻ trung, sôi động</h2>
+          <div class="location-image">
+            <img src="/client/img/pho-di-bo-ho-guom.png" alt="Phố đi bộ Hồ Gươm" />
+            <figcaption>Phố đi bộ Hồ Gươm - không gian trẻ trung, sôi động</figcaption>
+          </div>
+          <p>Cuối tuần, phố đi bộ quanh Hồ Gươm là nơi tụ tập của hàng nghìn bạn trẻ. Những màn biểu diễn đường phố, trò chơi dân gian và không gian mở đầy màu sắc khiến nơi đây luôn là điểm check-in nhộn nhịp và năng động bậc nhất.</p>
+        </section>
+
+        <section class="article-section" id="bat-trang">
+          <h2>9. Làng gốm Bát Tràng – Vẻ đẹp truyền thống và sáng tạo</h2>
+          <div class="location-image">
+            <img src="/client/img/lang-gom-bat-trang.jpg" alt="Làng gốm Bát Tràng" />
+            <figcaption>Làng gốm Bát Tràng - vẻ đẹp truyền thống</figcaption>
+          </div>
+          <p>Cách trung tâm Hà Nội khoảng 15 phút, làng nghề Bát Tràng nổi tiếng với những sản phẩm gốm sứ tinh xảo. Du khách có thể vừa chụp ảnh với những con ngõ gốm cổ kính, vừa tự tay làm gốm để lưu lại trải nghiệm đáng nhớ.</p>
+        </section>
+
+        <section class="article-section" id="ho-tay">
+          <h2>10. Hồ Tây – Nơi hoàng hôn đẹp nhất Hà Nội</h2>
+          <div class="location-image">
+            <img src="/client/img/hotay.jpg" alt="Hồ Tây" />
+            <figcaption>Hồ Tây - nơi hoàng hôn đẹp nhất Hà Nội</figcaption>
+          </div>
+          <p>Hồ Tây là "thiên đường" cho những ai yêu khung cảnh lãng mạn. Buổi chiều, khi ánh nắng cuối ngày phủ vàng mặt hồ, bạn sẽ có được những bức ảnh ngập tràn cảm xúc. Đừng quên ghé những quán cà phê ven hồ để tận hưởng view sống ảo cực chill nhé!</p>
+        </section>
+
+        <section class="article-section tips">
+          <h2>Mẹo nhỏ để ảnh sống ảo đẹp hơn</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-sun-o"></i> Khung giờ “vàng”: 7–9h sáng, 16–18h chiều.</div>
+            <div class="tip"><i class="fa fa-map-marker"></i> Ưu tiên góc chụp có chiều sâu, dẫn hướng.</div>
+            <div class="tip"><i class="fa fa-paint-brush"></i> Phối đồ ton-sur-ton với bối cảnh để nổi bật.</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>Kết luận</h2>
+          <p>Hà Nội vốn nổi tiếng với lịch sử, văn hóa và ẩm thực đặc sắc — nhưng ít người biết rằng thành phố này còn là mảnh đất vàng của những “tọa độ sống ảo” dành cho giới trẻ. Dù là những con phố cổ rêu phong, những mái ngói nhà xưa hay những rooftop cao thoáng ngắm trọn thành phố, mỗi địa điểm đều mang một “vibe” rất riêng. Nếu bạn đang tìm một địa chỉ lý tưởng để chụp ảnh, đi chơi cùng bạn bè hoặc đơn giản là lưu giữ khoảnh khắc đẹp của Thủ đô — thì danh sách trên (do “Hà Nội Vibes” tổng hợp) chính là dành cho bạn.</p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-1">Top 10 địa điểm du lịch Hà Nội</a></li>
+            <li><a href="/blog/bai-2">Top 10 quán cafe view đẹp</a></li>
+            <li><a href="/blog/bai-4">Hành trình ẩm thực Hà Nội</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>
+

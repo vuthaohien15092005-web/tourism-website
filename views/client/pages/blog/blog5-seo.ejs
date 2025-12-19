@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Khám phá phố cổ Hà Nội – Linh hồn nghìn năm văn hiến' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Khám phá phố cổ Hà Nội với lịch sử nghìn năm, kiến trúc cổ kính và những trải nghiệm văn hóa đặc sắc.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'phố cổ Hà Nội, 36 phố phường, Hàng Mã, Hàng Bạc, Ô Quan Chưởng, Nhà thờ Lớn, chợ Đồng Xuân, Hà Nội Vibes' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Khám phá phố cổ Hà Nội"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Khám phá phố cổ Hà Nội – Linh hồn nghìn năm văn hiến",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-12-21') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/old-quarter-hanoi.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Khám phá phố cổ Hà Nội với lịch sử nghìn năm, kiến trúc cổ kính và những trải nghiệm văn hóa đặc sắc.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/old-quarter-hanoi.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Khám phá phố cổ Hà Nội</span></div>
+        <h1 class="post-title">Khám phá phố cổ Hà Nội – Linh hồn nghìn năm văn hiến</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '21/12/2024' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Văn hóa</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <div class="article-cover">
+          <img src="/client/img/old-quarter-hanoi.jpg" alt="Khám phá phố cổ Hà Nội" />
+          <figcaption>Phố cổ Hà Nội – linh hồn nghìn năm văn hiến</figcaption>
+        </div>
+
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>Khám phá phố cổ Hà Nội – Linh hồn nghìn năm văn hiến</h2>
+          <p><strong>Hà Nội</strong> – mảnh đất nghìn năm văn hiến – không chỉ khiến du khách say mê bởi vẻ đẹp cổ kính, những di tích lịch sử hay ẩm thực tinh tế, mà còn bởi <em>phố cổ Hà Nội</em>, nơi được ví như <strong>"linh hồn"</strong> của Thủ đô. Ẩn mình giữa nhịp sống hiện đại, khu phố cổ vẫn giữ nguyên những mái ngói rêu phong, con ngõ nhỏ quanh co và nhịp sống chậm rãi đặc trưng.</p>
+          
+          <p>Đến với phố cổ, bạn không chỉ đơn thuần là đi du lịch – mà là <strong>hành trình ngược dòng thời gian</strong>, lắng nghe tiếng bước chân xưa vọng lại trên từng con phố. Mỗi ngôi nhà, mỗi biển hiệu, mỗi gánh hàng rong đều mang trong mình câu chuyện về con người Hà Nội – thanh lịch, tinh tế và nặng nghĩa tình.</p>
+        </section>
+
+
+        <!-- Section 1: History -->
+        <section class="article-section" id="lich-su">
+          <h2>1. Lịch sử hình thành và vị trí khu phố cổ Hà Nội</h2>
+          <p>Phố cổ Hà Nội nằm ở <strong>quận Hoàn Kiếm</strong>, khu vực phía Đông Bắc trung tâm thành phố, với diện tích khoảng 100 ha. Khu phố này có hơn 70 tuyến phố và gần 1000 ngôi nhà cổ, được hình thành từ thế kỷ XI – thời Lý, khi kinh thành Thăng Long trở thành trung tâm chính trị, kinh tế, văn hoá của Đại Việt.</p>
+          
+          <p>Ban đầu, đây là nơi tập trung của các phường nghề, mỗi phường chuyên một mặt hàng hoặc một nghề thủ công. Người dân tứ xứ đến đây buôn bán, sinh sống, dần dần hình thành nên <strong>"36 phố phường"</strong>, với đặc trưng "mỗi phố một nghề" – như Hàng Mã (bán đồ lễ), Hàng Bạc (chế tác vàng bạc), Hàng Đào (buôn vải nhuộm), Hàng Gai (lụa tơ tằm)…</p>
+          
+          <p>Đến nay, phố cổ vẫn giữ nguyên dấu tích kiến trúc, nghề truyền thống và nếp sống xưa, trở thành <em>di sản đô thị quý giá</em>, được công nhận là Khu bảo tồn di sản lịch sử – văn hoá cấp quốc gia.</p>
+        </section>
+
+        <!-- Section 2: Architecture -->
+        <section class="article-section" id="kien-truc">
+          <h2>2. Kiến trúc và nét đặc trưng của phố cổ Hà Nội</h2>
+          <p>Nhà cổ ở phố cổ Hà Nội thường có kiến trúc <strong>"nhà ống"</strong>, nghĩa là hẹp về chiều ngang nhưng sâu về chiều dài. Phía trước là cửa hàng buôn bán, phía sau là không gian sinh hoạt gia đình, xen giữa là khoảng sân nhỏ hoặc giếng trời để lấy sáng. Tường xây gạch, mái ngói nâu, cửa gỗ chạm trổ tinh xảo, tạo nên vẻ đẹp mộc mạc nhưng đầy tinh tế.</p>
+          
+          <p>Mỗi con phố ở đây đều có một câu chuyện riêng. Nếu Hàng Mã rực rỡ sắc màu trong dịp lễ tết, Hàng Bạc tỏa sáng bởi nghề kim hoàn tinh tế, thì Hàng Gai lại thanh lịch với những cửa hàng tơ lụa truyền thống. Bước đi trên những con đường lát gạch, ta dễ dàng cảm nhận được hơi thở của thời gian hòa quyện trong từng bức tường rêu, mái ngói cũ.</p>
+          
+          <p>Người Hà Nội ở phố cổ vẫn giữ nếp sống chậm, thanh nhã và ấm cúng. Mỗi buổi sáng, tiếng rao hàng vang lên, mùi phở nóng lan toả khắp ngõ nhỏ; chiều đến, người dân lại quây quần bên ấm trà, kể chuyện phố phường. Chính nếp sống ấy đã làm nên <strong>"thanh lịch Tràng An"</strong> – nét văn hoá đặc trưng của người Hà Nội xưa và nay.</p>
+        </section>
+
+        <!-- Section 3: Experiences -->
+        <section class="article-section" id="o-quan-chuong">
+          <h2>3.1. Tham quan Ô Quan Chưởng – Cổng thành xưa còn sót lại</h2>
+          <p><strong>Ô Quan Chưởng</strong> là cổng thành duy nhất còn nguyên vẹn của kinh thành Thăng Long. Đây là điểm khởi đầu lý tưởng cho hành trình khám phá phố cổ. Đứng tại đây, bạn có thể hình dung được ranh giới giữa Hà Nội cổ và hiện đại – nơi giao thoa giữa quá khứ và hiện tại.</p>
+        </section>
+
+        <section class="article-section" id="nha-tho-lon">
+          <h2>3.2. Tham quan Nhà thờ Lớn Hà Nội – Biểu tượng kiến trúc và tâm linh giữa lòng phố cổ</h2>
+          <p>Một trong những địa điểm không thể bỏ qua khi khám phá phố cổ Hà Nội chính là <strong>Nhà thờ Lớn Hà Nội</strong> – công trình kiến trúc mang đậm dấu ấn châu Âu, nằm ngay trung tâm quận Hoàn Kiếm. Được xây dựng từ năm 1886 theo phong cách Gothic, Nhà thờ Lớn với hai tháp chuông cao vút, mặt tiền rêu phong và những ô cửa kính màu rực rỡ, là biểu tượng tôn giáo lâu đời và địa điểm check-in nổi tiếng của Thủ đô.</p>
+        </section>
+
+        <section class="article-section" id="cho-dong-xuan">
+          <h2>3.3. Ghé chợ Đồng Xuân – trung tâm buôn bán lớn nhất phố cổ</h2>
+          <p><strong>Chợ Đồng Xuân</strong> được xây dựng từ cuối thế kỷ XIX, là biểu tượng thương mại của Hà Nội. Đây không chỉ là nơi buôn bán sầm uất mà còn là địa điểm du lịch hấp dẫn với hàng trăm gian hàng truyền thống, ẩm thực đường phố và khu chợ đêm náo nhiệt vào cuối tuần.</p>
+        </section>
+
+        <section class="article-section" id="phung-hung">
+          <h2>3.4. Khám phá phố Phùng Hưng – Không gian nghệ thuật giữa lòng phố cổ</h2>
+          <p><strong>Phố bích hoạ Phùng Hưng</strong> là điểm đến mới mẻ, nơi các bức tranh tường tái hiện sinh hoạt xưa của người Hà Nội: tàu điện leng keng, hàng nước chè xanh, gánh hàng rong… Mỗi bức tranh là một lát cắt ký ức, đưa du khách trở về với Hà Nội những năm tháng cũ.</p>
+        </section>
+
+        <section class="article-section" id="pho-di-bo">
+          <h2>3.5. Dạo quanh phố đi bộ Hồ Gươm</h2>
+          <p>Buổi tối, <strong>phố đi bộ quanh Hồ Hoàn Kiếm</strong> là không gian văn hoá đặc trưng của Thủ đô. Từ khu vực Hàng Đào – Hàng Ngang, bạn có thể đi bộ ra Tháp Rùa, cầu Thê Húc, đền Ngọc Sơn, vừa ngắm phố phường lung linh, vừa hoà mình vào nhịp sống sôi động của người Hà Nội.</p>
+        </section>
+
+        <!-- Section 4: Tips -->
+        <section class="article-section tips" id="bi-quyet">
+          <h2>4. Bí quyết du lịch phố cổ Hà Nội trọn vẹn</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-clock-o"></i> <strong>Thời điểm lý tưởng:</strong> Sáng sớm hoặc chiều muộn, khi nắng nhẹ, phố cổ trở nên yên bình và nên thơ.</div>
+            <div class="tip"><i class="fa fa-user"></i> <strong>Trang phục:</strong> Nên mặc gọn gàng, giày mềm để dễ di chuyển giữa những con ngõ nhỏ.</div>
+            <div class="tip"><i class="fa fa-camera"></i> <strong>Chụp ảnh:</strong> Hãy chọn góc tại Hàng Mã, Hàng Đào, hoặc trước Ô Quan Chưởng để có bức hình "vintage Hà Nội" đậm chất cổ điển.</div>
+            <div class="tip"><i class="fa fa-comments"></i> <strong>Trải nghiệm văn hoá:</strong> Đừng ngại trò chuyện với người dân địa phương – họ là "kho tư liệu sống" chứa đựng bao câu chuyện thú vị về Hà Nội xưa.</div>
+            <div class="tip"><i class="fa fa-shield"></i> <strong>Bảo vệ di sản:</strong> Giữ gìn vệ sinh, không vẽ bậy hay phá hủy kiến trúc cổ. Mỗi hành động nhỏ của du khách chính là cách gìn giữ linh hồn phố cổ.</div>
+          </div>
+        </section>
+
+        <!-- Section 5: Cultural Value -->
+        <section class="article-section" id="gia-tri">
+          <h2>5. Giá trị văn hoá và ý nghĩa lịch sử của phố cổ Hà Nội</h2>
+          <p>Phố cổ không chỉ là điểm du lịch mà còn là <strong>biểu tượng văn hoá sống động</strong> của người Việt. Nơi đây lưu giữ toàn bộ tiến trình phát triển của Hà Nội qua từng triều đại – từ Thăng Long cổ kính đến Hà Nội hiện đại.</p>
+          
+          <p>Các phố nghề truyền thống thể hiện tinh thần lao động sáng tạo, sự khéo léo của người dân; các đình, đền, chùa lại phản ánh đời sống tín ngưỡng phong phú. Tất cả tạo nên bức tranh văn hoá – xã hội đặc sắc, minh chứng cho bản sắc nghìn năm văn hiến của Thủ đô.</p>
+          
+          <p>Ngày nay, dù nhịp sống thay đổi, nhưng phố cổ vẫn là nơi giữ lại <em>linh hồn Hà Nội</em> – nơi con người tìm về sự hoài niệm, cảm nhận vẻ đẹp giản dị mà sâu lắng của mảnh đất kinh kỳ.</p>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>6. Kết luận: Phố cổ Hà Nội – Linh hồn bất tử của Thủ đô</h2>
+          <p>Khám phá phố cổ Hà Nội không chỉ là hành trình tham quan, mà là <strong>chuyến du hành vào ký ức của một dân tộc</strong>. Giữa những tòa nhà cao tầng và ánh đèn đô thị, phố cổ vẫn vẹn nguyên nét trầm mặc, cổ kính – như một nhân chứng của lịch sử, lặng lẽ kể câu chuyện về con người và văn hoá Hà thành.</p>
+          
+          <p>Nếu bạn đến Hà Nội, hãy dành ít nhất một buổi sáng hoặc chiều để dạo quanh khu phố cổ. Dừng chân ở một quán nhỏ, thưởng thức bát phở nóng, nghe tiếng rao của người bán hàng rong, ngắm mái ngói cổ dưới ánh nắng vàng. <strong>"Hà Nội Vibes"</strong> tin rằng, chỉ cần một lần đặt chân đến đây, bạn sẽ cảm nhận được trọn vẹn linh hồn nghìn năm văn hiến của Thủ đô.</p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-1">Top 10 địa điểm du lịch Hà Nội</a></li>
+            <li><a href="/blog/bai-4">Khám phá ẩm thực sáng Hà Nội</a></li>
+            <li><a href="/blog/bai-3">Top 10 địa điểm sống ảo Hà Nội</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>

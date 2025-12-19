@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Di chuyển & Giao thông | Hà Nội Vibes</title>
+    <meta
+      name="description"
+      content="Hướng dẫn chi tiết các phương tiện di chuyển đến và trong Hà Nội - Thủ đô ngàn năm văn hiến"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/harmony.css" />
+    <link rel="stylesheet" href="/client/css/transportation.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/client/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/client/img/logo.jpg"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/client/img/logo.jpg"
+    />
+    <link rel="manifest" href="/client/img/site.webmanifest" />
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- ===========================================
+             BANNER
+             =========================================== -->
+    <header
+      class="page-header transportation-banner"
+      style="background-image: url('/client/img/banner4.jpg')"
+    >
+    <div class="header-content" style="text-align: center;">
+      <h1>Hướng dẫn di chuyển</h1>
+      <p class="font-color" style="text-align: center !important;">Hà Nội Vibes – kết nối mọi nẻo đường đến</p>
+      <p class="font-color" style="text-align: center !important;">trái tim Thủ đô</p>
+    </div>
+    
+    </header>
+
+    <!-- ===========================================
+             PHƯƠNG TIỆN ĐẾN HÀ NỘI
+             =========================================== -->
+    <section class="transportation-page">
+      <div class="title">
+        <h1 class="dark">Phương tiện đến Hà Nội</h1>
+        <div class="line"></div>
+      </div>
+
+      <div class="transport-cards">
+        <article class="transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/airplane.jpg" alt="Máy bay" />
+          </div>
+          <div class="transport-icon"><i class="fa fa-plane"></i></div>
+          <h3 class="dark">Máy bay</h3>
+          <p class="font-color">
+            Hạ cánh tại sân bay quốc tế Nội Bài (cách trung tâm ~30 km), với
+            nhiều chuyến bay nội địa và&nbsp;quốc&nbsp;tế.
+          </p>
+        </article>
+
+        <article class="transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/train.jpg" alt="Tàu hỏa" />
+          </div>
+          <div class="transport-icon"><i class="fa fa-train"></i></div>
+          <h3 class="dark">Tàu hỏa</h3>
+          <p class="font-color">
+            Ga Hà Nội nằm ngay trung tâm, kết nối Bắc – Nam, thuận&nbsp;tiện cho du
+            khách.
+          </p>
+        </article>
+
+        <article class="transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/bus.jpg" alt="Xe khách" />
+          </div>
+          <div class="transport-icon"><i class="fa fa-bus"></i></div>
+          <h3 class="dark">Xe khách/ô tô</h3>
+          <p class="font-color">
+            Xuất phát từ các bến lớn như Mỹ Đình, Giáp Bát, Nước Ngầm, Gia Lâm,
+            dễ dàng kết nối liên tỉnh.
+          </p>
+        </article>
+
+        <article class="transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/car.jpg" alt="Xe cá nhân" />
+          </div>
+          <div class="transport-icon"><i class="fa fa-car"></i></div>
+          <h3 class="dark">Xe cá nhân</h3>
+          <p class="font-color">
+            Hệ thống cao tốc và&nbsp;quốc&nbsp;lộ thuận lợi cho cả ô tô và&nbsp;xe&nbsp;máy.
+          </p>
+        </article>
+
+        <article class="transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/tour.jpg" alt="Tour trọn gói" />
+          </div>
+          <div class="transport-icon"><i class="fa fa-map-signs"></i></div>
+          <h3 class="dark">Tour trọn gói</h3>
+          <p class="font-color">
+            Nhiều công ty du&nbsp;lịch cung cấp dịch vụ xe đưa đón tận nơi.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===========================================
+             PHƯƠNG TIỆN DI CHUYỂN TRONG HÀ NỘI
+             =========================================== -->
+    <section class="transportation-page">
+      <div class="title">
+        <h1 class="dark">Phương tiện di chuyển trong Hà Nội</h1>
+        <div class="line"></div>
+      </div>
+
+      <div class="local-transport-grid">
+        <!-- Taxi & xe công nghệ -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/taxi.jpg" alt="Taxi & xe công nghệ" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-taxi"></i>
+            <h3>Taxi & xe công nghệ</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Nhanh chóng, tiện lợi, đặt xe dễ dàng qua ứng dụng (Grab, Be,
+              XanhSM).
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Tiện lợi</span>
+              <span class="feature-tag">An toàn</span>
+              <span class="feature-tag">24/7</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Xe bus -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/city-bus.jpg" alt="Xe bus" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-bus"></i>
+            <h3>Xe bus</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Mạng lưới rộng khắp, giá rẻ; có buýt điện 2 tầng phục vụ du&nbsp;lịch.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Giá rẻ</span>
+              <span class="feature-tag">Rộng khắp</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tàu điện đô thị -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/metro.jpg" alt="Tàu điện đô thị" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-subway"></i>
+            <h3>Tàu điện đô thị</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Tuyến Cát Linh – Hà Đông hiện đang khai thác, hiện&nbsp;đại và&nbsp;thuận
+              tiện.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Hiện đại</span>
+              <span class="feature-tag">Nhanh chóng</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Xe máy & xe đạp -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/motorcycle.jpg" alt="Xe máy & xe đạp" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-motorcycle"></i>
+            <h3>Xe máy & xe đạp</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Dễ thuê, linh&nbsp;hoạt, phù hợp khám phá ngõ ngách và&nbsp;phố&nbsp;cổ.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Linh hoạt</span>
+              <span class="feature-tag">Tự do</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Xích lô -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/cyclo.jpg" alt="Xích lô" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-bicycle"></i>
+            <h3>Xích lô</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Phương tiện truyền thống, mang lại trải&nbsp;nghiệm độc đáo khi dạo
+              quanh phố&nbsp;cổ.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Truyền thống</span>
+              <span class="feature-tag">Độc đáo</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Xe điện du lịch -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/electric-car.jpg" alt="Xe điện du lịch" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-plug"></i>
+            <h3>Xe điện du lịch</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Hoạt động quanh hồ Hoàn Kiếm và&nbsp;khu&nbsp;phố&nbsp;cổ, thân thiện môi&nbsp;trường.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Xanh</span>
+              <span class="feature-tag">Êm ái</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Thuê ô tô -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/rental-car.jpg" alt="Thuê ô tô" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-car"></i>
+            <h3>Thuê ô tô</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Tự lái hoặc có lái - Phù hợp cho gia&nbsp;đình và&nbsp;nhóm&nbsp;nhỏ muốn di
+              chuyển linh&nbsp;hoạt.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Thoải mái</span>
+              <span class="feature-tag">Gia đình</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Đi bộ -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/walking.jpeg" alt="Đi bộ" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-male"></i>
+            <h3>Đi bộ</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Lựa chọn lý tưởng để khám&nbsp;phá hồ Hoàn Kiếm, phố&nbsp;cổ và&nbsp;phố&nbsp;đi&nbsp;bộ.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Miễn phí</span>
+              <span class="feature-tag">Khám phá</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Xe buýt 2 tầng -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/double-decker-bus.jpg" alt="Xe buýt 2 tầng" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-bus"></i>
+            <h3>Xe buýt 2 tầng</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Dành riêng cho khách du&nbsp;lịch, giúp tham quan các điểm nổi bật
+              trong thành phố.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Du lịch</span>
+              <span class="feature-tag">Ngắm cảnh</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Xe điện mini -->
+        <article class="local-transport-card">
+          <div class="transport-image">
+            <img src="/client/img/transportation/mini-electric.jpg" alt="Xe điện mini" />
+          </div>
+          <div class="card-header">
+            <i class="fa fa-bolt"></i>
+            <h3>Xe điện mini (xe zip)</h3>
+          </div>
+          <div class="card-body">
+            <p class="font-color">
+              Thường phục vụ tham quan khu vực hồ Hoàn Kiếm, Phố&nbsp;Cổ và&nbsp;các&nbsp;tuyến
+              du&nbsp;lịch ngắn.
+            </p>
+            <div class="features-list">
+              <span class="feature-tag">Nhỏ gọn</span>
+              <span class="feature-tag">Tiện lợi</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===========================================
+             ỨNG DỤNG HỮU ÍCH
+             =========================================== -->
+    <section class="transportation-page">
+      <div class="title">
+        <h1 class="dark">Ứng dụng hữu ích</h1>
+        <div class="line"></div>
+      </div>
+      <div class="app-grid">
+        <div class="app-card">
+          <div class="app-image">
+            <img src="/client/img/transportation/grab-app.png" alt="Grab App" />
+          </div>
+          <div class="app-icon"><i class="fa fa-mobile"></i></div>
+          <div class="app-info">
+            <h4 class="dark">Grab</h4>
+            <p class="font-color">
+              Đặt xe công nghệ nhanh chóng, thanh toán tiện lợi
+            </p>
+          </div>
+        </div>
+        <div class="app-card">
+          <div class="app-image">
+            <img src="/client/img/transportation/be-app.jpg" alt="Be App" />
+          </div>
+          <div class="app-icon"><i class="fa fa-mobile"></i></div>
+          <div class="app-info">
+            <h4 class="dark">Be</h4>
+            <p class="font-color">Ứng dụng gọi xe với nhiều ưu đãi</p>
+          </div>
+        </div>
+        <div class="app-card">
+          <div class="app-image">
+            <img src="/client/img/transportation/xanhsm-app.png" alt="XanhSM App" />
+          </div>
+          <div class="app-icon"><i class="fa fa-mobile"></i></div>
+          <div class="app-info">
+            <h4 class="dark">XanhSM</h4>
+            <p class="font-color">Taxi truyền thống với ứng dụng hiện&nbsp;đại</p>
+          </div>
+        </div>
+        <div class="app-card">
+          <div class="app-image">
+            <img src="/client/img/transportation/busmap-app.png" alt="BusMap App" />
+          </div>
+          <div class="app-icon"><i class="fa fa-bus"></i></div>
+          <div class="app-info">
+            <h4 class="dark">BusMap</h4>
+            <p class="font-color">Tra cứu tuyến xe buýt và&nbsp;thời&nbsp;gian chờ</p>
+          </div>
+        </div>
+        <div class="app-card">
+          <div class="app-image">
+            <img src="/client/img/transportation/google-maps-app.png" alt="Google Maps App" />
+          </div>
+          <div class="app-icon"><i class="fa fa-map-marker"></i></div>
+          <div class="app-info">
+            <h4 class="dark">Google Maps</h4>
+            <p class="font-color">Chỉ đường và&nbsp;tìm&nbsp;địa&nbsp;điểm chính xác</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================================
+             BẢNG SO SÁNH CHI PHÍ
+             =========================================== -->
+    <section class="transportation-page">
+      <div class="title">
+        <h1 class="dark">Bảng so sánh chi phí</h1>
+        <div class="line"></div>
+      </div>
+      <div class="comparison-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Phương tiện</th>
+              <th>Phạm vi giá</th>
+              <th>Thời gian chờ</th>
+              <th>Phù hợp với</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <i class="fa fa-taxi" style="color: var(--primary)"></i> Taxi
+              </td>
+              <td><span class="price-badge">30.000đ - 200.000đ</span></td>
+              <td>3-5 phút</td>
+              <td>Di chuyển nhanh, đi xa</td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-bus" style="color: var(--primary)"></i> Xe buýt
+              </td>
+              <td><span class="price-badge">7.000đ - 9.000đ</span></td>
+              <td>10-15 phút</td>
+              <td>Tiết kiệm, nhiều thời&nbsp;gian</td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-subway" style="color: var(--primary)"></i> Tàu
+                điện
+              </td>
+              <td><span class="price-badge">8.000đ - 15.000đ</span></td>
+              <td>5-10 phút</td>
+              <td>Nhanh, tránh tắc đường</td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-motorcycle" style="color: var(--primary)"></i>
+                Thuê xe máy
+              </td>
+              <td><span class="price-badge">80.000đ - 150.000đ/ngày</span></td>
+              <td>Ngay</td>
+              <td>Tự do, khám&nbsp;phá linh&nbsp;hoạt</td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-bicycle" style="color: var(--primary)"></i> Xích
+                lô
+              </td>
+              <td><span class="price-badge">100.000đ - 300.000đ/giờ</span></td>
+              <td>5-10 phút</td>
+              <td>Trải&nbsp;nghiệm, tham quan phố&nbsp;cổ</td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-bicycle" style="color: var(--primary)"></i> Thuê
+                xe đạp
+              </td>
+              <td><span class="price-badge">30.000đ - 80.000đ/ngày</span></td>
+              <td>Ngay</td>
+              <td>Khám&nbsp;phá nhẹ nhàng, lành mạnh</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===========================================
+             MẸO DI CHUYỂN THÔNG MINH
+             =========================================== -->
+    <section class="transportation-page tips-section">
+      <div class="title">
+        <h1 class="dark">Mẹo di chuyển thông minh</h1>
+        <div class="line"></div>
+      </div>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <h4>
+            <i class="fa fa-clock-o"></i> Tránh giờ cao
+            điểm
+          </h4>
+          <p class="font-color">
+            7h-9h sáng và 5h-7h chiều thường đông đúc. Lên kế hoạch di chuyển
+            hợp lý.
+          </p>
+        </div>
+        <div class="tip-card">
+          <h4>
+            <i class="fa fa-money"></i> Mang tiền mặt
+          </h4>
+          <p class="font-color">
+            Một số phương tiện như xích lô, xe buýt chỉ nhận tiền mặt.
+          </p>
+        </div>
+        <div class="tip-card">
+          <h4>
+            <i class="fa fa-map"></i> Tải bản đồ offline
+          </h4>
+          <p class="font-color">
+            Để sẵn sàng khi không có internet, đặc biệt ở khu vực xa trung tâm.
+          </p>
+        </div>
+        <div class="tip-card">
+          <h4>
+            <i class="fa fa-shield"></i> Lưu ý an toàn
+          </h4>
+          <p class="font-color">
+            Giữ tài sản cá nhân cẩn thận, đặc biệt khi di chuyển bằng xe máy
+            hoặc đi bộ.
+          </p>
+        </div>
+        <div class="tip-card">
+          <h4>
+            <i class="fa fa-language"></i> Học một vài từ
+            tiếng Việt
+          </h4>
+          <p class="font-color">
+            "Xin chào", "Cảm ơn", "Bao nhiêu tiền?" giúp giao tiếp dễ dàng hơn.
+          </p>
+        </div>
+        <div class="tip-card">
+          <h4>
+            <i class="fa fa-mobile"></i> Cài ứng dụng đặt
+            xe
+          </h4>
+          <p class="font-color">
+            Grab, Be giúp di chuyển thuận&nbsp;tiện và&nbsp;giá&nbsp;cả minh&nbsp;bạch.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-transportation' }) %>
+
+    <!-- up scroll -->
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+    <!--footer-->
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+  </body>
+</html>

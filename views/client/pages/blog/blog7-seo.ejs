@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Khám phá Hà Nội ngày Tết: Hương vị truyền thống và nét đẹp văn hóa xưa' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Khám phá Hà Nội ngày Tết với hương vị truyền thống, phong tục cổ truyền và những trải nghiệm văn hóa đặc sắc của Thủ đô.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'Hà Nội ngày Tết, du xuân Hà Nội, phong tục Tết Việt Nam, chợ hoa Hà Nội, ẩm thực Tết, lễ hội Tết, Hà Nội Vibes' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Khám phá Hà Nội ngày Tết"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Khám phá Hà Nội ngày Tết: Hương vị truyền thống và nét đẹp văn hóa xưa",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-12-23') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/banner-attraction.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Khám phá Hà Nội ngày Tết với hương vị truyền thống, phong tục cổ truyền và những trải nghiệm văn hóa đặc sắc của Thủ đô.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/banner-attraction.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Khám phá Hà Nội ngày Tết</span></div>
+        <h1 class="post-title">Khám phá Hà Nội ngày Tết: Hương vị truyền thống và nét đẹp văn hóa xưa</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '23/12/2024' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Văn hóa</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <div class="article-cover">
+          <img src="/client/img/tet.jpg" alt="Khám phá Hà Nội ngày Tết" />
+          <figcaption>Hà Nội ngày Tết – hòa quyện giữa hương vị truyền thống và nét đẹp văn hóa xưa</figcaption>
+        </div>
+
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>Khám phá Hà Nội ngày Tết: Hương vị truyền thống và nét đẹp văn hóa xưa</h2>
+          <p>Khám phá Hà Nội ngày Tết – nơi hòa quyện giữa <strong>hương vị truyền thống và nét đẹp văn hóa xưa</strong>. Khi xuân về, phố phường Thủ đô như khoác lên tấm áo rực rỡ sắc đào, sắc quất. Từng con phố Hàng Mã, Hàng Lược lại ngập tràn sắc đỏ, tiếng cười nói rộn ràng, mùi hương trầm xen lẫn hương bánh chưng mới gói – tất cả tạo nên bức tranh mùa xuân ấm áp, đậm đà bản sắc Việt.</p>
+          
+          <p>🌸 <strong>Dạo bước giữa không khí Tết xưa nơi lòng phố cổ</strong></p>
+          <p>Tết Hà Nội không chỉ là dịp đoàn viên, mà còn là hành trình tìm về cội nguồn văn hóa. Từ chợ hoa, phố cổ đến những nếp nhà xưa, đâu đâu cũng lưu giữ hơi thở của truyền thống và lòng hiếu khách của người Tràng An.</p>
+          
+          <p>Cùng <strong>"Hà Nội Vibes"</strong> du xuân, lắng nghe hơi thở mùa xuân qua từng góc phố, thưởng thức hương vị Tết xưa và cảm nhận trọn vẹn nét đẹp văn hóa ngàn năm của Thủ đô!</p>
+        </section>
+
+
+        <!-- Section 1: Main Information -->
+        <section class="article-section" id="thong-tin-chinh">
+          <h2>1. Thông tin chính về Hà Nội những ngày Tết</h2>
+          <p>Hà Nội mỗi độ Tết đến xuân về luôn mang một nét đẹp riêng – vừa cổ kính, vừa rộn ràng. Từ những con phố rợp cờ hoa, sắc đào, sắc quất cho đến tiếng rao, tiếng cười nói của người đi sắm Tết, tất cả hòa quyện thành bức tranh mùa xuân đầy sức sống. Không khí se lạnh của tháng Giêng như khiến lòng người thêm háo hức, xao xuyến.</p>
+          
+          <p>Người dân Hà Nội vẫn giữ gìn những phong tục truyền thống: dọn dẹp nhà cửa, trang trí bàn thờ tổ tiên, gói bánh chưng, mua hoa đào Nhật Tân, quất Tứ Liên và chuẩn bị mâm cỗ đoàn viên. Với du khách, đây là dịp tuyệt vời để cảm nhận <strong>tinh thần Tết Việt</strong> – nơi lưu giữ những giá trị văn hóa truyền thống giữa nhịp sống hiện đại của Thủ đô ngàn năm văn hiến.</p>
+        </section>
+
+        <!-- Section 2: Experiences -->
+        <section class="article-section" id="dao-pho-co">
+          <h2>2.1. Dạo phố cổ mua sắm Tết – Không khí nhộn nhịp ngập tràn sắc xuân</h2>
+          <p>Khi Tết đến, khu phố cổ Hà Nội trở thành điểm hẹn không thể bỏ lỡ. Dọc các con phố <strong>Hàng Mã, Hàng Lược, Hàng Đào</strong>, đâu đâu cũng thấy người mua kẻ bán tấp nập. Các gian hàng rực rỡ sắc đỏ của câu đối, đèn lồng, phong bao lì xì, tượng ông đồ... tạo nên một không gian đậm chất xuân.</p>
+          
+          <p>Đi dạo giữa dòng người, nghe tiếng nhạc xuân vang lên, du khách có thể cảm nhận được nhịp sống hối hả nhưng đầy ấm áp của Thủ đô. Nhiều du khách quốc tế cũng yêu thích nơi đây vì họ có thể tận mắt chứng kiến <em>văn hóa đón Tết đặc trưng của người Việt</em>.</p>
+        </section>
+
+        <section class="article-section" id="am-thuc-tet">
+          <h2>2.2. Thưởng thức ẩm thực truyền thống ngày Tết</h2>
+          <p>Ẩm thực Hà Nội ngày Tết là tinh hoa của sự kết hợp giữa hương vị, màu sắc và ý nghĩa văn hóa. Từ <strong>bánh chưng xanh, giò lụa, dưa hành</strong> đến thịt đông, canh măng, mỗi món ăn đều mang thông điệp chúc phúc cho năm mới sung túc, đủ đầy.</p>
+          
+          <p>Dọc các khu ẩm thực như <strong>Tạ Hiện, Mã Mây</strong> hay phố ẩm thực Hàng Buồm, du khách có thể thưởng thức nhiều món truyền thống hoặc thử biến tấu hiện đại như bánh chưng rán, trà hoa cúc nóng hay mứt tết. Ẩm thực ngày Tết ở Hà Nội không chỉ ngon miệng mà còn gợi nhớ về ký ức đoàn viên, sum họp gia đình.</p>
+        </section>
+
+        <section class="article-section" id="le-hoi">
+          <h2>2.3. Tham gia lễ hội và phong tục đón Tết cổ truyền</h2>
+          <p>Không chỉ dừng ở mua sắm và ẩm thực, du khách còn có thể tham gia nhiều hoạt động lễ hội truyền thống như <strong>Hội Gióng (Sóc Sơn, Gia Lâm), Hội làng Bát Tràng</strong> hay Lễ hội chùa Trấn Quốc đầu xuân. Các nghi thức cầu an, xin chữ đầu năm, hái lộc hay thả chim phóng sinh đều thể hiện nét đẹp tâm linh của người Hà Nội.</p>
+          
+          <p>Những phong tục ấy, dù giản dị, vẫn lưu giữ <em>hồn dân tộc</em>, giúp du khách cảm nhận sâu sắc giá trị văn hóa của cái Tết Việt xưa.</p>
+        </section>
+
+        <!-- Section 3: Attractions -->
+        <section class="article-section" id="diem-tham-quan">
+          <h2>3. Những điểm tham quan gợi ý cho hành trình du xuân trọn vẹn</h2>
+          <p>Nếu bạn có dịp ghé thăm Hà Nội trong những ngày đầu năm, đừng bỏ lỡ những điểm đến dưới đây:</p>
+          
+          <ul>
+            <li><strong>Hồ Hoàn Kiếm</strong> – trái tim Thủ đô, nơi du khách có thể ngắm cầu Thê Húc đỏ rực, viếng đền Ngọc Sơn và hòa mình vào dòng người đi chúc Tết.</li>
+            <li><strong>Phố bích họa Phùng Hưng</strong> – điểm check-in rực rỡ sắc màu, lưu giữ hình ảnh Hà Nội xưa.</li>
+            <li><strong>Văn Miếu – Quốc Tử Giám</strong> – nơi nhiều người đến xin chữ, cầu học hành tấn tới đầu năm.</li>
+            <li><strong>Làng đào Nhật Tân và làng quất Tứ Liên</strong> – không chỉ là điểm tham quan, mà còn là nơi lưu giữ nét văn hóa Tết của người dân Hà Nội.</li>
+          </ul>
+        </section>
+
+        <!-- Section 4: Tips -->
+        <section class="article-section tips" id="meo-thiet-yeu">
+          <h2>4. Những mẹo thiết yếu để khám phá Hà Nội ngày Tết suôn sẻ</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-clock-o"></i> <strong>Đi sớm và tránh giờ cao điểm:</strong> Một số khu như phố cổ hay Hồ Gươm thường rất đông, nên bạn nên đi vào buổi sáng sớm hoặc sau 8h tối.</div>
+            <div class="tip"><i class="fa fa-money"></i> <strong>Mang theo tiền mặt mệnh giá nhỏ:</strong> Để tiện mua hàng ở chợ Tết hoặc gửi xe.</div>
+            <div class="tip"><i class="fa fa-user"></i> <strong>Chọn trang phục ấm và lịch sự:</strong> Vì thời tiết Tết ở Hà Nội khá lạnh và nhiều nơi là không gian tâm linh.</div>
+            <div class="tip"><i class="fa fa-shield"></i> <strong>Giữ ý thức văn minh:</strong> Khi tham gia lễ hội – xếp hàng, không chen lấn, không xả rác.</div>
+            <div class="tip"><i class="fa fa-bed"></i> <strong>Đặt phòng khách sạn sớm:</strong> Bởi lượng du khách tăng cao trong dịp Tết.</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>5. Tổng kết: Hà Nội – Nơi lưu giữ hồn Tết Việt</h2>
+          <p>Giữa nhịp sống hiện đại, Hà Nội vẫn là nơi lưu giữ nguyên vẹn <strong>hồn Tết Việt</strong> – giản dị mà sâu sắc, cổ truyền nhưng vẫn đầy sức sống. Mỗi góc phố, mỗi nếp nhà, mỗi món ăn đều là một mảnh ghép trong bức tranh Tết xưa còn sống động đến hôm nay.</p>
+          
+          <p>Với du khách, hành trình khám phá Hà Nội dịp Tết không chỉ là chuyến đi du lịch, mà còn là <strong>hành trình tìm về nguồn cội</strong>, để cảm nhận tình người, sự gắn kết gia đình và lòng tự hào dân tộc.</p>
+          
+          <p>Nếu bạn đang tìm kiếm một nơi vừa cổ kính, vừa rộn ràng để bắt đầu năm mới, thì Hà Nội chính là điểm đến lý tưởng nhất. Hãy để <strong>"Hà Nội Vibes"</strong> đồng hành cùng bạn trong chuyến du xuân đầu năm, để mỗi bước chân qua phố phường đều là một lần chạm vào hương vị truyền thống và nét đẹp văn hóa xưa của đất Thăng Long ngàn năm.</p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-5">Khám phá phố cổ Hà Nội</a></li>
+            <li><a href="/blog/bai-4">Khám phá ẩm thực sáng Hà Nội</a></li>
+            <li><a href="/blog/bai-1">Top 10 địa điểm du lịch Hà Nội</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>

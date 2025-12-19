@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Top 10 quán cafe view đẹp ở Hà Nội' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Check-in 10 quán cafe Hà Nội view siêu đẹp, chill hết nấc.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'quán cafe Hà Nội, cafe view đẹp, rooftop Hà Nội, Hà Nội Vibes' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Top 10 quán cafe view đẹp Hà Nội"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Check-in ngay 10 quán cafe Hà Nội view siêu đẹp, chill hết nấc",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-02-15') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/banner-home.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Top 10 quán cafe view đẹp ở Hà Nội để check-in và thư giãn.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/cafe-hanoi-banner.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Top 10 quán cafe view đẹp Hà Nội</span></div>
+        <h1 class="post-title">Check-in ngay 10 quán cafe Hà Nội view siêu đẹp, chill hết nấc</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '15/02/2024' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Cẩm nang</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <div class="article-cover">
+          <img src="/client/img/cafe-hanoi-banner.jpg" alt="Top 10 quán cafe view đẹp ở Hà Nội" />
+          <figcaption>Hà Nội – thiên đường cafe với muôn kiểu không gian chill</figcaption>
+        </div>
+
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>BÀI 2 – Check-in ngay 10 quán cafe Hà Nội view siêu đẹp, chill hết nấc</h2>
+          <p>Hà Nội không chỉ mang nét đẹp cổ kính mà còn là “thiên đường cafe” cho những ai yêu cái đẹp và thích tận hưởng không gian nhẹ nhàng, thư giãn. Từ những quán rooftop lung linh ánh đèn đến góc nhỏ vintage giữa lòng phố cũ, mỗi nơi đều mang một “vibe” rất riêng – vừa chill, vừa nghệ thuật.</p>
+          <p>Nếu bạn đang tìm nơi hẹn hò, gặp bạn bè hay đơn giản chỉ muốn “đi trốn” cuối tuần, thì top 10 quán cafe view đẹp ở Hà Nội dưới đây chính là danh sách bạn không thể bỏ lỡ. Cùng “Hà Nội Vibes” khám phá ngay những tọa độ chill hết nấc – nơi chỉ cần giơ máy lên là có ảnh đẹp!</p>
+          <p>Hà Nội có hàng trăm quán cafe, nhưng không phải nơi nào cũng đủ “đỉnh” để vừa thưởng thức, vừa check-in. “Hà Nội Vibes” gợi ý cho bạn 10 cái tên nổi bật nhất, được giới trẻ yêu thích nhờ view đẹp, không gian độc đáo và đồ uống chất lượng.</p>
+        </section>
+
+
+        <!-- Top 10 Cafes -->
+        <section class="article-section" id="trill">
+          <h2>1. Trill Rooftop Café – Tầng 26, Hei Tower, 1 Ngụy Như Kon Tum, Thanh Xuân</h2>
+          <div class="location-image">
+            <img src="/client/img/trill-rooftop.jpeg" alt="Trill Rooftop Café" />
+            <figcaption>Trill Rooftop Café - view toàn cảnh Hà Nội từ trên cao</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 09:00 – 23:00</p>
+          <p>Từ trên cao, Trill Rooftop mang đến view toàn cảnh thành phố Hà Nội lung linh, đặc biệt vào buổi tối. Không gian mở, ánh đèn rực rỡ và thiết kế hiện đại khiến nơi đây trở thành "tọa độ vàng" cho những bức ảnh sống ảo ấn tượng.</p>
+        </section>
+
+        <section class="article-section" id="serein">
+          <h2>2. Serein Café & Lounge – Số 16 Ga Long Biên, Hoàn Kiếm</h2>
+          <div class="location-image">
+            <img src="/client/img/serein-cafe.jpg" alt="Serein Café & Lounge" />
+            <figcaption>Serein Café - phong cách châu Âu cổ điển bên cầu Long Biên</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 08:00 – 23:00</p>
+          <p>Tọa lạc ngay cạnh cầu Long Biên, Serein mang phong cách châu Âu cổ điển pha chút hoài niệm. Đây là nơi lý tưởng để nhâm nhi cà phê, ngắm cầu Long Biên và lưu lại những khung hình đậm chất vintage Hà Nội.</p>
+        </section>
+
+        <section class="article-section" id="lofita">
+          <h2>3. Lofita Tea & Coffee – 36 Hào Nam, Đống Đa</h2>
+          <div class="location-image">
+            <img src="/client/img/lofita-cafe.jpg" alt="Lofita Tea & Coffee" />
+            <figcaption>Lofita Tea & Coffee - không gian trẻ trung, tươi sáng</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 07:30 – 22:00</p>
+          <p>Lofita gây ấn tượng với phong cách trẻ trung, tươi sáng và nhiều góc check-in cực xịn. Từ tầng thượng, bạn có thể ngắm nhìn thành phố trong không gian ngập tràn ánh sáng và cây xanh.</p>
+        </section>
+
+        <section class="article-section" id="em-rooftop">
+          <h2>4. EM Rooftop Coffee – Tầng 8, 126 Hoàng Ngân, Thanh Xuân</h2>
+          <div class="location-image">
+            <img src="/client/img/em-rooftop.jpg" alt="EM Rooftop Coffee" />
+            <figcaption>EM Rooftop Coffee - thiết kế vintage trên cao</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 07:30 – 23:00</p>
+          <p>Với thiết kế rooftop kết hợp phong cách vintage, EM Rooftop là điểm đến quen thuộc của giới trẻ thích chụp hình. Ánh nắng chiều buông trên tầng cao tạo nên khung cảnh "chill" không thể cưỡng lại.</p>
+        </section>
+
+        <section class="article-section" id="cot">
+          <h2>5. Cup of Tea Café & Bistro – 317 Nguyễn Khang, Cầu Giấy</h2>
+          <div class="location-image">
+            <img src="/client/img/cup-of-tea.avif" alt="Cup of Tea Café & Bistro" />
+            <figcaption>Cup of Tea Café - không gian yên tĩnh, ban công ngập nắng</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 07:00 – 22:30</p>
+          <p>Không gian yên tĩnh, lối trang trí hài hòa và ban công ngập nắng khiến Cup of Tea trở thành quán "must-visit" cho các bạn yêu phong cách nhẹ nhàng, tinh tế.</p>
+        </section>
+
+        <section class="article-section" id="beigic">
+          <h2>6. Beigic Café – 25 Hàng Bún, Ba Đình, Hà Nội</h2>
+          <div class="location-image">
+            <img src="/client/img/beigic-cafe.jpg" alt="Beigic Café" />
+            <figcaption>Beigic Café - phong cách Hàn Quốc tối giản</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 08:00 – 22:00</p>
+          <p>Beigic gây ấn tượng với phong cách 2 tầng decor theo style Hàn Quốc, sử dụng tone nâu, trắng và be tối giản. Không gian ấm áp, thanh lịch và vô cùng "ăn ảnh", phù hợp cho những ai yêu thích phong cách nhẹ nhàng. Menu gồm cà phê, trà, nước ép và bánh ngọt được chăm chút tỉ mỉ, vừa ngon miệng vừa đẹp mắt – là điểm hẹn yêu thích của giới trẻ Hà Nội.</p>
+        </section>
+
+        <section class="article-section" id="thuy-ta">
+          <h2>7. Thủy Tạ Café – 1 Lê Thái Tổ, Hoàn Kiếm</h2>
+          <div class="location-image">
+            <img src="/client/img/thuy-ta-cafe.jpg" alt="Thủy Tạ Café" />
+            <figcaption>Thủy Tạ Café - bên bờ hồ Hoàn Kiếm</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 07:00 – 23:00</p>
+          <p>Nằm sát bên hồ Hoàn Kiếm, Thủy Tạ mang đến cảm giác yên bình, trong lành giữa lòng phố cổ. Đây là nơi lý tưởng để vừa thưởng thức cà phê, vừa ngắm phố phường Hà Nội.</p>
+        </section>
+
+        <section class="article-section" id="xofa">
+          <h2>8. Xofa Café & Bistro – 14 Tống Duy Tân, Hoàn Kiếm</h2>
+          <div class="location-image">
+            <img src="/client/img/xofa-cafe.jpg" alt="Xofa Café & Bistro" />
+            <figcaption>Xofa Café - không gian ấm cúng, mở 24/24</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 24/24</p>
+          <p>Là một trong số ít quán mở cả ngày lẫn đêm, Xofa mang phong cách ấm cúng, nhiều sofa mềm và không gian xanh mát. Bất kỳ góc nào cũng có thể trở thành background "chuẩn Hàn".</p>
+        </section>
+
+        <section class="article-section" id="aroi">
+          <h2>9. Aroi Dessert Café – Tống Duy Tân, Hoàn Kiếm</h2>
+          <div class="location-image">
+            <img src="/client/img/aroi-cafe.jpg" alt="Aroi Dessert Café" />
+            <figcaption>Aroi Dessert Café - phong cách trẻ trung, gần gũi</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 08:00 – 22:30</p>
+          <p>Aroi thu hút giới trẻ bởi phong cách trẻ trung, gần gũi và menu đồ uống hấp dẫn. Decor đơn giản nhưng cực kỳ "ăn ảnh", đặc biệt là vào buổi tối khi ánh đèn vàng lên.</p>
+        </section>
+
+        <section class="article-section" id="cuoi-ngo">
+          <h2>10. Quán Cuối Ngõ – Ngõ 68 Quan Hoa, Cầu Giấy</h2>
+          <div class="location-image">
+            <img src="/client/img/cuoi-ngo-cafe.jpg" alt="Quán Cuối Ngõ" />
+            <figcaption>Quán Cuối Ngõ - không gian cổ điển, mộc mạc</figcaption>
+          </div>
+          <p><strong>Mở cửa:</strong> 09:00 – 23:00</p>
+          <p>Ẩn mình giữa lòng phố, Quán Cuối Ngõ mang nét cổ điển, mộc mạc. Không gian nhỏ xinh, tĩnh lặng – lý tưởng cho những ai yêu sự bình yên và muốn "sống chậm" giữa Hà Nội.</p>
+        </section>
+
+        <section class="article-section tips">
+          <h2>Mẹo nhỏ để có ảnh đẹp</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-sun-o"></i> Canh ánh sáng tự nhiên (7–9h, 16–18h).</div>
+            <div class="tip"><i class="fa fa-camera"></i> Góc chụp rộng với rooftop, cận cảnh cho góc vintage.</div>
+            <div class="tip"><i class="fa fa-coffee"></i> Chọn đồ uống có màu nổi để ảnh thêm bắt mắt.</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>Kết luận</h2>
+          <p>Hà Nội không chỉ đẹp trong từng góc phố mà còn ẩn mình trong những quán cà phê mang dấu ấn riêng. Mỗi không gian là một “vibe” khác biệt – có nơi bình yên, có nơi rực rỡ, nhưng tất cả đều khiến người ta muốn dừng lại, nhâm nhi ly cà phê và tận hưởng khoảnh khắc.</p>
+          <p>Top 10 quán cà phê mà “Hà Nội Vibes” gợi ý không chỉ là điểm check-in lý tưởng, mà còn là nơi để bạn cảm nhận trọn vẹn hơi thở của thủ đô – vừa quen thuộc, vừa đầy cảm xúc.</p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-1">Top 10 địa điểm du lịch Hà Nội</a></li>
+            <li><a href="/blog/bai-4">Hành trình ẩm thực Hà Nội</a></li>
+            <li><a href="/blog/bai-5">Phố cổ – 36 phố phường</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>
+

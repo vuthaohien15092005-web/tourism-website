@@ -1,0 +1,401 @@
+<!-- Page Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><%= pageTitle %></h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="/admin/attractions" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>
+            Quay lại
+        </a>
+    </div>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <%= flash.error[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<!-- Form -->
+<form method="POST" action="/admin/attractions" enctype="multipart/form-data" id="attractionForm">
+    <div class="row">
+        <!-- === THÔNG TIN CƠ BẢN === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Thông tin cơ bản
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên điểm tham quan <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Danh mục <span class="text-danger">*</span></label>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="">Chọn danh mục</option>
+                                    <% categories.forEach(cat => { %>
+                                        <option value="<%= cat.value %>"><%= cat.label %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="district" class="form-label">Quận/Huyện <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="district" name="district" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="opening_hours" class="form-label">Giờ mở cửa</label>
+                                <textarea class="form-control" id="opening_hours" name="opening_hours" rows="4" placeholder="VD: 8:00 - 17:00 hàng ngày"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === GIÁ VÉ === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-ticket-alt me-2"></i>
+                        Thông tin giá vé
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="ticket_info" class="form-label">Giá vé tham quan</label>
+                        <textarea class="form-control" id="ticket_info" name="ticket_info" rows="5" placeholder="Ví dụ:\nGiá vé tham quan:\nVé người lớn là 70.000 VNĐ\nVé học sinh, sinh viên là 15.000 VNĐ (cần có thẻ học sinh, sinh viên)\nNgười khuyết tật nặng, người cao tuổi: 35.000 VND (là công dân Việt Nam từ đủ 60 tuổi trở lên, có căn cước công dân)\nTrẻ em dưới 15 tuổi, người khuyết tật và nhà giáo được miễn phí vé vào cửa. Ngoài ra, khi đăng ký tham quan nhóm từ 10 người trở lên, du khách sẽ được giảm giá vé vào cửa."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === NỘI DUNG === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-alt me-2"></i>
+                        Nội dung
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="intro" class="form-label">Giới thiệu</label>
+                                <textarea class="form-control" id="intro" name="intro" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Mô tả chi tiết <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === ĐIỂM NỔI BẬT === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-star me-2"></i>
+                        Điểm nổi bật
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="highlights-container">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" name="highlights[]" placeholder="Nhập điểm nổi bật">
+                            <button type="button" class="btn btn-outline-danger" onclick="removeHighlight(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="addHighlight()">
+                        <i class="fas fa-plus me-1"></i>Thêm điểm nổi bật
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- === LƯU Ý KHÁCH DU LỊCH === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Lưu ý cho khách du lịch
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="visitor_notes-container">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" name="visitor_notes[]" placeholder="Nhập lưu ý">
+                            <button type="button" class="btn btn-outline-danger" onclick="removeVisitorNote(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="addVisitorNote()">
+                        <i class="fas fa-plus me-1"></i>Thêm lưu ý
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- === HÌNH ẢNH === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-images me-2"></i>
+                        Hình ảnh
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="images" class="form-label">Hình ảnh</label>
+                        <input type="file" class="form-control" id="images" name="images" multiple accept="image/*">
+                        <div class="form-text">Có thể chọn nhiều hình ảnh cùng lúc</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === BẢN ĐỒ === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        Thông tin bản đồ
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="map[lat]" class="form-label">Vĩ độ (Latitude)</label>
+                                <input type="number" step="any" class="form-control" id="map[lat]" name="map[lat]">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="map[lng]" class="form-label">Kinh độ (Longitude)</label>
+                                <input type="number" step="any" class="form-control" id="map[lng]" name="map[lng]">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="map[link]" class="form-label">Link bản đồ</label>
+                                <input type="url" class="form-control" id="map[link]" name="map[link]" placeholder="https://maps.google.com/...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- === TRẠNG THÁI === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-cog me-2"></i>
+                        Trạng thái
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="isActive" name="isActive" checked>
+                                <label class="form-check-label" for="isActive">
+                                    Kích hoạt
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="featured" name="featured">
+                                <label class="form-check-label" for="featured">
+                                    Điểm nổi bật
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <a href="/admin/attractions" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>
+                            Hủy
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>
+                            Lưu điểm tham quan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+// Dynamic form fields management
+function addHighlight() {
+    const container = document.getElementById('highlights-container');
+    const div = document.createElement('div');
+    div.className = 'input-group mb-2';
+    div.innerHTML = `
+        <input type="text" class="form-control" name="highlights[]" placeholder="Nhập điểm nổi bật">
+        <button type="button" class="btn btn-outline-danger" onclick="removeHighlight(this)">
+            <i class="fas fa-trash"></i>
+        </button>
+    `;
+    container.appendChild(div);
+}
+
+function removeHighlight(button) {
+    button.parentElement.remove();
+}
+
+function addVisitorNote() {
+    const container = document.getElementById('visitor_notes-container');
+    const div = document.createElement('div');
+    div.className = 'input-group mb-2';
+    div.innerHTML = `
+        <input type="text" class="form-control" name="visitor_notes[]" placeholder="Nhập lưu ý">
+        <button type="button" class="btn btn-outline-danger" onclick="removeVisitorNote(this)">
+            <i class="fas fa-trash"></i>
+        </button>
+    `;
+    container.appendChild(div);
+}
+
+function removeVisitorNote(button) {
+    button.parentElement.remove();
+}
+
+// Form validation
+document.getElementById('attractionForm').addEventListener('submit', function(e) {
+    const name = document.getElementById('name').value.trim();
+    const category = document.getElementById('category').value;
+    const address = document.getElementById('address').value.trim();
+    const district = document.getElementById('district').value.trim();
+    const description = document.getElementById('description').value.trim();
+
+    if (!name || !category || !address || !district || !description) {
+        e.preventDefault();
+        alert('Vui lòng điền đầy đủ các trường bắt buộc (*)');
+        return false;
+    }
+});
+</script>
+
+<script>
+// Reviews dynamic handlers
+function reindexReviews() {
+    const items = document.querySelectorAll('#reviews-container .review-item');
+    items.forEach((item, idx) => {
+        item.querySelectorAll('input, textarea, label').forEach((el) => {
+            if (el.name && el.name.includes('reviews[')) {
+                el.name = el.name.replace(/reviews\[[0-9]+\]/, `reviews[${idx}]`);
+            }
+            if (el.htmlFor && el.htmlFor.startsWith('rv')) {
+                el.htmlFor = `rv${idx}v`;
+            }
+            if (el.id && el.id.startsWith('rv') && el.id.endsWith('v')) {
+                el.id = `rv${idx}v`;
+            }
+        });
+    });
+}
+
+function addReviewRow() {
+    const container = document.getElementById('reviews-container');
+    const div = document.createElement('div');
+    div.className = 'border rounded p-3 mb-3 review-item';
+    div.innerHTML = `
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Tác giả</label>
+                <input type="text" class="form-control" name="reviews[0][author]" placeholder="Tên người đánh giá">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Avatar (Ảnh)</label>
+                <input type="file" class="form-control" name="reviews[0][avatarFile]" accept="image/*">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Điểm</label>
+                <input type="number" class="form-control" name="reviews[0][rating]" min="1" max="5" step="1" value="5">
+            </div>
+            <div class="col-md-2">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" name="reviews[0][verified]" id="rv0v">
+                    <label class="form-check-label" for="rv0v">Đã xác minh</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Ngày</label>
+                <input type="date" class="form-control" name="reviews[0][date]">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Nguồn</label>
+                <input type="text" class="form-control" name="reviews[0][source]" value="google">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Nội dung</label>
+                <textarea class="form-control" name="reviews[0][text]" rows="2" placeholder="Nội dung đánh giá..."></textarea>
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeReviewRow(this)"><i class="fas fa-trash me-1"></i>Xóa</button>
+            </div>
+        </div>
+    `;
+    container.appendChild(div);
+    reindexReviews();
+}
+
+function removeReviewRow(btn) {
+    const item = btn.closest('.review-item');
+    if (item) item.remove();
+    reindexReviews();
+}
+
+// ensure correct initial indexes
+reindexReviews();
+</script>

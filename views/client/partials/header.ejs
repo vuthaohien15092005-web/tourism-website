@@ -1,0 +1,126 @@
+<!-- Header Component -->
+<style>
+  /* Ẩn nút đóng menu trên desktop */
+  .menu-close-btn {
+    display: none !important;
+  }
+  
+  /* Hiển thị nút đóng chỉ trên mobile */
+  @media (max-width: 768px) {
+    .menu-close-btn {
+      display: block !important;
+    }
+  }
+  
+  /* Ẩn logo image trên responsive */
+  @media (max-width: 768px) {
+    .navbar .img2 {
+      display: none !important;
+    }
+    
+    /* Điều chỉnh logo text trên mobile */
+    .navbar .logo {
+      margin-left: 0 !important;
+      font-size: 1.5rem !important;
+      font-weight: bold !important;
+    }
+    
+    /* Điều chỉnh container logo */
+    .navbar span a {
+      justify-content: flex-start !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navbar .logo {
+      font-size: 1.3rem !important;
+    }
+  }
+</style>
+
+<nav class="navbar glass" style="height: 70px">
+  <span
+    ><a href="/" style="display: flex; align-items: center"
+      ><img
+        class="img2"
+        src="/client/img/logo.jpg"
+        width="32"
+        style="margin: -20px -8px -20px -16px"
+      />
+      <h1 class="logo">&nbsp;Hanoivibes</h1></a
+    ></span
+  >
+  <ul class="nav-links">
+    <!-- Close button -->
+    <li class="menu-close-btn">
+      <button class="close-menu-btn" aria-label="Đóng menu">
+        <span class="close-icon">×</span>
+      </button>
+    </li>
+    <li>
+      <a href="/" id="pri" class="cir_border">Trang chủ</a>
+    </li>
+    <li>
+      <a href="/attraction" id="sec" class="cir_border">Điểm tham quan</a>
+    </li>
+    <li>
+      <a href="/accommodation" id="tri" class="cir_border">Lưu trú</a>
+    </li>
+    <li>
+      <a href="/cuisine" id="quad" class="cir_border">Ẩm thực</a>
+    </li>
+    <li>
+      <a href="/transportation" id="quint" class="cir_border">Di chuyển</a>
+    </li>
+    <li>
+      <a href="/entertainment" id="hex" class="cir_border">Giải trí</a>
+    </li>
+    <li>
+      <a href="/blog" id="sept" class="cir_border">Blog</a>
+    </li>
+    
+    <!-- Auth Section trong mobile menu -->
+    <li class="auth-section-mobile">
+      <% if (typeof user !== 'undefined' && user) { %>
+        <div class="user-menu-mobile">
+          <span class="user-name-mobile">Xin chào, <%= user.fullName %></span>
+          <div class="user-dropdown-mobile">
+            <a href="/auth/info" class="dropdown-item-mobile">Thông tin tài khoản</a>
+            <% if (user.role === 'admin' || user.role === 'editor') { %>
+              <a href="/admin/dashboard" class="dropdown-item-mobile">Trang quản trị</a>
+            <% } %>
+            <a href="/auth/logout" class="dropdown-item-mobile">Đăng xuất</a>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="auth-buttons-mobile">
+          <a href="/auth/login" class="btn-login-mobile">Đăng nhập</a>
+          <a href="/auth/register" class="btn-register-mobile">Đăng ký</a>
+        </div>
+      <% } %>
+    </li>
+  </ul>
+  
+  <!-- Auth Section cho desktop -->
+  <div class="auth-section auth-section-desktop">
+    <% if (typeof user !== 'undefined' && user) { %>
+      <div class="user-menu">
+        <span class="user-name">Xin chào, <%= user.fullName %></span>
+        <div class="user-dropdown">
+          <a href="/auth/info" class="dropdown-item">Thông tin tài khoản</a>
+          <% if (user.role === 'admin' || user.role === 'editor') { %>
+            <a href="/admin/dashboard" class="dropdown-item">Trang quản trị</a>
+          <% } %>
+          <a href="/auth/logout" class="dropdown-item">Đăng xuất</a>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="auth-buttons">
+        <a href="/auth/login" class="btn-login">Đăng nhập</a>
+        <a href="/auth/register" class="btn-register">Đăng ký</a>
+      </div>
+    <% } %>
+  </div>
+  
+  <img src="/client/img/menu-btn.png" alt="" class="menu-btn" />
+</nav>

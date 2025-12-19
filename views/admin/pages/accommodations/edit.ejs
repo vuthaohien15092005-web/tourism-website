@@ -1,0 +1,495 @@
+<!-- Page Header -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><%= pageTitle %></h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="/admin/accommodations" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>
+            Quay lại
+        </a>
+    </div>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <%= flash.error[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<!-- Form -->
+<form method="POST" action="/admin/accommodations/edit/<%= accommodation._id %>?_method=PATCH" enctype="multipart/form-data" id="accommodationForm">
+    <input type="hidden" name="_method" value="PATCH">
+    <div class="row">
+        <!-- === THÔNG TIN CƠ BẢN === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Thông tin cơ bản
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên lưu trú <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" value="<%= accommodation.name %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="star" class="form-label">Hạng sao</label>
+                                <select class="form-select" id="star" name="star">
+                                    <option value="">Chọn hạng sao</option>
+                                    <% for (let i = 1; i <= 5; i++) { %>
+                                        <option value="<%= i %>" <%= accommodation.star === i ? 'selected' : '' %>>
+                                            <%= i %> sao
+                                        </option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="priceFromDisplay" class="form-label">Giá từ (VNĐ) <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" inputmode="numeric" pattern="[0-9.,\s]*" class="form-control" id="priceFromDisplay" value="<%= (accommodation.priceFrom || 0).toLocaleString('vi-VN') %>" aria-describedby="vnd-addon" required>
+                                    <span class="input-group-text" id="vnd-addon">VNĐ</span>
+                                </div>
+                                <input type="hidden" id="priceFrom" name="priceFrom" value="<%= accommodation.priceFrom %>">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Mô tả chi tiết <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="description" name="description" rows="4" required><%= accommodation.description %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === ĐỊA CHỈ === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        Thông tin địa chỉ
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address" name="address" value="<%= accommodation.address %>" required placeholder="VD: 123 Phố Huế, Hà Nội">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="district" class="form-label">Quận/Huyện <span class="text-danger">*</span></label>
+                                <select class="form-select" id="district" name="district" required>
+                                    <option value="">Chọn quận/huyện</option>
+                                    <option value="Hoàn Kiếm" <%= accommodation.district === 'Hoàn Kiếm' ? 'selected' : '' %>>Hoàn Kiếm</option>
+                                    <option value="Ba Đình" <%= accommodation.district === 'Ba Đình' ? 'selected' : '' %>>Ba Đình</option>
+                                    <option value="Tây Hồ" <%= accommodation.district === 'Tây Hồ' ? 'selected' : '' %>>Tây Hồ</option>
+                                    <option value="Long Biên" <%= accommodation.district === 'Long Biên' ? 'selected' : '' %>>Long Biên</option>
+                                    <option value="Cầu Giấy" <%= accommodation.district === 'Cầu Giấy' ? 'selected' : '' %>>Cầu Giấy</option>
+                                    <option value="Đống Đa" <%= accommodation.district === 'Đống Đa' ? 'selected' : '' %>>Đống Đa</option>
+                                    <option value="Hai Bà Trưng" <%= accommodation.district === 'Hai Bà Trưng' ? 'selected' : '' %>>Hai Bà Trưng</option>
+                                    <option value="Hoàng Mai" <%= accommodation.district === 'Hoàng Mai' ? 'selected' : '' %>>Hoàng Mai</option>
+                                    <option value="Thanh Xuân" <%= accommodation.district === 'Thanh Xuân' ? 'selected' : '' %>>Thanh Xuân</option>
+                                    <option value="Hà Đông" <%= accommodation.district === 'Hà Đông' ? 'selected' : '' %>>Hà Đông</option>
+                                    <option value="Nam Từ Liêm" <%= accommodation.district === 'Nam Từ Liêm' ? 'selected' : '' %>>Nam Từ Liêm</option>
+                                    <option value="Bắc Từ Liêm" <%= accommodation.district === 'Bắc Từ Liêm' ? 'selected' : '' %>>Bắc Từ Liêm</option>
+                                    <option value="Thanh Trì" <%= accommodation.district === 'Thanh Trì' ? 'selected' : '' %>>Thanh Trì</option>
+                                    <option value="Gia Lâm" <%= accommodation.district === 'Gia Lâm' ? 'selected' : '' %>>Gia Lâm</option>
+                                    <option value="Đông Anh" <%= accommodation.district === 'Đông Anh' ? 'selected' : '' %>>Đông Anh</option>
+                                    <option value="Sóc Sơn" <%= accommodation.district === 'Sóc Sơn' ? 'selected' : '' %>>Sóc Sơn</option>
+                                    <option value="Mê Linh" <%= accommodation.district === 'Mê Linh' ? 'selected' : '' %>>Mê Linh</option>
+                                    <option value="Hà Nam" <%= accommodation.district === 'Hà Nam' ? 'selected' : '' %>>Hà Nam</option>
+                                    <option value="Phú Xuyên" <%= accommodation.district === 'Phú Xuyên' ? 'selected' : '' %>>Phú Xuyên</option>
+                                    <option value="Thường Tín" <%= accommodation.district === 'Thường Tín' ? 'selected' : '' %>>Thường Tín</option>
+                                    <option value="Mỹ Đức" <%= accommodation.district === 'Mỹ Đức' ? 'selected' : '' %>>Mỹ Đức</option>
+                                    <option value="Ứng Hòa" <%= accommodation.district === 'Ứng Hòa' ? 'selected' : '' %>>Ứng Hòa</option>
+                                    <option value="Chương Mỹ" <%= accommodation.district === 'Chương Mỹ' ? 'selected' : '' %>>Chương Mỹ</option>
+                                    <option value="Thanh Oai" <%= accommodation.district === 'Thanh Oai' ? 'selected' : '' %>>Thanh Oai</option>
+                                    <option value="Thạch Thất" <%= accommodation.district === 'Thạch Thất' ? 'selected' : '' %>>Thạch Thất</option>
+                                    <option value="Quốc Oai" <%= accommodation.district === 'Quốc Oai' ? 'selected' : '' %>>Quốc Oai</option>
+                                    <option value="Ba Vì" <%= accommodation.district === 'Ba Vì' ? 'selected' : '' %>>Ba Vì</option>
+                                    <option value="Sơn Tây" <%= accommodation.district === 'Sơn Tây' ? 'selected' : '' %>>Sơn Tây</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === TỌA ĐỘ BẢN ĐỒ === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-map me-2"></i>
+                        Tọa độ bản đồ
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="map[coordinates][0]" class="form-label">Kinh độ (Longitude)</label>
+                                <input type="number" step="any" class="form-control" id="map[coordinates][0]" name="map[coordinates][0]" value="<%= accommodation.map?.coordinates?.[0] || '' %>" placeholder="105.8342">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="map[coordinates][1]" class="form-label">Vĩ độ (Latitude)</label>
+                                <input type="number" step="any" class="form-control" id="map[coordinates][1]" name="map[coordinates][1]" value="<%= accommodation.map?.coordinates?.[1] || '' %>" placeholder="21.0278">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="map[mapEmbed]" class="form-label">Link nhúng bản đồ</label>
+                                <input type="url" class="form-control" id="map[mapEmbed]" name="map[mapEmbed]" value="<%= accommodation.map?.mapEmbed || '' %>" placeholder="https://www.google.com/maps/embed/...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === HÌNH ẢNH HIỆN TẠI === -->
+        <% if (accommodation.images && accommodation.images.length > 0) { %>
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-images me-2"></i>
+                        Hình ảnh hiện tại
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <% accommodation.images.forEach((image, index) => { %>
+                            <div class="col-md-3 mb-3">
+                                <div class="position-relative">
+                                    <img src="<%= image %>" class="img-fluid rounded" style="width: 100%; height: 150px; object-fit: cover;">
+                                    <div class="position-absolute top-0 end-0 p-1">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="removeImages" value="<%= index %>" id="removeImage<%= index %>">
+                                            <label class="form-check-label text-white bg-danger rounded px-1" for="removeImage<%= index %>" style="font-size: 0.8em;">
+                                                Xóa
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+        <!-- === TIỆN NGHI === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-concierge-bell me-2"></i>
+                        Tiện nghi
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="amenities" class="form-label">Tiện nghi</label>
+                                <div id="amenities-container">
+                                    <% if (accommodation.amenities && accommodation.amenities.length > 0) { %>
+                                        <% accommodation.amenities.forEach(amenity => { %>
+                                            <div class="input-group mb-2">
+                                                <input type="text" class="form-control" name="amenities[]" value="<%= amenity %>">
+                                                <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <div class="input-group mb-2">
+                                            <input type="text" class="form-control" name="amenities[]" placeholder="VD: WiFi miễn phí">
+                                            <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary" onclick="addField('amenities-container', 'amenities[]', 'VD: WiFi miễn phí')">
+                                    <i class="fas fa-plus me-1"></i>Thêm tiện nghi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === MEDIA === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-images me-2"></i>
+                        Hình ảnh & Video mới
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="images" class="form-label">Thêm hình ảnh mới</label>
+                                <input type="file" class="form-control" id="images" name="images" multiple accept="image/*">
+                                <div class="form-text">Chọn nhiều hình ảnh (JPG, PNG, GIF)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="website" class="form-label">Website chính thức</label>
+                                <input type="url" class="form-control" id="website" name="website" value="<%= accommodation.website || '' %>" placeholder="https://example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === LIÊN HỆ === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-phone me-2"></i>
+                        Thông tin liên hệ
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="contact[phone]" class="form-label">Số điện thoại</label>
+                                <input type="tel" class="form-control" id="contact[phone]" name="contact[phone]" value="<%= accommodation.contact?.phone || '' %>" placeholder="024 xxxx xxxx">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="contact[email]" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="contact[email]" name="contact[email]" value="<%= accommodation.contact?.email || '' %>" placeholder="info@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- === TAGS & TRẠNG THÁI === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-tags me-2"></i>
+                        Tags & Trạng thái
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Trạng thái</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="public" <%= accommodation.status === 'public' ? 'selected' : '' %>>Công khai</option>
+                                    <option value="draft" <%= accommodation.status === 'draft' ? 'selected' : '' %>>Bản nháp</option>
+                                    <option value="hidden" <%= accommodation.status === 'hidden' ? 'selected' : '' %>>Ẩn</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="isActive" name="isActive" <%= accommodation.isActive ? 'checked' : '' %>>
+                                <label class="form-check-label" for="isActive">
+                                    Kích hoạt
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="featured" name="featured" <%= accommodation.featured ? 'checked' : '' %>>
+                                <label class="form-check-label" for="featured">
+                                    Nổi bật
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === BUTTONS === -->
+        <div class="col-12">
+            <div class="d-flex justify-content-end gap-2">
+                <a href="/admin/accommodations" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i>
+                    Hủy
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>
+                    Cập nhật lưu trú
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+function addField(containerId, name, placeholder) {
+    const container = document.getElementById(containerId);
+    const div = document.createElement('div');
+    div.className = 'input-group mb-2';
+    div.innerHTML = `
+        <input type="text" class="form-control" name="${name}" placeholder="${placeholder}">
+        <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    container.appendChild(div);
+}
+
+function removeField(button) {
+    button.parentElement.remove();
+}
+
+// Form validation
+// Currency helpers (VNĐ)
+function parseCurrencyToNumber(value) {
+    if (!value) return '';
+    var digits = String(value).replace(/[^0-9]/g, '');
+    return digits ? String(parseInt(digits, 10)) : '';
+}
+
+function formatVND(value) {
+    if (!value) return '';
+    try { return Number(value).toLocaleString('vi-VN'); } catch { return value; }
+}
+
+const priceDisplay = document.getElementById('priceFromDisplay');
+const priceHidden = document.getElementById('priceFrom');
+
+priceDisplay.addEventListener('input', function() {
+    var raw = parseCurrencyToNumber(this.value);
+    priceHidden.value = raw;
+});
+
+priceDisplay.addEventListener('blur', function(){
+    var raw = parseCurrencyToNumber(this.value);
+    this.value = formatVND(raw);
+});
+
+document.getElementById('accommodationForm').addEventListener('submit', function(e) {
+    const name = document.getElementById('name').value.trim();
+    const priceFrom = priceHidden.value || parseCurrencyToNumber(priceDisplay.value);
+    priceHidden.value = priceFrom;
+    const description = document.getElementById('description').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const district = document.getElementById('district').value;
+
+    if (!name || !priceFrom || !description || !address || !district) {
+        e.preventDefault();
+        alert('Vui lòng điền đầy đủ các trường bắt buộc!');
+        return false;
+    }
+
+    if (!priceFrom || parseFloat(priceFrom) < 0) {
+        e.preventDefault();
+        alert('Giá từ (VNĐ) phải là số dương!');
+        return false;
+    }
+});
+
+// === REVIEWS FUNCTIONS ===
+function reindexReviewRows() {
+    const items = document.querySelectorAll('#reviews-container .review-item');
+    items.forEach((item, idx) => {
+        item.querySelectorAll('input, textarea, label').forEach((el) => {
+            if (el.name && el.name.includes('reviews[')) {
+                el.name = el.name.replace(/reviews\[[0-9]+\]/, `reviews[${idx}]`);
+            }
+            if (el.htmlFor && el.htmlFor.startsWith('rv')) {
+                el.htmlFor = `rv${idx}v`;
+            }
+            if (el.id && el.id.startsWith('rv') && el.id.endsWith('v')) {
+                el.id = `rv${idx}v`;
+            }
+        });
+    });
+}
+
+function addReviewRow() {
+    const container = document.getElementById('reviews-container');
+    const div = document.createElement('div');
+    div.className = 'border rounded p-3 mb-3 review-item';
+    div.innerHTML = `
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Tác giả</label>
+                <input type="text" class="form-control" name="reviews[0][author]" placeholder="Tên người đánh giá">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Avatar (Ảnh)</label>
+                <input type="file" class="form-control" name="reviews[0][avatarFile]" accept="image/*">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Điểm</label>
+                <input type="number" class="form-control" name="reviews[0][rating]" min="1" max="5" step="1" value="5">
+            </div>
+            <div class="col-md-2">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" name="reviews[0][verified]" id="rv0v">
+                    <label class="form-check-label" for="rv0v">Đã xác minh</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Ngày</label>
+                <input type="date" class="form-control" name="reviews[0][date]">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Nguồn</label>
+                <input type="text" class="form-control" name="reviews[0][source]" value="google">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Nội dung</label>
+                <textarea class="form-control" name="reviews[0][text]" rows="2" placeholder="Nội dung đánh giá..."></textarea>
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeReviewRow(this)"><i class="fas fa-trash me-1"></i>Xóa</button>
+            </div>
+        </div>
+    `;
+    container.appendChild(div);
+    reindexReviewRows();
+}
+
+function removeReviewRow(button) {
+    const item = button.closest('.review-item');
+    if (item) {
+        item.remove();
+        reindexReviewRows();
+    }
+}
+</script>

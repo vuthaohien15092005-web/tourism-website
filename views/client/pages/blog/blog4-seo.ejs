@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Khám phá ẩm thực sáng của Thủ đô - Hương sáng Hà Nội' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Khám phá ẩm thực sáng Hà Nội với 9 địa điểm ăn sáng nổi tiếng từ phở, bún chả đến cà phê trứng.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'ẩm thực sáng Hà Nội, địa điểm ăn sáng Hà Nội, phở Hà Nội, bún chả, cà phê trứng, Hà Nội Vibes' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Khám phá ẩm thực sáng Hà Nội"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Khám phá ẩm thực sáng của Thủ đô - Hương sáng Hà Nội",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-12-20') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/hanoi-breakfast-food.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Khám phá ẩm thực sáng Hà Nội với 9 địa điểm ăn sáng nổi tiếng từ phở, bún chả đến cà phê trứng.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/hanoi-breakfast-food.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Khám phá ẩm thực sáng Hà Nội</span></div>
+        <h1 class="post-title">Khám phá ẩm thực sáng của Thủ đô - Hương sáng Hà Nội</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '19/10/2025' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Ẩm thực</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <div class="article-cover">
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>Khám phá ẩm thực sáng của Thủ đô - Hương sáng Hà Nội</h2>
+          <p><strong>Hà Nội</strong> – mảnh đất nghìn năm văn hiến, không chỉ níu chân du khách bằng những góc phố cổ kính, những hàng cây rợp bóng hay tiết trời se lạnh đặc trưng, mà còn khiến người ta say mê bởi <em>nền ẩm thực sáng sớm đầy tinh tế và giàu bản sắc</em>. Giữa nhịp sống hối hả, hình ảnh những gánh hàng rong nghi ngút khói, tiếng rao thân quen vang lên giữa phố hay mùi phở bò thơm nức từ quán nhỏ bên đường – tất cả tạo nên một bức tranh bình dị nhưng đậm đà hồn Việt.</p>
+          
+          <h3>Địa điểm ăn sáng tại Hà Nội</h3>
+          <p>Người Hà Nội coi bữa sáng không chỉ là bữa ăn khởi đầu ngày mới, mà là một phần của <strong>văn hoá sống</strong>, là cách họ cảm nhận trọn vẹn nhịp thở của thành phố qua từng món ăn dân dã. Từ phở, bún chả, bánh cuốn đến xôi xéo, cháo sườn – mỗi món đều mang một hương vị riêng, một câu chuyện riêng về con người và vùng đất nơi đây. Và chính vì thế, khám phá những địa điểm ăn sáng tại Hà Nội không chỉ là hành trình tìm kiếm ẩm thực, mà còn là hành trình chạm vào tâm hồn của Thủ đô – nơi quá khứ và hiện tại giao hòa trong từng hơi thở ấm nồng của buổi sớm mai.</p>
+        </section>
+
+
+        <!-- Section 1: Introduction -->
+        <section class="article-section" id="gioi-thieu-chi-tiet">
+          <h2>1. Giới thiệu: Ẩm thực sáng Hà Nội – Nét đẹp giản dị trong từng món ăn</h2>
+          <p>Hà Nội không chỉ cuốn hút bởi nét cổ kính, những con phố rêu phong hay nhịp sống bình dị, mà còn khiến du khách say lòng bởi <strong>văn hoá ẩm thực buổi sáng đặc sắc</strong>. Từ những gánh hàng rong bên vỉa hè cho tới các quán lâu đời truyền qua nhiều thế hệ, mỗi món ăn đều mang trong mình một câu chuyện riêng, một hương vị riêng của Thủ đô.</p>
+          <p>Người Hà Nội ăn sáng tinh tế, giản dị mà cầu kỳ – không chỉ để no mà còn để bắt đầu ngày mới bằng một <em>"nghi thức ẩm thực"</em>. Hãy cùng <strong>"Hà Nội Vibes"</strong> khám phá Top 9 địa điểm ăn sáng tại Hà Nội được yêu thích nhất, nơi lưu giữ trọn vẹn tinh hoa ẩm thực Việt giữa lòng phố cổ.</p>
+        </section>
+
+        <!-- Section 2: Top 9 Breakfast Places -->
+        <section class="article-section" id="pho-thin">
+          <h2>2.1. Phở Thìn – Hương vị phở bò trứ danh Hà Thành</h2>
+          <p>Nhắc đến phở Hà Nội mà không nói đến <strong>Phở Thìn Lò Đúc</strong> thì quả là thiếu sót lớn. Quán tồn tại từ năm 1979, nổi tiếng với phở bò tái lăn thơm ngậy, nước dùng đậm đà và mùi gừng hành đặc trưng. Một bát phở nóng hổi, ăn kèm quẩy giòn và ớt ngâm chua cay, chính là cách tuyệt vời nhất để khởi đầu buổi sáng se lạnh của Hà Nội.</p>
+          <p><strong>Địa chỉ:</strong> 13 Lò Đúc, Hai Bà Trưng, Hà Nội<br>
+          <strong>Giờ mở cửa:</strong> 06:00 – 13:00</p>
+        </section>
+
+        <section class="article-section" id="bun-cha">
+          <h2>2.2. Bún Chả Hương Liên - Nổi tiếng từ "bữa ăn của Tổng thống Obama"</h2>
+          <p>Quán <strong>Bún Chả Hương Liên</strong> trở thành "hiện tượng toàn cầu" khi cựu Tổng thống Mỹ Barack Obama và đầu bếp Anthony Bourdain ghé thăm năm 2016. Dù vậy, hương vị bún chả tại đây đã chinh phục người Hà Nội từ lâu: thịt nướng thơm phức, nước chấm pha hài hoà, nem cua bể giòn rụm – tất cả hòa quyện tạo nên bữa sáng hoàn hảo.</p>
+          <p><strong>Địa chỉ:</strong> 24 Lê Văn Hưu, Hai Bà Trưng, Hà Nội<br>
+          <strong>Giờ mở cửa:</strong> 07h00 – 20h30</p>
+        </section>
+
+        <section class="article-section" id="banh-cuon">
+          <h2>2.3. Bánh Cuốn Bà Hoành – Mộc mạc mà tinh tế</h2>
+          <p>Bánh cuốn là món ăn sáng nhẹ nhàng nhưng đầy tinh tế của người Hà Nội. <strong>Bánh cuốn Bà Hoành</strong> nổi tiếng với lớp bánh mỏng tang, dẻo mịn, nhân thịt thơm, ăn cùng chả quế và nước mắm pha chanh tỏi ớt vừa miệng. Hương vị truyền thống được gìn giữ qua nhiều thế hệ khiến thực khách đến một lần là nhớ mãi.</p>
+          <p><strong>Địa chỉ:</strong> 66 Tô Hiến Thành, Hai Bà Trưng, Hà Nội<br>
+          <strong>Giờ mở cửa:</strong> 06h00 – 11h00</p>
+        </section>
+
+        <section class="article-section" id="xoi-yen">
+          <h2>2.4. Xôi Yến – Hương vị thân thuộc của người Hà Nội</h2>
+          <p>Nếu bạn muốn một bữa sáng no nê và đậm vị Bắc, hãy đến <strong>Xôi Yến</strong> – thương hiệu xôi nổi tiếng suốt mấy chục năm qua. Món xôi xéo vàng óng, dẻo thơm, ăn kèm thịt kho, trứng rán hoặc ruốc, tạo nên hương vị dân dã mà đầy cuốn hút. Quán lúc nào cũng đông khách, đặc biệt vào sáng sớm.</p>
+          <p><strong>Địa chỉ:</strong> 35B Nguyễn Hữu Huân, Hoàn Kiếm, Hà Nội<br>
+          <strong>Giờ mở cửa:</strong> 05h00 – 0h00</p>
+        </section>
+
+        <section class="article-section" id="bun-thang">
+          <h2>2.5. Bún Thang Cầu Gỗ – Tinh hoa ẩm thực Hà thành</h2>
+          <p>Bún thang là món ăn thể hiện sự cầu kỳ, tinh tế bậc nhất trong ẩm thực Hà Nội. Mỗi bát bún gồm hơn 20 nguyên liệu: gà xé, trứng tráng, giò lụa, tôm khô, nấm hương, củ cải khô… được xếp khéo léo, chan cùng nước dùng trong, ngọt thanh. <strong>Bún Thang Cầu Gỗ</strong> là địa chỉ quen thuộc của những ai yêu vị truyền thống.</p>
+          <p><strong>Địa chỉ:</strong> 32 Cầu Gỗ, Hoàn Kiếm, Hà Nội<br>
+          <strong>Giờ mở cửa:</strong> 06h00 – 10h30</p>
+        </section>
+
+        <section class="article-section" id="chao-suon">
+          <h2>2.6. Cháo Sườn Sụn Hàng Bồ – Ấm lòng sáng sớm</h2>
+          <p>Giữa tiết trời lạnh của Hà Nội, một bát cháo sườn sụn nóng hổi là lựa chọn hoàn hảo. Cháo ở đây được nấu nhuyễn, sườn sụn giòn sần sật, thêm ruốc và quẩy giòn rụm. Mùi hành phi thơm lừng lan toả khiến bạn chỉ muốn ăn mãi không dừng.</p>
+          <p><strong>Địa chỉ:</strong> 14 Hàng Bồ, Hoàn Kiếm, Hà Nội<br>
+          <strong>Giờ mở cửa:</strong> 06h00 – 10h00 và 17h00 – 23h00</p>
+        </section>
+
+        <section class="article-section" id="mien-luon">
+          <h2>2.7. Miến Lươn Đông Thịnh – Giòn tan, đậm đà khó quên</h2>
+          <p><strong>Miến lươn Đông Thịnh</strong> đã tồn tại hơn 60 năm, được coi là "huyền thoại miến lươn" đất Hà thành. Lươn ở đây được chiên giòn vàng, không hề tanh, nước dùng thanh ngọt tự nhiên. Dù ăn khô hay chan, hương vị vẫn hài hòa, tinh tế – đúng chuẩn món sáng dành cho người sành ăn.</p>
+          <p><strong>Địa chỉ:</strong> 87 Hàng Điếu, Hoàn Kiếm<br>
+          <strong>Giờ mở cửa:</strong> 06h00 – 14h00</p>
+        </section>
+
+        <section class="article-section" id="banh-da-cua">
+          <h2>2.8. Bánh Đa Cua Dốc Hòe Nhai – Vị đậm miền Bắc giữa lòng Thủ đô</h2>
+          <p>Không cần vào Nam để ăn bánh đa cua, người Hà Nội có thể thưởng thức món này ngay tại quán <strong>Dốc Hòe Nhai</strong>. Bánh đa dai mềm, cua đồng thơm, nước dùng ngọt thanh, thêm rau muống và chả lá lốt tạo nên hương vị hấp dẫn. Quán tuy nhỏ nhưng lúc nào cũng tấp nập.</p>
+          <p><strong>Địa chỉ:</strong> 13 Dốc Hòe Nhai, Ba Đình<br>
+          <strong>Giờ mở cửa:</strong> 06h00 – 11h00</p>
+        </section>
+
+        <section class="article-section" id="ca-phe-trung">
+          <h2>2.9. Cà Phê Trứng Giảng – Kết thúc buổi sáng bằng hương vị ngọt ngào</h2>
+          <p>Sau bữa sáng no nê, hãy dừng chân tại <strong>Cà Phê Giảng</strong> – nơi khai sinh ra món cà phê trứng trứ danh Hà Nội. Lớp kem trứng béo ngậy quyện với cà phê đậm đà, tạo nên hương vị khó quên. Đây không chỉ là thức uống mà còn là <em>"biểu tượng"</em> văn hoá cà phê Hà thành.</p>
+          <p><strong>Địa chỉ:</strong> 39 Nguyễn Hữu Huân, Hoàn Kiếm<br>
+          <strong>Giờ mở cửa:</strong> 07h00 – 22h00</p>
+        </section>
+
+        <section class="article-section tips">
+          <h2>Mẹo nhỏ khi thưởng thức ẩm thực sáng Hà Nội</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-clock-o"></i> Thời gian lý tưởng: 6h-9h sáng để tránh đông đúc</div>
+            <div class="tip"><i class="fa fa-cutlery"></i> Thưởng thức đúng cách: ăn nóng, nhâm nhi từ từ</div>
+            <div class="tip"><i class="fa fa-map-marker"></i> Di chuyển: đi bộ hoặc xe máy để dễ dàng khám phá</div>
+            <div class="tip"><i class="fa fa-camera"></i> Lưu giữ kỷ niệm: chụp ảnh món ăn và không gian quán</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>3. Kết luận: Hà Nội – Hành trình vị giác khởi đầu bằng bữa sáng</h2>
+          <p>Ăn sáng ở Hà Nội không chỉ là thói quen, mà còn là <strong>trải nghiệm văn hoá</strong>. Mỗi món ăn, mỗi địa điểm đều chứa đựng câu chuyện của người làm bếp và tâm hồn của mảnh đất ngàn năm văn hiến. Dù là phở nóng nghi ngút, bún chả nướng thơm phức hay bát cháo sườn giản dị – tất cả đều gợi lên hình ảnh Hà Nội thân thương, mộc mạc nhưng sâu sắc.</p>
+          <p>Nếu có dịp ghé thăm Thủ đô, đừng bỏ lỡ cơ hội thức dậy sớm, lang thang qua những con phố nhỏ và thưởng thức bữa sáng đúng kiểu Hà Nội. <strong>"Hà Nội Vibes"</strong> tin rằng – chỉ cần một bát phở nóng hay một ly cà phê trứng ngọt ngào, bạn sẽ cảm nhận được trọn vẹn hơi thở và linh hồn của Hà Nội buổi sớm mai.</p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-1">Top 10 địa điểm du lịch Hà Nội</a></li>
+            <li><a href="/blog/bai-2">Top 10 quán cafe view đẹp</a></li>
+            <li><a href="/blog/bai-3">Top 10 địa điểm sống ảo Hà Nội</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>

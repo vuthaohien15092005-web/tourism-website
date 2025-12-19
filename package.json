@@ -1,0 +1,66 @@
+{
+  "name": "tourism-website",
+  "version": "1.0.0",
+  "description": "Hà Nội Vibes - Tourism Website with AI Chatbot, Maps, and Multi-language Support",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon --inspect server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node scripts/seed.js",
+    "deploy": "bash scripts/deploy.sh",
+    "optimize-images": "node scripts/optimize-uploads.js",
+    "cleanup-uploads": "node scripts/cleanup-uploads.js",
+    "test-cloudinary": "node scripts/test-cloudinary.js",
+    "migrate-to-cloudinary": "node scripts/migrate-to-cloudinary.js",
+    "vercel-build": "echo 'Build completed'",
+    "vercel-dev": "vercel dev",
+    "vercel-deploy": "vercel --prod"
+  },
+  "keywords": [
+    "tourism",
+    "hanoi",
+    "travel",
+    "maps",
+    "ai",
+    "chatbot",
+    "multilingual",
+    "vercel"
+  ],
+  "author": "Tourism Website Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "dependencies": {
+    "@google/genai": "^0.3.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "helmet": "^8.1.0",
+    "md5": "^2.3.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.18.0",
+    "morgan": "^1.10.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^7.0.9"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10",
+    "sharp": "^0.34.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/tourism-website.git"
+  },
+  "homepage": "https://your-domain.vercel.app"
+}

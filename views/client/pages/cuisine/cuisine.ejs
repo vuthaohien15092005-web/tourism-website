@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ẩm thực Hà Nội | Hà Nội Vibes</title>
+        <meta name="description" content="Khám phá ẩm thực Hà Nội: đặc sản, quán ăn uy tín, lịch sử và phong tục ẩm thực. Lọc theo khu vực, loại món, hình thức quán và tìm kiếm nhanh." />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/client/css/style.css" />
+        <link rel="stylesheet" href="/client/css/responsive.css" />
+        <link rel="stylesheet" href="/client/css/harmony.css" />
+        <link rel="stylesheet" href="/client/css/cuisine.css" />
+        <link rel="stylesheet" href="/client/css/components/pagination.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+        <link rel="manifest" href="/site.webmanifest" />
+    </head>
+    <body class="cuisine">
+        <%- include('../../partials/header') %>    
+
+        <!-- Banner -->
+        <header class="page-header cuisine-banner" style="background-image: url('/client/img/pho-ha-noi-banner.jpg');">
+            <div class="header-content">
+                <h1>Ẩm thực Hà Nội</h1>
+                <p class="font-color" style="text-align: center;">Hà Nội Vibes – hương vị thủ đô trong từng trải nghiệm</p>
+            </div>
+        </header>
+
+        <!-- Filters -->
+        <section>
+            <div class="cuisine-filters" aria-label="Bộ lọc ẩm thực">
+                <div class="filter-row">
+                    <div class="box" role="search">
+                        <i class="fa fa-search" aria-hidden="true" style="margin-right:8px"></i>
+                        <input id="cui-search" type="text" placeholder="Tìm tên ẩm thực" aria-label="Tìm theo tên" value="<%= currentSearch %>" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <section class="cuisine-grid" aria-label="Danh sách món/quán">
+                <% var list = (typeof cuisines !== 'undefined' && cuisines && cuisines.length) ? cuisines : []; %>
+                <% if (list.length) { list.forEach(function(item){ %>
+                <article class="cuisine-card" data-title="<%= item.title %>" data-area="<%= item.area %>" data-form="<%= item.form %>" data-rating="<%= item.rating %>">
+                    <div class="thumb">
+                        <img src="<%= item.image %>" alt="<%= item.title %>" loading="lazy" />
+                    </div>
+                    <div class="content">
+                        <h3 class="title dark"><%= item.title %></h3>
+                        <% if (item.desc) { %>
+                            <p class="desc font-color"><%= item.desc.length > 80 ? item.desc.substring(0, 80) + '...' : item.desc %></p>
+                        <% } else { %>
+                            <p class="desc font-color">Món ăn đặc sản Hà Nội với hương vị truyền thống và độc đáo...</p>
+                        <% } %>
+                        <div class="actions">
+                            <a class="ctn" href="/cuisine/<%= item.slug %>">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </article>
+                <% }) } %>
+            </section>
+
+            <!-- Pagination -->
+            <%- include('../../components/pagination') %>
+        </section>
+
+        <!-- Contact Section -->
+        <%- include('../../components/contact-section', { sectionId: 'contact-cuisine' }) %>
+
+        <!-- up scroll -->
+        <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+
+        <!--footer-->
+        <%- include('../../partials/footer') %>
+
+        <!-- Inject all cuisines data for search -->
+        <div id="cuisines-data" data-json='<%= allCuisinesForSearch %>' style="display: none;"></div>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/client/js/includes.js"></script>
+        <script src="/client/js/script.js"></script>
+        <script src="/client/js/components/pagination.js"></script>
+        <script>
+        // Cuisine filtering functionality (server-side)
+        document.addEventListener('DOMContentLoaded', function() {
+            var searchInput = document.getElementById('cui-search');
+            var searchTimeout;
+
+            function updateUrl(search) {
+                var url = new URL(window.location.href);
+                if (search && search.trim()) {
+                    url.searchParams.set('search', search.trim());
+                } else {
+                    url.searchParams.delete('search');
+                }
+                url.searchParams.delete('page'); // Reset to page 1 when filtering
+                return url.toString();
+            }
+
+            function applyFilter(search) {
+                var newUrl = updateUrl(search);
+                window.location.href = newUrl;
+            }
+
+            // Search input with debounce
+            if (searchInput) {
+                searchInput.addEventListener('input', function(){
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(function(){
+                        var search = searchInput.value;
+                        applyFilter(search);
+                    }, 500); // 500ms debounce
+                });
+            }
+        });
+        </script>
+        <!--footer-->
+    </body>
+</html>

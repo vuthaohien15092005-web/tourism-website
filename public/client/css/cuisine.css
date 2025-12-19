@@ -1,0 +1,312 @@
+/* Cuisine Page (namespaced) */
+
+/* ===========================================
+   TEXT JUSTIFICATION FOR ALL CONTENT
+   =========================================== */
+.cuisine-page p,
+.cuisine-page .description,
+.cuisine-page .content,
+.cuisine-page .cuisine-description,
+.cuisine-page .dish-description,
+.cuisine-page .restaurant-description {
+  text-align: justify !important;
+  line-height: 1.6;
+  font-family: var(--ff-primary);
+  font-size: var(--fs-paragraphs);
+}
+
+.cuisine .navbar.glass { background: rgba(0, 0, 0, 0.6) !important; box-shadow: none !important; }
+.cuisine .navbar .nav-links li a { color: #fff !important; }
+body.dark .cuisine .navbar .nav-links li a { color: #fff !important; }
+.cuisine .navbar .nav-links li a.active,
+.cuisine .navbar .nav-links li a:hover { 
+  border-color: var(--primary-color) !important;
+  /* color: var(--primary-color) !important; */
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-1px) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Banner */
+.cuisine-banner.page-header { 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  min-height: 320px; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  text-align:center; 
+  padding:60px 20px; 
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: high-quality;
+}
+.cuisine-banner .header-content h1 { 
+  color: #fff;
+  font-family: var(--ff-heading); /* Roboto */
+  font-size: var(--fs-headings); /* Responsive heading size */
+  font-weight: 600; /* Semi-bold */
+  letter-spacing: normal; /* Normal spacing như blog section */
+}
+
+.cuisine-banner .header-content h2 {
+  font-family: var(--ff-heading); /* Roboto */
+  font-size: 3vmin; /* Giữ nguyên responsive size */
+  font-weight: 500; /* Medium weight */
+  letter-spacing: normal; /* Normal spacing */
+}
+
+.cuisine-banner .header-content p {
+  font-family: var(--ff-primary); /* Inter font */
+  font-size: var(--fs-paragraphs); /* Responsive paragraph size */
+  color: whitesmoke;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+/* Overview section */
+.cuisine-overview { max-width: 1100px; margin: 28px auto; padding: 0 16px; text-align: center; }
+.cuisine-overview p { 
+  line-height: 1.7; 
+  font-family: var(--ff-primary); /* Inter font */
+  font-size: var(--fs-paragraphs); /* Responsive font size */
+  color: #7c7c7c; /* Màu xám giống blog section */
+}
+
+/* Filters */
+.cuisine-filters { max-width: 1200px; margin: 20px auto 16px; padding: 0 16px; width: 100%; box-sizing: border-box; }
+.cuisine-filters .filter-row { display: grid; grid-template-columns: 1fr 180px 180px 180px; gap: 12px; }
+.cuisine-filters .box { background: rgba(255,255,255,0.92); border-radius: 12px; box-shadow: 0 6px 24px rgba(0,0,0,0.06); padding: 10px 12px; display: flex; align-items: center; }
+.cuisine-filters .box input,
+.cuisine-filters .box select { 
+  width: 100%; 
+  background: transparent; 
+  border: none; 
+  outline: none; 
+  color: inherit; 
+  height: 40px; 
+  font-size: var(--fs-sm); /* 0.875rem (14px) */
+  font-family: var(--ff-primary); /* Inter font */
+}
+body.dark .cuisine-filters .box input,
+body.dark .cuisine-filters .box select { color: #111; }
+
+/* Mobile responsive for search bar */
+@media (max-width: 640px) { 
+  .cuisine-filters { 
+    padding: 0 16px; /* Đảm bảo padding giống grid */
+  }
+  .cuisine-filters .filter-row { 
+    grid-template-columns: 1fr; 
+    gap: 8px;
+  }
+  .cuisine-filters .box { 
+    padding: 12px 16px; 
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.95);
+  }
+  .cuisine-filters .box input {
+    height: 48px;
+    font-size: 1rem; /* Prevent zoom on iOS */
+    padding-left: 8px;
+  }
+  .cuisine-filters .box i {
+    color: #666;
+    font-size: 1.125rem;
+  }
+  
+  /* Mobile card adjustments */
+  .cuisine-card {
+    height: 380px; /* Slightly smaller on mobile */
+  }
+  .cuisine-card .thumb {
+    height: 180px; /* Smaller image on mobile */
+  }
+  .cuisine-card .content {
+    flex: 1; /* Allow content to grow on mobile too */
+  }
+  .cuisine-card .title {
+    height: 44px; /* Slightly smaller title */
+    font-size: 1.125rem; /* 18px */
+  }
+  .cuisine-card .desc {
+    /* Removed fixed height to show full description on mobile */
+    font-size: 0.8rem; /* 12.8px */
+  }
+  .cuisine-card .meta {
+    height: 56px; /* Adjusted meta height */
+  }
+}
+
+/* Pills */
+.cuisine-pills { max-width: 1200px; margin: 10px auto 24px; padding: 0 16px; display:flex; gap:10px; overflow-x:auto; }
+.cuisine-pills .pill { white-space: nowrap; border: 1px solid rgba(255,255,255,0.4); color:#fff; border-radius:999px; padding:8px 14px; background: rgba(255,255,255,0.08); cursor:pointer; transition: all .2s ease; }
+body.dark .cuisine-pills .pill { border-color: rgba(255,255,255,0.2); }
+.cuisine-pills .pill.active, .cuisine-pills .pill:hover { background:#fff; color:#111; }
+
+/* Grid */
+.cuisine-grid { max-width: 1200px; margin: 0 auto 80px; padding: 0 16px; display:grid; grid-template-columns: repeat(3, 1fr); gap:24px; width: 100%; box-sizing: border-box; }
+@media (max-width: 1024px) { .cuisine-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { 
+  .cuisine-grid { 
+    grid-template-columns: 1fr; 
+    padding: 0 16px; /* Đảm bảo padding giống filter */
+  } 
+}
+
+/* Card */
+.cuisine-card { 
+  background: rgba(255,255,255,0.95); 
+  border-radius: 16px; 
+  overflow:hidden; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+  transition: transform .2s ease, box-shadow .2s ease; 
+  display:flex; 
+  flex-direction:column;
+  height: 400px; /* Fixed height for all cards */
+}
+body.dark .cuisine-card { background: rgba(20,20,22,0.92); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.cuisine-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.12); }
+.cuisine-card .thumb { 
+  position: relative; 
+  width: 100%; 
+  height: 200px; /* Fixed height for image */
+  overflow:hidden; 
+}
+.cuisine-card .thumb img { 
+  position:absolute; 
+  inset:0; 
+  width:100%; 
+  height:100%; 
+  object-fit:cover; 
+  transition: transform .5s ease; 
+}
+.cuisine-card:hover .thumb img { transform: scale(1.06); }
+.cuisine-card .content { 
+  padding:16px; 
+  display:flex; 
+  flex-direction:column; 
+  gap:10px;
+  flex: 1; /* Allow content to grow to fill available space */
+  justify-content: space-between;
+}
+.cuisine-card .title { 
+  font-size: var(--fs-xl); /* 1.25rem (20px) */
+  font-family: var(--ff-heading); /* Roboto */
+  font-weight: 600; /* Semi-bold như blog section */
+  letter-spacing: normal;
+  text-align: left;
+  height: 48px; /* Fixed height for title */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.2;
+}
+.cuisine-card .desc { 
+  color: #7c7c7c; /* Màu xám giống blog section */
+  line-height: 1.4; 
+  font-family: var(--ff-primary); /* Inter font */
+  font-size: var(--fs-sm); /* 0.875rem (14px) */
+  text-align: left;
+  /* Removed fixed height and line-clamp to show full description */
+}
+.cuisine-card .meta { 
+  display:flex; 
+  flex-direction:column; 
+  gap:6px;
+  height: 60px; /* Fixed height for meta */
+  justify-content: flex-start;
+}
+.cuisine-card .address, .cuisine-card .hours { 
+  font-size: var(--fs-xs); /* 0.75rem (12px) */
+  font-family: var(--ff-primary); /* Inter font */
+  color: #7c7c7c; /* Màu xám giống blog section */
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+body.dark .cuisine-card .address, body.dark .cuisine-card .hours { color: #cbd5e1; }
+.cuisine-card .actions { 
+  margin-top: auto; 
+  display:flex; 
+  justify-content:center;
+  height: 40px; /* Fixed height for actions */
+  align-items: center;
+}
+
+/* Visibility helper */
+.cuisine-card.is-hidden { display: none !important; }
+
+/* Blog cards in cuisine detail */
+.blog-card .ctn {
+  display: block;
+  text-align: center;
+  margin: 20px auto 0;
+  padding: 12px 28px;
+  font-size: 0.875rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  width: fit-content;
+  max-width: 180px;
+  font-weight: 600;
+}
+
+.blog-card .ctn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Blog meta layout - separate rating and address */
+.blog-card .blog-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.blog-card .blog-rating {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.blog-card .blog-address {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.blog-card .blog-rating .blog-date,
+.blog-card .blog-address .blog-author {
+  font-size: 0.875rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.blog-card .blog-rating .blog-date i {
+  color: #ffc107;
+  font-size: 0.9rem;
+}
+
+.blog-card .blog-address .blog-author i {
+  color: #dc3545;
+  font-size: 0.9rem;
+}
+
+/* Blog title spacing */
+.blog-card .blog-title {
+  margin: 12px 0 8px 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}

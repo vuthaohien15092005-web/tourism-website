@@ -1,0 +1,91 @@
+<% /*
+  Reusable Contact Section Component
+  Props (via locals when including):
+  - sectionId: string (optional, default: 'contact')
+  - title: string (optional, default: 'LIÊN HỆ')
+  - heading: string (optional, default: 'Gửi tin nhắn cho chúng tôi')
+  - action: string (optional, default: '/contact')
+  - method: string (optional, default: 'post')
+  - successId, errorId: optional ids for message containers
+*/ %>
+<section id="<%= typeof sectionId !== 'undefined' ? sectionId : 'contact' %>">
+    <div class="title">
+        <h1 class="font-color"><%= typeof title !== 'undefined' ? title : 'LIÊN HỆ' %></h1>
+        <div class="line"></div>
+    </div>
+    <div class="contact_us">
+        <form class="cform" id="contactForm" action="<%= typeof action !== 'undefined' ? action : '/contact' %>" method="<%= typeof method !== 'undefined' ? method : 'post' %>">
+            <div class="crow-message">
+                <h1 class="color"><%= typeof heading !== 'undefined' ? heading : 'Gửi tin nhắn cho chúng tôi' %></h1>
+                <div></div>
+            </div>
+
+            <!-- Success/Error Messages -->
+            <div id="contactMessages" style="display: none;">
+                <div id="<%= typeof successId !== 'undefined' ? successId : 'successMessage' %>" class="alert alert-success" style="display: none;">
+                    <i class="fa fa-check-circle"></i>
+                    <span id="successText"></span>
+                    <button type="button" class="alert-close" onclick="closeAlert()">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div id="<%= typeof errorId !== 'undefined' ? errorId : 'errorMessage' %>" class="alert alert-error" style="display: none;">
+                    <i class="fa fa-exclamation-circle"></i>
+                    <span id="errorText"></span>
+                    <button type="button" class="alert-close" onclick="closeAlert()">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="crow-in">
+                <input type="text" id="name" name="name" placeholder="Tên của bạn" required />
+                <input type="email" id="email" name="email" placeholder="Email của bạn" required />
+            </div>
+
+            <div class="crow">
+                <div class="ccol-left">
+                    <select name="country" id="country" required>
+                        <option value="">Chọn quốc gia</option>
+                        <option value="Việt Nam">Việt Nam</option>
+                        <option value="Nga">Nga</option>
+                        <option value="Mỹ">Mỹ</option>
+                        <option value="Nhật Bản">Nhật Bản</option>
+                        <option value="Pháp">Pháp</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="crow">
+                <div class="ccol-left">
+                    <textarea id="remarks" name="remarks" placeholder="Nội dung tin nhắn của bạn..." style="height: 150px" required></textarea>
+                </div>
+            </div>
+
+            <input class="crow-s" type="submit" value="Gửi tin nhắn" id="submitBtn" />
+        </form>
+
+        <div class="cbox">
+            <div>
+                <p class="cbox-message">
+                    Bạn muốn cách nào khác?<br />
+                    Hãy liên hệ với chúng tôi theo thông tin bên dưới
+                </p>
+                <div class="cbox-line"></div>
+            </div>
+            <div class="c_boxx">
+                <a href="mailto:abc@gmail.com"><i class="fa fa-envelope"></i>Mail: hanoivibess@gmail.com</a>
+            </div>
+            <div class="c_boxx">
+                <a href="tel:+91-12345-67890"><i class="fa fa-phone"></i>Phone: 1900 3690</a>
+            </div>
+            <div class="c_boxx">
+                <a href="#"><i class="fa fa-map-marker"></i>Location: Hà Nội, Việt Nam</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+

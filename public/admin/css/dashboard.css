@@ -1,0 +1,106 @@
+/* Dashboard specific styles */
+.page-heading {
+    margin-bottom: 1.5rem;
+}
+
+.page-content {
+    padding: 0;
+}
+
+.stats-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.stats-icon.purple {
+    background: linear-gradient(135deg, #1261A6 0%, #e6025a 100%);
+}
+
+.stats-icon.blue {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stats-icon.green {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.stats-icon.red {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-extrabold {
+    font-weight: 800;
+}
+
+.avatar {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar-md {
+    width: 40px;
+    height: 40px;
+}
+
+.avatar-lg {
+    width: 50px;
+    height: 50px;
+}
+
+.avatar-xl {
+    width: 60px;
+    height: 60px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.recent-message {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.recent-message:last-child {
+    border-bottom: none;
+}
+
+/* Iconly Icons - Using Font Awesome */
+[class^="iconly-bold"], [class*=" iconly-bold"] {
+    font-family: 'Font Awesome 6 Free' !important;
+    font-weight: 900;
+    speak: never;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.iconly-boldShow:before {
+    content: "\f06e"; /* fa-eye */
+}
+
+.iconly-boldProfile:before {
+    content: "\f2bd"; /* fa-user-circle */
+}
+
+.iconly-boldAdd-User:before {
+    content: "\f234"; /* fa-user-plus */
+}
+
+.iconly-boldBookmark:before {
+    content: "\f02e"; /* fa-bookmark */
+}

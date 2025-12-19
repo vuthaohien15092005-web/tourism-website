@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle || 'Hà Nội đi lại bằng gì? Từ xe bus, taxi đến xe điện phố&nbsp;cổ' %> - Hà Nội Vibes</title>
+    <meta name="description" content="<%= (meta && meta.description) || 'Khám phá các phương tiện di chuyển phổ biến ở Hà Nội như xe bus, taxi, xe công nghệ và xe điện phố&nbsp;cổ.' %>" />
+    <meta name="keywords" content="<%= (meta && meta.keywords) || 'Hà Nội đi lại, phương tiện Hà Nội, xe bus Hà Nội, taxi Hà Nội, xe công nghệ, xe điện phố&nbsp;cổ, Grab Hà Nội, du&nbsp;lịch Hà Nội' %>" />
+    <meta name="author" content="<%= (meta && meta.author) || 'Hà Nội Vibes' %>" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/blog.css" />
+    <link rel="stylesheet" href="/client/css/blog-detail.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": <%- JSON.stringify((meta && meta.siteUrl) || 'https://example.com') %>},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": <%- JSON.stringify(((meta && meta.siteUrl) || 'https://example.com') + '/blog') %>},
+          {"@type": "ListItem", "position": 3, "name": "Phương tiện di chuyển Hà Nội"}
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Hà Nội đi lại bằng gì? Từ xe bus, taxi đến xe điện phố&nbsp;cổ",
+        "author": {"@type": "Person", "name": <%- JSON.stringify((meta && meta.author) || 'Hà Nội Vibes') %>},
+        "datePublished": <%- JSON.stringify((meta && meta.dateISO) || '2024-12-23') %>,
+        "image": [<%- JSON.stringify((meta && meta.image) || '/client/img/Overview-2.jpg') %>],
+        "publisher": {"@type": "Organization", "name": "Hà Nội Vibes"},
+        "description": <%- JSON.stringify((meta && meta.description) || 'Khám phá các phương tiện di chuyển phổ biến ở Hà Nội như xe bus, taxi, xe công nghệ và xe điện phố&nbsp;cổ.') %>
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../../partials/header') %>
+
+    <!-- Hero Banner for Blog Detail -->
+    <header class="blog-detail-hero" data-bg="<%= (meta && meta.image) || '/client/img/Overview-2.jpg' %>">
+      <div class="overlay"></div>
+      <div class="hero-content container">
+        <div class="breadcrumb"><a href="/">Trang chủ</a> <span>/</span> <a href="/blog">Blog</a> <span>/</span> <span>Phương tiện di chuyển Hà Nội</span></div>
+        <h1 class="post-title">Hà Nội đi lại bằng gì? Từ xe bus, taxi đến xe điện phố&nbsp;cổ</h1>
+        <div class="post-meta">
+          <span><i class="fa fa-calendar"></i> <%= (meta && meta.date) || '23/12/2024' %></span>
+          <span><i class="fa fa-user"></i> <%= (meta && meta.author) || 'Admin' %></span>
+          <span class="chip">Du lịch</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="blog-detail container">
+      <article class="article">
+        <div class="article-cover">
+          <img src="/client/img/ptdc.jpg" alt="Phương tiện di chuyển Hà Nội" />
+          <figcaption>Khám phá các phương tiện di chuyển đa dạng ở Hà Nội</figcaption>
+        </div>
+
+        <!-- Intro -->
+        <section class="article-section" id="gioi-thieu">
+          <h2>BÀI 9 – Hà Nội đi lại bằng gì? Từ xe bus, taxi đến xe điện phố cổ</h2>
+          <p>Hà Nội với hệ thống giao thông đa dạng và phong phú, từ phương tiện công cộng hiện đại đến những phương tiện truyền thống đậm chất văn hóa. Cùng "Hà Nội Vibes" khám phá các cách di chuyển thú vị nhất trong Thủ đô.</p>
+          <p>Việc lựa chọn phương tiện di chuyển phù hợp sẽ giúp bạn có những trải nghiệm du lịch Hà Nội trọn vẹn và đáng nhớ nhất. Từ xe bus công cộng tiết kiệm đến xe điện phố cổ lãng mạn, mỗi phương tiện đều mang đến những cảm nhận riêng biệt.</p>
+        </section>
+
+
+        <!-- Sections -->
+        <section class="article-section" id="xe-bus">
+          <h2>1. Xe bus công cộng - Tiết kiệm và tiện lợi</h2>
+          <p>Xe bus là phương tiện công cộng phổ biến nhất ở Hà Nội với mạng lưới rộng khắp thành phố. Giá vé rẻ (7.000-15.000 VNĐ), phù hợp cho du khách muốn tiết kiệm chi phí và trải nghiệm cuộc sống địa phương.</p>
+          <p><strong>Ưu điểm:</strong> Giá rẻ, mạng lưới rộng, có điều hòa, an toàn. <strong>Nhược điểm:</strong> Có thể đông đúc vào giờ cao điểm, thời gian chờ đợi.</p>
+        </section>
+
+        <section class="article-section" id="taxi">
+          <h2>2. Taxi và xe công nghệ - Linh hoạt và nhanh chóng</h2>
+          <p>Taxi truyền thống và các ứng dụng gọi xe như Grab, Be, Gojek rất phổ biến ở Hà Nội. Phù hợp cho những chuyến đi ngắn hoặc khi cần di chuyển nhanh chóng.</p>
+          <p><strong>Lưu ý:</strong> Nên sử dụng ứng dụng để tránh bị tính giá cao, kiểm tra giá trước khi đi.</p>
+        </section>
+
+        <section class="article-section" id="xe-dien">
+          <h2>3. Xe điện phố cổ - Trải nghiệm độc đáo</h2>
+          <p>Xe điện phố cổ là phương tiện đặc trưng của Hà Nội, đưa du khách tham quan các điểm nổi tiếng như Hồ Gươm, phố cổ, Văn Miếu. Đây là cách tuyệt vời để khám phá thành phố một cách lãng mạn.</p>
+          <p><strong>Đặc điểm:</strong> Tốc độ chậm, phù hợp tham quan, có hướng dẫn viên, giá cả hợp lý (khoảng 50.000-100.000 VNĐ/người).</p>
+        </section>
+
+        <section class="article-section" id="xe-dap">
+          <h2>4. Xe đạp và đi bộ - Khám phá từng góc phố</h2>
+          <p>Đi bộ hoặc thuê xe đạp là cách tuyệt vời để khám phá Hà Nội một cách chi tiết. Đặc biệt phù hợp cho việc tham quan phố cổ, Hồ Gươm và các khu vực trung tâm.</p>
+          <p><strong>Gợi ý:</strong> Thuê xe đạp tại các điểm du lịch, đi bộ quanh Hồ Gươm vào buổi sáng sớm hoặc chiều tối.</p>
+        </section>
+
+        <section class="article-section tips">
+          <h2>Mẹo di chuyển thông minh</h2>
+          <div class="tips-grid">
+            <div class="tip"><i class="fa fa-bus"></i> Xe bus: Kiểm tra tuyến đường trên Google Maps</div>
+            <div class="tip"><i class="fa fa-car"></i> Taxi: Sử dụng ứng dụng để tránh bị tính giá cao</div>
+            <div class="tip"><i class="fa fa-bicycle"></i> Xe đạp: Thuê tại các điểm du lịch chính</div>
+            <div class="tip"><i class="fa fa-walking"></i> Đi bộ: Tốt nhất cho khu vực phố cổ và Hồ Gươm</div>
+          </div>
+        </section>
+
+        <section class="article-section" id="ket-luan">
+          <h2>Kết luận</h2>
+          <p>Hà Nội với hệ thống giao thông đa dạng mang đến nhiều lựa chọn di chuyển thú vị cho du khách. Từ xe bus tiết kiệm đến xe điện phố cổ lãng mạn, mỗi phương tiện đều có những ưu điểm riêng.</p>
+          <p>Với "Hà Nội Vibes", bạn sẽ được hướng dẫn chi tiết về cách sử dụng các phương tiện di chuyển một cách hiệu quả và an toàn nhất. Hãy để chúng tôi đồng hành cùng bạn trong hành trình khám phá Hà Nội.</p>
+          <p><em>"Hà Nội Vibes – Cùng bạn tận hưởng trọn vẹn hơi thở Hà Nội."</em></p>
+        </section>
+      </article>
+
+      <aside class="sidebar">
+        <div class="widget related">
+          <h3>Bài viết liên quan</h3>
+          <ul>
+            <li><a href="/blog/bai-5">Phố cổ Hà Nội - 36 phố phường</a></li>
+            <li><a href="/blog/bai-10">Hồ Gươm - Trái tim Hà Nội</a></li>
+            <li><a href="/blog/bai-4">Ẩm thực đường phố Hà Nội</a></li>
+          </ul>
+        </div>
+        <div class="widget subscribe">
+          <h3>Nhận bản tin</h3>
+          <form class="subscribe-form" onsubmit="return false;">
+            <input type="email" placeholder="Email của bạn" required />
+            <button type="submit" class="ctn">Đăng ký</button>
+          </form>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Contact Section -->
+    <%- include('../../components/contact-section', { sectionId: 'contact-blog-detail' }) %>
+
+    <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+    <%- include('../../partials/footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/client/js/includes.js"></script>
+    <script src="/client/js/script.js"></script>
+    <script src="/client/js/blog.js"></script>
+    <script>
+      (function() {
+        var hero = document.querySelector('.blog-detail-hero');
+        if (hero) {
+          var bg = hero.getAttribute('data-bg');
+          if (bg) {
+            hero.style.backgroundImage = 'url("' + bg + '")';
+          }
+        }
+      })();
+    </script>
+  </body>
+  </html>

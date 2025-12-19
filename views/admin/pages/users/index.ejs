@@ -1,0 +1,323 @@
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0 text-gray-800">Quản lý Người dùng</h1>
+            <p class="text-muted">Quản lý tài khoản người dùng hệ thống</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary" onclick="refreshData()">
+                <i class="fas fa-sync-alt"></i> Làm mới
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tổng người dùng</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= stats.total %></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Đang hoạt động</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= stats.active %></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-check fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Admin</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= stats.admins %></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-shield fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Editor</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= stats.editors %></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-edit fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bộ lọc</h6>
+        </div>
+        <div class="card-body">
+            <form method="GET" class="row g-3">
+                <div class="col-md-4">
+                    <label for="search" class="form-label">Tìm kiếm</label>
+                    <input type="text" class="form-control" id="search" name="search" 
+                           value="<%= search %>" placeholder="Tên, email, số điện thoại...">
+                </div>
+                <div class="col-md-3">
+                    <label for="role" class="form-label">Vai trò</label>
+                    <select class="form-select" id="role" name="role">
+                        <option value="">Tất cả vai trò</option>
+                        <option value="admin" <%= role === 'admin' ? 'selected' : '' %>>Admin</option>
+                        <option value="editor" <%= role === 'editor' ? 'selected' : '' %>>Editor</option>
+                        <option value="user" <%= role === 'user' ? 'selected' : '' %>>User</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="status" class="form-label">Trạng thái</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="active" <%= status === 'active' ? 'selected' : '' %>>Hoạt động</option>
+                        <option value="inactive" <%= status === 'inactive' ? 'selected' : '' %>>Không hoạt động</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Lọc
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
+            <span class="badge bg-primary"><%= total %> người dùng</span>
+        </div>
+        <div class="card-body">
+            <% if (users && users.length > 0) { %>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Tên</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
+                                <th>Vai trò</th>
+                                <th>Trạng thái</th>
+                                <th>Đăng nhập cuối</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach(user => { %>
+                                <tr>
+                                    <td>
+                                        <img src="<%= user.avatar %>" alt="Avatar" 
+                                             class="rounded-circle" width="40" height="40"
+                                             onerror="this.src='/client/img/avatar.png'">
+                                    </td>
+                                    <td>
+                                        <div class="font-weight-bold"><%= user.fullName %></div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted"><%= user.email %></div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted"><%= user.phone || 'Chưa cập nhật' %></div>
+                                    </td>
+                                    <td>
+                                        <% if (user.role === 'admin') { %>
+                                            <span class="badge bg-danger">Admin</span>
+                                        <% } else if (user.role === 'editor') { %>
+                                            <span class="badge bg-warning">Editor</span>
+                                        <% } else { %>
+                                            <span class="badge bg-info">User</span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-<%= user.status === 'active' ? 'success' : 'secondary' %>">
+                                            <%= user.status === 'active' ? 'Hoạt động' : 'Không hoạt động' %>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted">
+                                            <%= user.lastLogin ? new Date(user.lastLogin).toLocaleString('vi-VN') : 'Chưa đăng nhập' %>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="/admin/users/<%= user._id %>" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <% if (user.role !== 'admin' || user.email !== process.env.ADMIN_EMAIL) { %>
+                                                <button class="btn btn-sm btn-outline-<%= user.status === 'active' ? 'warning' : 'success' %>"
+                                                        onclick="toggleStatus('<%= user._id %>', '<%= user.status %>')">
+                                                    <i class="fas fa-<%= user.status === 'active' ? 'ban' : 'check' %>"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger"
+                                                        onclick="deleteUser('<%= user._id %>', '<%= user.fullName %>')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            <% } else { %>
+                                                <span class="text-muted">Không thể thao tác</span>
+                                            <% } %>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <% if (totalPages > 1) { %>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <% if (currentPage > 1) { %>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<%= currentPage - 1 %>&search=<%= search %>&role=<%= role %>&status=<%= status %>">Trước</a>
+                                </li>
+                            <% } %>
+                            
+                            <% for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) { %>
+                                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                    <a class="page-link" href="?page=<%= i %>&search=<%= search %>&role=<%= role %>&status=<%= status %>"><%= i %></a>
+                                </li>
+                            <% } %>
+                            
+                            <% if (currentPage < totalPages) { %>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<%= currentPage + 1 %>&search=<%= search %>&role=<%= role %>&status=<%= status %>">Sau</a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </nav>
+                <% } %>
+            <% } else { %>
+                <div class="text-center py-5">
+                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Không có người dùng nào</h5>
+                    <p class="text-muted">Chưa có người dùng nào trong hệ thống</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script>
+// Toggle user status
+async function toggleStatus(userId, currentStatus) {
+    try {
+        const response = await fetch(`/admin/users/${userId}/toggle-status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification(result.message, 'success');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        } else {
+            showNotification(result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('Có lỗi xảy ra khi thay đổi trạng thái', 'error');
+    }
+}
+
+// Delete user
+async function deleteUser(userId, userName) {
+    if (confirm(`Bạn có chắc chắn muốn xóa người dùng "${userName}"?`)) {
+        try {
+            const response = await fetch(`/admin/users/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showNotification(result.message, 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                showNotification(result.message, 'error');
+            }
+        } catch (error) {
+            showNotification('Có lỗi xảy ra khi xóa người dùng', 'error');
+        }
+    }
+}
+
+// Refresh data
+function refreshData() {
+    window.location.reload();
+}
+
+// Show notification
+function showNotification(message, type) {
+    const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    const alertHtml = `
+        <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+    
+    // Insert at top of page
+    const container = document.querySelector('.container-fluid');
+    container.insertAdjacentHTML('afterbegin', alertHtml);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        const alert = container.querySelector('.alert');
+        if (alert) {
+            alert.remove();
+        }
+    }, 5000);
+}
+</script>

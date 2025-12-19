@@ -1,0 +1,478 @@
+<!-- Page Actions -->
+<div class="d-flex justify-content-end mb-3">
+    <a href="/admin/entertainments" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>
+        Quay lại
+    </a>
+</div>
+
+<!-- Flash Messages -->
+<% if (typeof flash !== 'undefined' && flash.error && flash.error.length > 0) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <%= flash.error[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<!-- Form -->
+<form method="POST" action="/admin/entertainments/<%= entertainment._id %>" id="entertainmentForm" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="PUT">
+    <div class="row">
+        <!-- === THÔNG TIN CƠ BẢN === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Thông tin cơ bản
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên địa điểm <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" 
+                                       value="<%= entertainment.name %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="zone" class="form-label">Khu vực <span class="text-danger">*</span></label>
+                                <select class="form-select" id="zone" name="zone" required>
+                                    <option value="">Chọn khu vực</option>
+                                    <option value="Khu văn hoá – nghệ thuật" <%= entertainment.zone === 'Khu văn hoá – nghệ thuật' ? 'selected' : '' %>>Khu văn hoá – nghệ thuật</option>
+                                    <option value="Địa điểm ngoài trời – công viên" <%= entertainment.zone === 'Địa điểm ngoài trời – công viên' ? 'selected' : '' %>>Địa điểm ngoài trời – công viên</option>
+                                    <option value="Trung tâm thương mại – Khu vui chơi trong nhà" <%= entertainment.zone === 'Trung tâm thương mại – Khu vui chơi trong nhà' ? 'selected' : '' %>>Trung tâm thương mại – Khu vui chơi trong nhà</option>
+                                    <option value="Khu vui chơi giải trí quy mô lớn" <%= entertainment.zone === 'Khu vui chơi giải trí quy mô lớn' ? 'selected' : '' %>>Khu vui chơi giải trí quy mô lớn</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="type" class="form-label">Loại hình <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="type" name="type" value="<%= entertainment.type %>" placeholder="VD: Nhà hát, Công viên, ..." required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address" name="address" 
+                                       value="<%= entertainment.address %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="openHours" class="form-label">Giờ mở cửa <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="openHours" name="openHours" rows="3" 
+                                          placeholder="VD: 8:00 - 22:00 hàng ngày" required><%= entertainment.openHours %></textarea>
+                                <div class="form-text">Ví dụ: 8:00 - 22:00 hàng ngày, Thứ 2 - Chủ nhật. Có thể xuống dòng để nhập nhiều thông tin.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="ticket" class="form-label">Giá vé <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="ticket" name="ticket" rows="3" 
+                                          placeholder="VD: 50.000đ - 200.000đ" required><%= entertainment.ticket %></textarea>
+                                <div class="form-text">Ví dụ: 50.000đ - 200.000đ, Miễn phí, 100.000đ/người. Có thể xuống dòng để nhập nhiều thông tin.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === REVIEW WIDGET === -->
+
+        
+
+        <!-- === LỊCH SỬ VÀ KIẾN TRÚC === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-history me-2"></i>
+                        Lịch sử và kiến trúc
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="history" class="form-label">Lịch sử hình thành</label>
+                                <textarea class="form-control" id="history" name="history" rows="4" 
+                                          placeholder="Tóm tắt lịch sử hình thành (nếu có)"><%= entertainment.history || '' %></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="architecture" class="form-label">Kiến trúc & Thiết kế</label>
+                                <textarea class="form-control" id="architecture" name="architecture" rows="4" 
+                                          placeholder="Mô tả kiến trúc, cảnh quan (nếu có)"><%= entertainment.architecture || '' %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === TRẢI NGHIỆM VÀ LƯU Ý === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-star me-2"></i>
+                        Trải nghiệm và lưu ý
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="experience" class="form-label">Trải nghiệm nổi bật</label>
+                                <textarea class="form-control" id="experience" name="experience" rows="4" 
+                                          placeholder="Mỗi trải nghiệm trên một dòng"><%= Array.isArray(entertainment.experience) ? entertainment.experience.join('\n') : (typeof entertainment.experience === 'string' ? entertainment.experience : '') %></textarea>
+                                <div class="form-text">Mỗi trải nghiệm trên một dòng riêng</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Lưu ý cần biết</label>
+                                <textarea class="form-control" id="notes" name="notes" rows="4" 
+                                          placeholder="Mỗi lưu ý trên một dòng"><%= Array.isArray(entertainment.notes) ? entertainment.notes.join('\n') : (typeof entertainment.notes === 'string' ? entertainment.notes : '') %></textarea>
+                                <div class="form-text">Mỗi lưu ý trên một dòng riêng</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === HOẠT ĐỘNG VÀ ĐỐI TƯỢNG === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-running me-2"></i>
+                        Hoạt động và đối tượng
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="activities" class="form-label">Hoạt động của du khách</label>
+                                <textarea class="form-control" id="activities" name="activities" rows="4" 
+                                          placeholder="Mỗi hoạt động trên một dòng"><%= Array.isArray(entertainment.activities) ? entertainment.activities.join('\n') : (typeof entertainment.activities === 'string' ? entertainment.activities : '') %></textarea>
+                                <div class="form-text">Mỗi hoạt động trên một dòng riêng</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="targetAudience" class="form-label">Đối tượng khách hàng</label>
+                                <textarea class="form-control" id="targetAudience" name="targetAudience" rows="4" 
+                                          placeholder="Mỗi đối tượng trên một dòng"><%= Array.isArray(entertainment.targetAudience) ? entertainment.targetAudience.join('\n') : (typeof entertainment.targetAudience === 'string' ? entertainment.targetAudience : '') %></textarea>
+                                <div class="form-text">Mỗi đối tượng trên một dòng riêng</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === HÌNH ẢNH === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-images me-2"></i>
+                        Hình ảnh
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- Hiển thị hình ảnh hiện tại -->
+                    <% if (entertainment.images && entertainment.images.length > 0) { %>
+                        <div class="mb-3">
+                            <label class="form-label">Hình ảnh hiện tại (<%= entertainment.images.length %> ảnh)</label>
+                            <div class="row" id="currentImages">
+                                <% entertainment.images.forEach((image, index) => { %>
+                                    <div class="col-md-3 mb-2" id="image-<%= index %>">
+                                        <div class="position-relative">
+                                            <img src="<%= image %>" alt="Hình <%= index + 1 %>" class="img-thumbnail" style="width: 100%; height: 120px; object-fit: cover;">
+                                            <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0" onclick="removeImage(<%= index %>)" title="Xóa ảnh">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                            <div class="position-absolute top-0 start-0 bg-primary text-white rounded-circle p-1" 
+                                                 style="width: 20px; height: 20px; font-size: 12px; text-align: center; line-height: 18px;">
+                                                <%= index + 1 %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        </div>
+                    <% } %>
+                    
+                    <!-- Upload hình ảnh mới -->
+                    <div class="mb-3">
+                        <label for="images" class="form-label">Thêm hình ảnh mới</label>
+                        <input type="file" class="form-control" id="images" name="images" multiple accept="image/*">
+                        <div class="form-text">Chọn nhiều hình ảnh (JPG, PNG, GIF, WebP) - Tối đa 10MB mỗi file</div>
+                    </div>
+                    
+                    <!-- New Image Preview Area -->
+                    <div id="newImagePreview" class="row mt-3" style="display: none;">
+                        <div class="col-12">
+                            <label class="form-label">Xem trước hình ảnh mới:</label>
+                            <div id="newPreviewContainer" class="row"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === BẢN ĐỒ === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        Thông tin bản đồ
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="map[lat]" class="form-label">Vĩ độ (Latitude)</label>
+                                <input type="number" step="any" class="form-control" id="map[lat]" name="map[lat]" 
+                                       value="<%= entertainment && entertainment.map ? (entertainment.map.coordinates ? entertainment.map.coordinates[1] : entertainment.map.lat) : '' %>">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="map[lng]" class="form-label">Kinh độ (Longitude)</label>
+                                <input type="number" step="any" class="form-control" id="map[lng]" name="map[lng]" 
+                                       value="<%= entertainment && entertainment.map ? (entertainment.map.coordinates ? entertainment.map.coordinates[0] : entertainment.map.lng) : '' %>">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="map[embedUrl]" class="form-label">URL nhúng Google Maps (tuỳ chọn)</label>
+                                <input type="url" class="form-control" id="map[embedUrl]" name="map[embedUrl]" 
+                                       value="<%= entertainment && entertainment.map ? entertainment.map.embedUrl : '' %>" 
+                                       placeholder="https://www.google.com/maps/embed?pb=...">
+                                <div class="form-text">Có thể bỏ trống. Hệ thống dùng lat/lng để hiển thị bản đồ.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === TRẠNG THÁI === -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-cog me-2"></i>
+                        Trạng thái
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="isActive" name="isActive" 
+                                       <%= entertainment.isActive ? 'checked' : '' %>>
+                                <label class="form-check-label" for="isActive">
+                                    Kích hoạt
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="featured" name="featured" 
+                                       <%= entertainment.featured ? 'checked' : '' %>>
+                                <label class="form-check-label" for="featured">
+                                    Đánh dấu nổi bật
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="d-flex justify-content-end gap-2">
+        <a href="/admin/entertainments" class="btn btn-secondary">
+            <i class="fas fa-times me-2"></i>
+            Hủy
+        </a>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save me-2"></i>
+            Cập nhật
+        </button>
+    </div>
+</form>
+
+<script>
+// Array to store images to be removed
+let imagesToRemove = [];
+
+function removeImage(index) {
+    if (confirm('Bạn có chắc chắn muốn xóa hình ảnh này?')) {
+        imagesToRemove.push(index);
+        // Hide the image container with animation
+        const imageContainer = document.getElementById(`image-${index}`);
+        if (imageContainer) {
+            imageContainer.style.transition = 'opacity 0.3s ease';
+            imageContainer.style.opacity = '0.5';
+            imageContainer.style.pointerEvents = 'none';
+        }
+    }
+}
+
+// New image preview functionality
+document.getElementById('images').addEventListener('change', function(e) {
+    const files = e.target.files;
+    const previewContainer = document.getElementById('newPreviewContainer');
+    const imagePreview = document.getElementById('newImagePreview');
+    
+    // Clear previous previews
+    previewContainer.innerHTML = '';
+    
+    if (files.length > 0) {
+        imagePreview.style.display = 'block';
+        
+        Array.from(files).forEach((file, index) => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-3 mb-2';
+                    col.innerHTML = `
+                        <div class="position-relative">
+                            <img src="${e.target.result}" alt="New Preview ${index + 1}" 
+                                 class="img-thumbnail" style="width: 100%; height: 120px; object-fit: cover;">
+                            <div class="position-absolute top-0 end-0 bg-success text-white rounded-circle p-1" 
+                                 style="width: 20px; height: 20px; font-size: 12px; text-align: center; line-height: 18px;">
+                                +
+                            </div>
+                        </div>
+                    `;
+                    previewContainer.appendChild(col);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    } else {
+        imagePreview.style.display = 'none';
+    }
+});
+
+// Reviews management functions
+function reindexReviewRows() {
+    const items = document.querySelectorAll('#reviews-container .review-item');
+    items.forEach((item, idx) => {
+        item.querySelectorAll('input, textarea, label').forEach((el) => {
+            if (el.name && el.name.includes('reviews[')) {
+                el.name = el.name.replace(/reviews\[[0-9]+\]/, `reviews[${idx}]`);
+            }
+            if (el.htmlFor && el.htmlFor.startsWith('rv')) {
+                el.htmlFor = `rv${idx}v`;
+            }
+            if (el.id && el.id.startsWith('rv') && el.id.endsWith('v')) {
+                el.id = `rv${idx}v`;
+            }
+        });
+    });
+}
+
+function addReviewRow() {
+    const container = document.getElementById('reviews-container');
+    const div = document.createElement('div');
+    div.className = 'border rounded p-3 mb-3 review-item';
+    div.innerHTML = `
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Tác giả</label>
+                <input type="text" class="form-control" name="reviews[0][author]" placeholder="Tên người đánh giá">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Avatar (Ảnh)</label>
+                <input type="file" class="form-control" name="reviews[0][avatarFile]" accept="image/*">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Điểm</label>
+                <input type="number" class="form-control" name="reviews[0][rating]" min="1" max="5" step="1" value="5">
+            </div>
+            <div class="col-md-2">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" name="reviews[0][verified]" id="rv0v">
+                    <label class="form-check-label" for="rv0v">Đã xác minh</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Ngày</label>
+                <input type="date" class="form-control" name="reviews[0][date]">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Nguồn</label>
+                <input type="text" class="form-control" name="reviews[0][source]" value="google">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Nội dung</label>
+                <textarea class="form-control" name="reviews[0][text]" rows="2" placeholder="Nội dung đánh giá..."></textarea>
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeReviewRow(this)"><i class="fas fa-trash me-1"></i>Xóa</button>
+            </div>
+        </div>
+    `;
+    container.appendChild(div);
+    reindexReviewRows();
+}
+
+function removeReviewRow(button) {
+    const item = button.closest('.review-item');
+    item.remove();
+    reindexReviewRows();
+}
+
+// Form validation
+document.getElementById('entertainmentForm').addEventListener('submit', function(e) {
+    // Add hidden inputs for images to remove
+    imagesToRemove.forEach(index => {
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'removeImages';
+        hiddenInput.value = index;
+        this.appendChild(hiddenInput);
+    });
+    
+    // Basic validation
+    const requiredFields = ['name', 'zone', 'type', 'address', 'openHours', 'ticket'];
+    let isValid = true;
+    
+    requiredFields.forEach(field => {
+        const input = document.getElementById(field);
+        if (!input.value.trim()) {
+            input.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            input.classList.remove('is-invalid');
+        }
+    });
+    
+    if (!isValid) {
+        e.preventDefault();
+        alert('Vui lòng điền đầy đủ các trường bắt buộc');
+        return;
+    }
+    
+});
+</script>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hà Nội Vibes - Cẩm nang du lịch Hà Nội</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/client/css/style.css" />
+    <link rel="stylesheet" href="/client/css/responsive.css" />
+    <link rel="stylesheet" href="/client/css/map.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/client/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/client/img/logo.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/client/img/logo.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- MapLibre GL CSS -->
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@5.7.3/dist/maplibre-gl.css' />
+    <!-- Mapbox GL Draw CSS -->
+    <link rel='stylesheet' href='https://unpkg.com/@mapbox/mapbox-gl-draw@1.4.3/dist/mapbox-gl-draw.css' />
+</head>
+
+<body
+    onload='if (window.location.href.substr(window.location.href.length - 6) == "#about") { introAboutLogoTransition(); }'>
+    <%- include('../../partials/header') %>
+        <%- include('../../components/flash-messages') %>
+
+            <header id="home">
+                <div class="header-content">
+                    <h2 id="quote"
+                        style="color:#fff; text-shadow: -1px -1px 0 #444, 1px -1px 0 #444, -1px 1px 0 #444, 1px 1px 0 #444;">
+                        Khám phá Hà Nội – di sản và&nbsp;nhịp&nbsp;sống
+                    </h2>
+
+                    <h1
+                        style="color:#fff; text-shadow: -1px -1px 0 #444, 1px -1px 0 #444, -1px 1px 0 #444, 1px 1px 0 #444;">
+                        CẨM NANG DU LỊCH HÀ NỘI
+                    </h1>
+
+
+                    <a href="#about" class="ctn"
+                        onclick='removeall(); $("#quad").css("border", "2px solid whitesmoke"); $("#quad").css("border-radius", "20px");'>Tìm
+                        hiểu thêm</a>
+                </div>
+            </header>
+
+            <!--Overview-->
+            <section class="tours" id="tours">
+                <div class="container row">
+                    <div class="col content-col">
+                        <h1 class="font-color">TỔNG QUAN</h1>
+                        <h1 class="font-color">HÀ NỘI</h1>
+                        <p>
+                            Hà Nội là điểm đến du lịch tiêu biểu với sự giao hòa giữa vẻ đẹp cổ kính
+                            và&nbsp;hiện&nbsp;đại. Thành phố nổi bật với các di tích lịch sử như Hoàng thành Thăng Long,
+                            Văn Miếu – Quốc Tử Giám, chùa Một Cột, khu phố cổ 36 phố phường. Không gian xanh như Hồ Hoàn
+                            Kiếm, Hồ Tây và các làng cổ tạo nên sự gần gũi, bình yên. Ẩm&nbsp;thực đặc sắc cùng nhiều sự
+                            kiện văn hóa, nghệ thuật truyền thống và&nbsp;hiện&nbsp;đại góp phần tạo nên sức hút đặc
+                            biệt cho Hà Nội – nơi lưu giữ nét thanh lịch Tràng An giữa nhịp sống mới, nhiều lần được
+                            vinh danh là điểm đến hàng đầu châu Á.
+                        </p>
+                        <!-- <a href="#" class="ctn">Tìm hiểu thêm</a> -->
+                    </div>
+                    <div class="image-col">
+                        <div class="image-gallery">
+                            <!-- <img src="/client/img/Overview-1.jpg" alt="" /> -->
+                            <!-- <img src="/client/img/Overview-2.jpg" alt="" /> -->
+                            <img src="/client/img/Overview-3.jpg" alt="" />
+                            <img src="/client/img/Overview-5.jpg" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--tours-->
+
+            <!-- Blog Section -->
+            <section class="events" id="blog">
+                <div class="container">
+                    <div class="title">
+                        <h1 class="dark">BLOG</h1>
+                        <div class="line"></div>
+                    </div>
+                    <div class="row">
+                        <!-- BÀI 1 -->
+                        <article class="card col">
+                            <img class="card-img" src="/client/img/hotay.jpg" alt="Top 10 địa điểm du lịch Hà Nội" />
+                            <div class="blog-meta">
+                                <span class="blog-category">Du lịch</span>
+                                <span class="blog-date">15/01/2024</span>
+                            </div>
+                            <h4 class="dark">Top 10 địa điểm du lịch Hà Nội đẹp và hấp dẫn</h4>
+                            <p class="font-color">
+                                Hà Nội cuốn hút với vẻ đẹp văn hóa, lịch sử và&nbsp;ẩm&nbsp;thực đặc sắc. Cùng Hà Nội
+                                Vibes khám phá 10 điểm đến hấp dẫn nhất...
+                            </p>
+                            <a href="/blog/bai-1" class="ctn">Đọc tiếp</a>
+                        </article>
+
+                        <!-- BÀI 2 -->
+                        <article class="card col">
+                            <img class="card-img" src="/client/img/cafe-hanoi-banner.jpg"
+                                alt="Top 10 quán cafe view đẹp ở Hà Nội" />
+                            <div class="blog-meta">
+                                <span class="blog-category">Cafe</span>
+                                <span class="blog-date">15/02/2024</span>
+                            </div>
+                            <h4 class="dark">10 quán cafe Hà Nội view siêu đẹp, chill hết nấc</h4>
+                            <p class="font-color">
+                                Từ rooftop lung linh đến góc nhỏ vintage, đây là 10 tọa độ cafe có view đẹp, không gian
+                                độc đáo và&nbsp;đồ&nbsp;uống chất lượng...
+                            </p>
+                            <a href="/blog/bai-2" class="ctn">Đọc tiếp</a>
+                        </article>
+
+                        <!-- BÀI 3 -->
+                        <article class="card col">
+                            <img class="card-img" src="/client/img/banner-attraction.jpg"
+                                alt="Top 10 địa điểm sống ảo Hà Nội" />
+                            <div class="blog-meta">
+                                <span class="blog-category">Check-in</span>
+                                <span class="blog-date">01/03/2024</span>
+                            </div>
+                            <h4 class="dark">10 địa điểm sống ảo hot ở Hà Nội cho giới trẻ</h4>
+                            <p class="font-color">
+                                Từ phố cổ rêu phong đến góc hiện đại đầy nghệ thuật, đây là danh sách check-in mới lạ
+                                và&nbsp;đầy&nbsp;cảm&nbsp;hứng...
+                            </p>
+                            <a href="/blog/bai-3" class="ctn">Đọc tiếp</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+            <!-- Blog Section -->
+
+            <!--Attractions-->
+            <section class="events" id="events">
+                <div class="container">
+                    <div class="title">
+                        <h1 class="dark">ĐIỂM THAM QUAN NỔI BẬT</h1>
+                        <div class="line"></div>
+                    </div>
+                    <div class="row">
+                        <% if (featuredAttractions && featuredAttractions.length> 0) { %>
+                            <% featuredAttractions.forEach(attraction=> { %>
+                                <article class="card col">
+                                    <% if (attraction.images && attraction.images.length> 0) { %>
+                                        <img class="card-img" src="<%= attraction.images[0] %>"
+                                            alt="<%= attraction.name %>" />
+                                        <% } else { %>
+                                            <img class="card-img" src="/client/img/hotay.jpg"
+                                                alt="<%= attraction.name %>" />
+                                            <% } %>
+                                                <h4 class="dark">
+                                                    <%= attraction.name %>
+                                                </h4>
+                                                <p class="font-color">
+                                                    <%= attraction.shortDescription ||
+                                                        attraction.description?.substring(0, 80) + '...'
+                                                        || 'Khám phá điểm tham quan thú vị tại Hà Nội' %>
+                                                </p>
+                                                <a href="/attraction/<%= attraction.slug %>" class="ctn">Xem chi
+                                                    tiết</a>
+                                </article>
+                                <% }); %>
+                                    <% } else { %>
+                                        <!-- Fallback content khi không có điểm tham quan nổi bật -->
+                                        <article class="card col">
+                                            <img class="card-img" src="/client/img/lang-co.jpg" />
+                                            <h4 class="dark">Làng cổ</h4>
+                                            <p class="font-color">
+                                                Khám phá làng cổ.
+                                            </p>
+                                            <a href="/attraction" class="ctn">Xem chi tiết</a>
+                                        </article>
+                                        <article class="card col">
+                                            <img src="/client/img/pho-co.jpg" />
+                                            <h4 class="dark">Phố cổ Hà Nội</h4>
+                                            <p class="font-color">
+                                                Khám phá phố cổ Hà Nội.
+                                            </p>
+                                            <a href="/attraction" class="ctn">Xem chi tiết</a>
+                                        </article>
+                                        <article class="card col">
+                                            <img src="/client/img/ho-tay.jpg" />
+                                            <h4 class="dark">Hồ Tây</h4>
+                                            <p class="font-color">
+                                                Dạo quanh Hồ Tây, ghé chùa Trấn Quốc và&nbsp;trải&nbsp;nghiệm làng cổ
+                                                ven đô.
+                                            </p>
+                                            <a href="/attraction" class="ctn">Xem chi tiết</a>
+                                        </article>
+                                        <% } %>
+                    </div>
+                </div>
+            </section>
+            <!--Attractions-->
+            <!-- About -->
+            <section id="about">
+                <div class="title">
+                    <h1 class="font-color">HÌNH ẢNH</h1>
+                    <div class="line"></div>
+                </div>
+                <br />
+                <div id="about_us">
+                    <div class="boxx">
+                        <div class="containerx">
+                            <input type="radio" name="slider" id="item-1" checked />
+                            <input type="radio" name="slider" id="item-2" />
+                            <input type="radio" name="slider" id="item-3" />
+                            <div class="cards">
+                                <label class="cardt" for="item-1" id="col-img-1">
+                                    <img src="/client/img/ovv7.jpg" />
+                                </label>
+                                <label class="cardt" for="item-2" id="col-img-2">
+                                    <img src="/client/img/ovv6.jpg" />
+                                </label>
+                                <label class="cardt" for="item-3" id="col-img-3">
+                                    <img src="/client/img/ovv8.jpg" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </section>
+            <!-- About -->
+
+            <!-- Contributions -->
+            <section class="contributors" id="contribution">
+                <div class="contributors-title">
+                    <h1>THÀNH VIÊN ĐÓNG GÓP</h1>
+                    <div class="line"></div>
+                </div>
+                <!-- <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Ngô Đức Mạnh</h1>
+                    <p class="msv">MSV: 22012426</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Vũ Thị Anh</h1>
+                    <p class="msv">MSV: 22013199</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Nguyễn Phương Ly</h1>
+                    <p class="msv">MSV: 22013360</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Đồng Thu Nguyệt</h1>
+                    <p class="msv">MSV: 22012736</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Đỗ Minh Hằng</h1>
+                    <p class="msv">MSV: 22013271</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Nguyễn Sỹ Đăng Dương</h1>
+                    <p class="msv">MSV: 22013358</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Nguyễn Trường Giang</h1>
+                    <p class="msv">MSV: 22013197</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Lê Thị Thu Hoà</h1>
+                    <p class="msv">MSV: 22011652</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Bùi Thị Huệ</h1>
+                    <p class="msv">MSV: 22013339</p>
+                </div>
+            </div>
+
+            <div class="concard">
+                <img
+                    src="/client/img/avatar.png"
+                    alt="profile-picture"
+                    class="pfp"
+                />
+                <div class="text">
+                    <h1>Lê Yến Nhi</h1>
+                    <p class="msv">MSV: 22013359</p>
+                </div>
+            </div> -->
+                <div class="concard">
+                    <img src="/client/img/avatar.png" alt="profile-picture" class="pfp" />
+                    <div class="text">
+                        <h1>Thiều Tuấn Anh</h1>
+                    </div>
+                </div>
+            </section>
+            <!-- Contributions -->
+
+            <!-- Overview & Map Container -->
+            <section class="overview-map-container" id="overview-map">
+                <!-- Explore/Overview Section (Left) -->
+                <div class="explore" id="explore">
+                    <div class="explore-content">
+                        <h1>TỔNG QUAN DỰ ÁN</h1>
+                        <div class="line"></div>
+                        <p style="text-align: justify; color: #fff;">
+                            Hà Nội Vibes là nền tảng số du lịch thân thiện, đa ngôn ngữ, tổng hợp thông tin về các địa
+                            điểm tham quan, di tích, ẩm&nbsp;thực và&nbsp;trải&nbsp;nghiệm đặc sắc tại Hà Nội. Dự án
+                            tích hợp bản đồ thông minh, kết nối khách du lịch với doanh nghiệp dịch vụ
+                            và&nbsp;thúc&nbsp;đẩy quảng bá hình ảnh Hà Nội ra&nbsp;quốc&nbsp;tế.
+                            <br><br>
+                            Nền tảng hướng tới tối ưu trải nghiệm tìm kiếm, giảm thời&nbsp;gian và&nbsp;chi&nbsp;phí,
+                            đồng thời đặt du khách làm trung tâm với mục tiêu phát triển thành cẩm nang điện tử toàn
+                            quốc, góp phần nâng cao vị thế ngành du lịch Việt Nam trong xu thế toàn cầu hóa
+                            và&nbsp;chuyển&nbsp;đổi&nbsp;số.
+                        </p>
+
+                    </div>
+                </div>
+
+                <!-- Map Section (Right) -->
+                <%- include('../../components/map-section') %>
+            </section>
+            <!-- End Overview & Map Container -->
+
+            <!-- contact -->
+            <%- include('../../components/contact-section', { sectionId: 'contact' }) %>
+                <!-- contact  -->
+                <!-- up scroll -->
+                <i class="arrow" onclick="topFunction()" id="upbtn"></i>
+                <!-- end -->
+                <!--footer-->
+                <%- include('../../partials/footer') %>
+                    <!--footer-->
+
+                    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+                    <script src="/client/js/includes.js"></script>
+                    <script src="/client/js/script.js"></script>
+
+                    <!-- MapLibre GL JS -->
+                    <script src='https://unpkg.com/maplibre-gl@5.7.3/dist/maplibre-gl.js'></script>
+                    <!-- Mapbox GL Draw JS -->
+                    <script src='https://unpkg.com/@mapbox/mapbox-gl-draw@1.4.3/dist/mapbox-gl-draw.js'></script>
+                    <!-- Map JavaScript -->
+                    <script src="/client/js/map.js"></script>
+
+                    <!-- Contact Form JavaScript - Removed to use flash messages -->
+
+                    <!-- Contact Form Styles -->
+                    <style>
+                        .alert {
+                            padding: 15px 20px;
+                            margin-bottom: 20px;
+                            border-radius: 6px;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            font-weight: 500;
+                            position: relative;
+                        }
+
+                        .alert-success {
+                            background: #d4edda;
+                            color: #155724;
+                            border: 1px solid #c3e6cb;
+                        }
+
+                        .alert-error {
+                            background: #f8d7da;
+                            color: #721c24;
+                            border: 1px solid #f5c6cb;
+                        }
+
+                        .alert i {
+                            font-size: 1.125rem;
+                        }
+
+                        .alert-close {
+                            position: absolute;
+                            top: 8px;
+                            right: 8px;
+                            background: none;
+                            border: none;
+                            font-size: 1rem;
+                            cursor: pointer;
+                            padding: 4px;
+                            border-radius: 50%;
+                            width: 24px;
+                            height: 24px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            transition: background-color 0.2s;
+                        }
+
+                        .alert-close:hover {
+                            background-color: rgba(0, 0, 0, 0.1);
+                        }
+
+                        .alert-success .alert-close {
+                            color: #155724;
+                        }
+
+                        .alert-error .alert-close {
+                            color: #721c24;
+                        }
+
+                        #contactForm input:required:invalid,
+                        #contactForm select:required:invalid,
+                        #contactForm textarea:required:invalid {
+                            border-color: var(--primary-color);
+                        }
+
+                        #contactForm input:required:valid,
+                        #contactForm select:required:valid,
+                        #contactForm textarea:required:valid {
+                            border-color: #28a745;
+                        }
+
+                        .crow-s:disabled {
+                            opacity: 0.6;
+                            cursor: not-allowed;
+                        }
+
+                        /* Blog Section Styles */
+                        .blog-meta {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 10px;
+                            font-size: 0.75rem;
+                        }
+
+                        .blog-category {
+                            background: #007bff;
+                            color: white;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-weight: 500;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                        }
+
+                        .blog-date {
+                            color: #6c757d;
+                            font-weight: 500;
+                        }
+
+                        .blog-meta+h4 {
+                            margin-top: 0;
+                        }
+                    </style>
+                    <script>
+                        // ===========================================
+                        // HOME PAGE SPECIFIC SCRIPTS
+                        // ===========================================
+
+                        // Home page specific functionality can be added here
+                        console.log('Home page loaded with map component');
+                    </script>
+</body>
+
+</html>

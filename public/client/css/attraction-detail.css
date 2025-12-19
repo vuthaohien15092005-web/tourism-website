@@ -1,0 +1,1352 @@
+/* Modern Attraction Detail Styles */
+
+/* ===========================================
+   NAVBAR HOVER EFFECTS
+   =========================================== */
+.attraction-detail-page .navbar .nav-links li a {
+  color: #fff !important;
+}
+.attraction-detail-page .navbar .nav-links li a.active,
+.attraction-detail-page .navbar .nav-links li a:hover {
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-1px) !important;
+  transition: all 0.3s ease !important;
+}
+
+:root {
+    --primary-light: #ff4d8a;
+    --primary-dark: #d6024f;
+    --secondary-color: #2c3e50;
+    --accent-color: #3498db;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    --light-gray: #f8f9fa;
+    --medium-gray: #6c757d;
+    --dark-gray: #343a40;
+    --white: #ffffff;
+    --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
+    --shadow-heavy: 0 8px 30px rgba(0,0,0,0.2);
+    --border-radius: 12px;
+    --border-radius-lg: 20px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s ease;
+    
+    /* Font System Integration - Updated to match main system */
+    --ff-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --ff-heading: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    
+    /* Font Size Variables - Updated to match main system */
+    --fs-xl: 1.125rem; /* 18px */
+    --fs-paragraphs: clamp(0.8rem, 0.7rem + 0.3vw, 1rem); /* 12.8px - 16px responsive */
+    --fs-headings: clamp(1.25rem, 1rem + 1.2vw, 2.25rem); /* 20px - 36px responsive */
+}
+
+/* ===========================================
+   TEXT JUSTIFICATION FOR ALL CONTENT
+   =========================================== */
+.attraction-detail-page p,
+.attraction-detail-page .description,
+.attraction-detail-page .content,
+.attraction-detail-page .attraction-description,
+.attraction-detail-page .history-text,
+.attraction-detail-page .feature-description,
+.attraction-detail-page .review-content,
+.attraction-detail-page .info-text {
+  text-align: justify !important;
+  line-height: 1.6;
+  font-family: var(--ff-primary);
+  font-size: var(--fs-paragraphs);
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sticky Navigation */
+.sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100; /* ensure above banner elements */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transform: translateY(-100%);
+    transition: var(--transition);
+}
+
+.sticky-nav.visible { transform: translateY(0); }
+.sticky-nav.open { transform: translateY(0); }
+/* .sticky-nav.open .nav-links - not used, using responsive.css mobile menu */
+.sticky-nav.open .nav-actions .btn-share { display: none; }
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.nav-logo .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.125rem;
+    transition: var(--transition);
+}
+
+.nav-logo .logo-link:hover { color: var(--primary-dark); transform: scale(1.05); }
+
+/* .nav-links { display: flex; gap: 24px; align-items: center; } - moved to responsive.css */
+.nav-link {
+    text-decoration: none;
+    color: var(--dark-gray);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: var(--transition);
+    position: relative;
+}
+.nav-link:hover, .nav-link.active { color: var(--primary-color); background: #1261A614; }
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px; height: 2px; background: var(--primary-color); border-radius: 1px;
+}
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.btn-share {
+    background: var(--primary-color);
+    color: white; border: none; border-radius: 50%; width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition);
+}
+.btn-share:hover { background: var(--primary-dark); transform: scale(1.08); }
+
+/* .mobile-menu-toggle - not used, using .menu-btn from responsive.css */
+
+/* Attraction Banner - aligned with entertainment detail */
+.page-header.attraction-banner { 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    position: relative; 
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: high-quality;
+}
+.page-header.attraction-banner::before { 
+    content:""; 
+    position:absolute; 
+    inset:0; 
+    background: rgba(0,0,0,.15); 
+}
+.page-header.attraction-banner .header-content { 
+    position: relative; 
+    text-align: center;
+    letter-spacing: .2rem;
+    padding: 2rem 1rem;
+    font-family: var(--ff-primary);
+}
+
+/* Banner h1 styling for desktop */
+.page-header.attraction-banner .header-content h1 {
+    font-family: var(--ff-heading);
+    font-size: var(--fs-headings); /* Use consistent heading size */
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+/* Banner h2 styling for desktop */
+.page-header.attraction-banner .header-content h2 {
+    font-family: var(--ff-heading);
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Banner p styling for desktop */
+.page-header.attraction-banner .header-content p {
+    font-family: var(--ff-primary);
+    font-size: var(--fs-paragraphs);
+    margin: 8px auto 0 auto; /* Căn giữa với margin auto */
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    line-height: 1.5;
+    text-align: center; /* Căn giữa text */
+    max-width: 35ch; /* Giới hạn độ rộng để dễ đọc */
+}
+
+/* Mobile banner adjustments - show more image, smaller center block */
+@media (max-width: 768px) {
+  .page-header.attraction-banner { height: 56vh; min-height: 300px; }
+  .page-header.attraction-banner .header-content { padding: 1rem; margin-bottom: 40px; letter-spacing: .08rem; text-align: center; }
+  .page-header.attraction-banner .header-content h1 { 
+    font-family: var(--ff-heading);
+    font-size: var(--fs-headings); /* Use consistent heading size */
+    font-weight: 600;
+    margin-top: 10px; 
+    margin-bottom: 6px; 
+  }
+  .page-header.attraction-banner .header-content h2 { 
+    font-family: var(--ff-heading);
+    font-size: clamp(0.8rem, 3.5vw, 1.1rem); 
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .page-header.attraction-banner .header-content p { 
+    font-family: var(--ff-primary);
+    font-size: clamp(0.8rem, 3.8vw, 1rem); 
+    margin: 4px auto 0 auto; /* Căn giữa với margin auto */
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    text-align: center; /* Căn giữa text */
+    max-width: 35ch; /* Giới hạn độ rộng để dễ đọc */
+}
+}
+
+/* Main */
+.attraction-detail.main .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+.content-section { padding: 0px 0; }
+@media (max-width: 768px) { .content-section { padding: -100px 0; } }
+.content-section.map-overview { padding: 0; }
+/* Remove any gap between map and next section */
+#map-overview.content-section { padding-bottom: 0; margin-bottom: 0; }
+#humanities-attraction.content-section { padding-top: 0; margin-top: 0; }
+.section-header { text-align: center; margin-bottom: 36px; }
+.section-header h2 { 
+    margin: 0 0 8px 0; 
+    font-family: var(--ff-heading);
+    font-size: var(--fs-headings);
+    font-weight: 600;
+    letter-spacing: normal;
+}
+.section-header p { 
+    margin: 0; 
+    color: var(--medium-gray);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-paragraphs);
+    line-height: 1.5;
+}
+
+/* Tighten space before Gallery */
+#gallery.content-section { padding-top: 0px; margin-top: 0; }
+
+/* Map Overview */
+.map-overview .itinerary-overview__map-container { position: relative; border-radius: 0; overflow: hidden; box-shadow: none; width: 100vw; margin-left: calc(50% - 50vw); margin-top: -80px; }
+.map-overview .itinerary-overview__map-inner { position: relative; height: clamp(420px, 70vh, 680px); background: #eef2f5; }
+.map-overview .itinerary-overview__map { position: absolute; inset: 0; z-index: 1; }
+.map-toolbar { display: none; }
+.map-overview .map-overview__heading { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; color: #111; padding: 0; background: transparent; box-shadow: none; margin: 0; }
+.map-overview .map-overview__heading h2 { margin: 0; font-size: 1.5rem; line-height: 1.2; text-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.map-overview .map-overview__heading p { margin: 6px 0 0 0; font-size: 0.8125rem; color: var(--medium-gray); text-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+.map-overview .itinerary-overview__map-gradient-vertical { display: none; }
+.map-overview .itinerary-overview__map-gradient-horizontal { display: none; }
+
+/* MapLibre controls and popup clarity tweaks */
+/* Improve visibility of popup close button (the “X”) */
+.mapboxgl-popup-close-button,
+.maplibregl-popup-close-button {
+    top: -10px;
+    right: -10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #111 !important;
+    color: #fff !important;
+    border: 0;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    opacity: 1;
+}
+.mapboxgl-popup-close-button:hover,
+.maplibregl-popup-close-button:hover { background: var(--primary-color) !important; }
+
+/* Ensure + / − icons always show even if default icon fonts are overridden */
+.mapboxgl-ctrl button,
+.maplibregl-ctrl button { 
+    width: 36px; height: 36px; border-radius: 10px; background: #fff; 
+    border: 1px solid rgba(0,0,0,0.12); box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon,
+.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon,
+.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon,
+.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon { background: none !important; width: auto; height: auto; }
+.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon::before,
+.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon::before { content: "+"; font-size: 1.25rem; font-weight: 700; color: #111; line-height: 1; }
+.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon::before,
+.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon::before { content: "−"; font-size: 1.25rem; font-weight: 700; color: #111; line-height: 1; }
+
+@media (max-width: 768px) {
+  .mapboxgl-ctrl button,
+  .maplibregl-ctrl button { width: 34px; height: 34px; }
+}
+
+@media (max-width: 768px) {
+    .map-overview .itinerary-overview__map-container { border-radius: 16px; }
+}
+
+/* Fact Box */
+.fact-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.fact-item { background: rgba(255,255,255,0.96); border-radius: 16px; box-shadow: var(--shadow-light); padding: 18px; display: flex; gap: 12px; align-items: flex-start; transition: var(--transition); }
+.fact-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-medium); }
+.fact-icon { width: 42px; height: 42px; border-radius: 50%; background: var(--primary-color); color: #fff; display: flex; align-items: center; justify-content: center; }
+.fact-content h3 { margin: 2px 0 6px 0; font-size: 1rem; }
+.hours-list { display: grid; gap: 4px; }
+.hour-item { font-size: 0.8125rem; color: var(--medium-gray); }
+.price { color: var(--primary-color); font-weight: 700; }
+.rating .stars i { color: #ffc107; }
+
+/* Experiences */
+.experiences-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.experience-card { background: rgba(255,255,255,0.96); border-radius: 16px; box-shadow: var(--shadow-light); overflow: hidden; transition: var(--transition); }
+.experience-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-medium); }
+.experience-card .card-header { padding: 16px; display: flex; gap: 12px; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.exp-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--primary-color); color: #fff; display: flex; align-items: center; justify-content: center; }
+.exp-info h3 { margin: 0 0 6px 0; font-size: 1.125rem; }
+.exp-meta { display: flex; gap: 12px; color: var(--medium-gray); font-size: 0.8125rem; }
+.expand-btn { margin-left: auto; border: none; background: transparent; color: var(--medium-gray); cursor: pointer; border-radius: 50%; padding: 6px; transition: var(--transition); }
+.expand-btn:hover { background: rgba(0,0,0,0.05); color: var(--primary-color); }
+.expand-btn.rotated { transform: rotate(180deg); }
+.experience-card .card-content { padding: 0 16px; max-height: 0; overflow: hidden; transition: var(--transition); }
+.experience-card.expanded .card-content { padding: 16px; max-height: 220px; }
+.exp-actions { display: flex; gap: 10px; margin-top: 12px; }
+.btn-outline { background: transparent; border: 1.6px solid var(--primary-color); color: var(--primary-color); padding: 8px 14px; border-radius: 999px; cursor: pointer; transition: var(--transition); }
+.btn-outline:hover { background: var(--primary-color); color: #fff; }
+
+/* Gallery */
+.content-section#gallery { text-align: center; }
+
+/* Media Showcase (Hero + Thumbs) */
+.media-showcase { padding: 0; }
+.media-hero-wrapper { width: 100vw; margin-left: calc(50% - 50vw); }
+.media-hero { position: relative; height: clamp(360px, 54vh, 620px); background-size: cover; background-position: center; }
+.media-hero__overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); }
+.media-hero__content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; padding: 12px; gap: 8px; transition: background .3s ease, color .3s ease; }
+.media-hero__title { 
+    margin: 0; 
+    font-family: var(--ff-heading); 
+    font-weight: 800; 
+    letter-spacing: .12rem; 
+    font-size: clamp(22px, 3.2vw, 36px); 
+}
+.media-hero__subtitle { 
+    margin: 0; 
+    font-family: var(--ff-primary); 
+    font-size: var(--fs-paragraphs);
+    line-height: 1.5;
+}
+.media-hero__subtitle a { color: #fff; text-decoration: underline; }
+.media-hero__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.25); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s ease, transform .2s ease; }
+.media-hero__nav.prev { left: 12px; }
+.media-hero__nav.next { right: 12px; }
+.media-hero__nav:hover { background: rgba(0,0,0,0.65); transform: translateY(-50%) scale(1.05); }
+.media-hero__zoom { position: absolute; right: 12px; bottom: 12px; background: var(--primary-color); color: #fff; border: none; width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,.25); transition: transform .2s ease, background .2s ease; }
+.media-hero__zoom:hover { transform: scale(1.05); background: var(--primary-dark); }
+
+.media-thumbs { background: #fff; }
+.media-thumbs__header { height: 10px; }
+.media-thumbs__grid { max-width: 1200px; margin: 0 auto; padding: 0 12px 20px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.thumb { display: block; width: 100%; border-radius: 10px; overflow: hidden; }
+.thumb__img { display: block; width: 100%; padding-top: 100%; background-size: cover; background-position: center; transition: transform .25s ease, box-shadow .25s ease; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.thumb:hover .thumb__img { transform: scale(1.04); }
+
+@media (max-width: 1024px) { .media-thumbs__grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 768px) { .media-thumbs__grid { grid-template-columns: repeat(3, 1fr); } .media-hero { height: clamp(320px, 48vh, 560px); } }
+@media (max-width: 500px) { .media-thumbs__grid { grid-template-columns: repeat(2, 1fr); } }
+.gallery-btn { background: #fff; color: var(--primary-color); border: none; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+/* Reviews */
+.reviews-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(255,255,255,0.96); border-radius: 16px; box-shadow: var(--shadow-light); padding: 18px; margin-bottom: 16px; }
+.rating-overview { display: flex; align-items: center; gap: 12px; }
+.rating-score { font-size: 2.25rem; font-weight: 800; color: var(--primary-color); }
+.rating-stars i { color: #ffc107; }
+.rating-count { color: var(--medium-gray); font-size: 0.8125rem; }
+.reviews-list { display: grid; gap: 12px; }
+.review-item { background: rgba(255,255,255,0.96); border-radius: 12px; box-shadow: var(--shadow-light); padding: 14px; display: grid; grid-template-columns: 50px 1fr; gap: 12px; }
+.review-avatar { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; }
+.review-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.review-header { display: flex; align-items: center; gap: 8px; }
+.review-header h4 { margin: 0; font-size: 0.9375rem; }
+.review-content p { margin: 6px 0 0 0; color: var(--medium-gray); }
+
+/* Reviews PRO */
+section.reviews-pro { --reviews-gutter: 40px; }
+@media (max-width: 768px) { section.reviews-pro { --reviews-gutter: 16px; } }
+.reviews-pro__header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+/* Make the reviews header nearly full-width while staying scoped to the reviews section */
+section.reviews-pro .reviews-pro__header { width: calc(100vw - var(--reviews-gutter) * 2); margin-left: calc(50% - 50vw + var(--reviews-gutter)); padding: 0; }
+.reviews-pro__heading h2 { margin: 0; font-size: 1.75rem; }
+.reviews-pro__heading .subheading { margin: 6px 0 0 0; color: var(--medium-gray); }
+.reviews-pro__provider { display: flex; align-items: center; gap: 10px; }
+.reviews-pro__provider-icon { width: 24px; height: 24px; }
+.reviews-pro__provider-stats { display: flex; align-items: center; gap: 8px; }
+.reviews-pro__provider-stats .overall { font-weight: 700; }
+.reviews-pro__provider-stats .stars i { color: #ffc107; }
+.reviews-pro__link { color: var(--primary-color); text-decoration: none; }
+
+.reviews-pro__slider { position: relative; width: calc(100vw - var(--reviews-gutter) * 2); margin-left: calc(50% - 50vw + var(--reviews-gutter)); padding: 0; overflow: visible; }
+.reviews-pro__viewport { overflow: hidden; }
+.reviews-pro__track { display: grid; grid-auto-flow: column; gap: 10px; transition: transform .3s ease; }
+.reviews-pro__card { width: 360px; min-height: 180px; background: rgba(255,255,255,0.96); border-radius: 16px; box-shadow: var(--shadow-light); padding: 16px; display: grid; gap: 10px; }
+.reviews-pro__quote { width: 18px; height: 18px; opacity: .6; }
+.reviews-pro__text { color: var(--dark-gray); line-height: 1.5; }
+.reviews-pro__stars i { color: #ffc107; }
+.reviews-pro__meta { color: var(--medium-gray); display: flex; align-items: center; gap: 8px; }
+.reviews-pro__meta .dot { width: 3px; height: 3px; border-radius: 50%; background: #5c5766; display: inline-block; }
+/* Avatar + author */
+.reviews-pro__avatar { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; }
+.reviews-pro__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.reviews-pro__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.55); color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; z-index: 2; }
+.reviews-pro__nav.prev { left: 12px; }
+.reviews-pro__nav.next { right: 12px; }
+
+/* Reviews dots */
+.reviews-pro__dots { display: flex; gap: 6px; justify-content: center; margin-top: 10px; }
+.reviews-pro__dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.25); cursor: pointer; transition: opacity .2s ease, transform .2s ease, background .2s ease; }
+.reviews-pro__dot.active { background: #5c5766; transform: scale(1.2); }
+
+@media (max-width: 768px) {
+  .reviews-pro__card { width: 300px; }
+}
+/* Practical */
+.practical-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.practical-card { background: rgba(255,255,255,0.96); border-radius: 16px; box-shadow: var(--shadow-light); padding: 18px; }
+.practical-card h3 { margin: 0 0 12px 0; font-size: 1.125rem; }
+.rules-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.rules-list li { display: flex; gap: 8px; align-items: flex-start; color: var(--medium-gray); }
+.rules-list i { color: #2f9e44; margin-top: 3px; }
+.map-container { border-radius: 12px; overflow: hidden; }
+.map-container iframe { width: 100%; height: 280px; border: 0; }
+
+/* MapLibre markers and popups */
+.map-marker { width: 14px; height: 14px; border-radius: 50%; background: #7c3aed; box-shadow: 0 0 0 6px rgba(124,58,237,0.2); transition: transform .2s ease, box-shadow .2s ease; }
+.map-marker.hover, .map-marker:hover { transform: scale(1.12); box-shadow: 0 0 0 8px rgba(124,58,237,0.24); }
+.map-marker.active { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(124,58,237,0.28); }
+
+.mapboxgl-popup, .maplibregl-popup { font-family: inherit; }
+.mapboxgl-popup-content, .maplibregl-popup-content { padding: 0; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-heavy); }
+.mapboxgl-popup-tip, .maplibregl-popup-tip { display: none; }
+.map-popup { display: grid; grid-template-columns: 96px 1fr; }
+.map-popup .thumb { background-size: cover; background-position: center; min-height: 96px; }
+.map-popup .info { padding: 12px; }
+.map-popup h4 { margin: 0 0 6px 0; font-size: 1rem; }
+.map-popup p { margin: 0 0 10px 0; font-size: 0.8125rem; color: var(--medium-gray); }
+.map-popup .btn-link { display: inline-block; font-size: 0.8125rem; color: var(--primary-color); text-decoration: none; font-weight: 600; }
+.map-popup .btn-link:hover { text-decoration: underline; }
+
+/* Modals */
+.gallery-modal, .review-modal { position: fixed; inset: 0; z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
+.gallery-modal.active, .review-modal.active { display: flex; }
+.modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); }
+.modal-content { position: relative; background: #fff; border-radius: 16px; max-width: 92vw; max-height: 92vh; overflow: hidden; box-shadow: var(--shadow-heavy); animation: modalSlideIn 0.28s ease-out; }
+.gallery-modal .modal-content { width: 860px; height: 600px; }
+.modal-close { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(0,0,0,0.5); color: #fff; cursor: pointer; }
+.modal-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 12px; z-index: 3; }
+.nav-prev, .nav-next { background: rgba(0,0,0,0.5); color: #fff; border: none; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; }
+.modal-image { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.modal-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.modal-info { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.55); color: #fff; padding: 6px 10px; border-radius: 999px; font-size: 0.75rem; }
+
+/* Review Modal */
+.review-modal .modal-content { width: 520px; max-height: 640px; }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.modal-header h3 { margin: 0; }
+.review-form { padding: 16px; }
+.form-group { margin-bottom: 16px; }
+.rating-input { display: flex; flex-direction: row-reverse; gap: 6px; }
+.rating-input input { display: none; }
+.rating-input label { color: #ddd; font-size: 1.375rem; cursor: pointer; transition: var(--transition-fast); }
+.rating-input label:hover, .rating-input label:hover ~ label, .rating-input input:checked ~ label { color: #ffc107; }
+textarea { width: 100%; padding: 10px 12px; border: 1.6px solid #e6e6e6; border-radius: 10px; font-family: inherit; resize: vertical; transition: var(--transition-fast); }
+textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: none; }
+.form-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* Animations */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-8px); }
+    60% { transform: translateX(-50%) translateY(-4px); }
+}
+@keyframes modalSlideIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+/* Responsive - mobile menu handled by responsive.css */
+@media (max-width: 1024px) {
+    /* .nav-links { display: none; } - handled by responsive.css */
+    /* .mobile-menu-toggle { display: flex; } - not used, using .menu-btn */
+}
+@media (max-width: 1200px) {
+    .gallery-grid { max-width: 100%; }
+}
+@media (max-width: 1024px) {
+    .gallery-modal .modal-content { width: 96vw; height: 70vh; }
+    .review-modal .modal-content { width: 92vw; }
+    /* reviews: reduce card width so more fit and avoid overflow */
+    .reviews-pro__card { width: 300px; }
+    /* gallery: responsive masonry columns */
+    .gallery-grid { column-count: 2; }
+}
+@media (max-width: 768px) {
+    .gallery-modal .modal-content { width: 96vw; height: 70vh; }
+    .review-modal .modal-content { width: 92vw; }
+    /* reviews: reduce card width so more fit and avoid overflow */
+    .reviews-pro__card { width: 300px; }
+    .gallery-grid { column-count: 2; }
+}
+
+@media (max-width: 500px) {
+    .gallery-grid { column-count: 1; }
+}
+
+/* Dark mode */
+body.dark .sticky-nav { background: rgba(20,20,22,0.9); border-bottom-color: rgba(255,255,255,0.08); }
+body.dark .nav-link { color: #e0e0e0; }
+body.dark .nav-link.active, body.dark .nav-link:hover { background: #1261A62E; }
+body.dark .experience-card, body.dark .fact-item, body.dark .reviews-summary, body.dark .review-item, body.dark .practical-card { background: rgba(28,28,30,0.94); box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+body.dark .modal-content { background: rgba(28,28,30,0.96); color: #f0f0f0; }
+body.dark textarea { background: rgba(38,38,40,0.9); border-color: rgba(255,255,255,0.16); color: #f0f0f0; }
+
+/* Itinerary Day (namespaced) */
+.content-section#humanities-attraction { padding-top: 0; }
+.itinerary-day__hero-wrapper { position: relative; width: 100vw; margin-left: calc(50% - 50vw); }
+.itinerary-day__hero-wrapper { margin-top: 0; }
+.itinerary-day__hero-media { position: relative; height: clamp(420px, 60vh, 640px); overflow: hidden; }
+.itinerary-day__hero-media img { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 0; transition: transform .5s ease; }
+.itinerary-day__hero-media:hover img { transform: scale(1.04); }
+/* Banner title overlay (restored) */
+.itinerary-day__banner-title { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; padding: 0 16px; z-index: 2; pointer-events: none; }
+.itinerary-day__banner-title h2 { 
+    margin: 0; 
+    font-family: var(--ff-heading);
+    font-size: clamp(24px, 4vw, 44px); 
+    font-weight: 800; 
+    text-shadow: 0 6px 24px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.35); 
+    letter-spacing: .2px; 
+}
+.page-header.attraction-banner .banner-rating { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
+.page-header.attraction-banner .banner-rating .stars { display: inline-flex; gap: 1px; }
+.page-header.attraction-banner .banner-rating .stars i { 
+    font-size: 1.125rem; 
+    color: #ffd700 !important; 
+}
+.page-header.attraction-banner .banner-rating .stars i.active { 
+    color: #ffd700 !important; 
+}
+.page-header.attraction-banner .banner-rating .stars i.fa-star-o { 
+    color: #d1d5db !important; 
+}
+.itinerary-day__title-wrapper { text-align: center; margin-bottom: 12px; }
+.itinerary-day__title { margin: 0; font-size: 1.75rem; font-weight: 800; }
+.itinerary-day__subtitle { margin: 4px 0 0 0; color: var(--medium-gray); }
+
+.itinerary-day__overlay { margin-top: -80px; position: relative; z-index: 2; }
+
+.itinerary-day__content-container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+.itinerary-day__columns { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; align-items: start; }
+.itinerary-day__description-card, .itinerary-day__info-card, .itinerary-day__highlights, .itinerary-day__notes { background: rgba(255,255,255,0.96); border-radius: 16px; box-shadow: var(--shadow-light); padding: 20px; border: 1px solid rgba(0,0,0,0.05); }
+.itinerary-day__info-list, .itinerary-day__highlights-list, .itinerary-day__notes-list { margin: 0; padding-left: 18px; }
+.itinerary-day__info-list .note { color: var(--medium-gray); font-size: 0.8125rem; list-style: none; padding-left: 0; }
+/* Improved readability */
+.itinerary-day__description p { 
+    line-height: 1.7; 
+    margin: 8px 0 0 0; 
+    color: var(--dark-gray);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-paragraphs);
+}
+.itinerary-day__info-list li { margin-bottom: 6px; }
+.itinerary-day__highlights-list li { margin-bottom: 6px; }
+.itinerary-day__notes-list li { margin-bottom: 6px; }
+.itinerary-day__description-card + .itinerary-day__info-card { margin-top: 12px; }
+
+@media (max-width: 1024px) {
+    .itinerary-day__columns { grid-template-columns: 1fr; }
+}
+
+/* Mobile-specific height for hero to avoid excessive crop while keeping desktop intact */
+@media (max-width: 768px) {
+    .itinerary-day__hero-media { height: clamp(300px, 45vh, 520px); }
+    .itinerary-day__hero-media img { height: 100%; }
+}
+
+/* ===========================================
+   NEW EXPERIENCE & GUIDELINE STYLES
+   =========================================== */
+
+/* Experience Cards Grid */
+.experiences-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.experience-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.experience-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.experience-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.experience-icon i {
+    color: var(--white);
+    font-size: 1.25rem;
+}
+
+.experience-content {
+    flex: 1;
+}
+
+.experience-content h4 {
+    font-family: var(--ff-heading);
+    font-size: var(--fs-xl); /* 20px - matching blog section */
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin: 0 0 8px 0;
+}
+
+.experience-content p {
+    font-family: var(--ff-primary);
+    color: var(--medium-gray);
+    line-height: 1.5;
+    margin: 0 0 12px 0;
+    font-size: var(--fs-paragraphs); /* responsive font size */
+}
+
+.experience-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.experience-meta span {
+    font-family: var(--ff-primary);
+    font-size: 0.875rem;
+    color: var(--medium-gray);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.difficulty {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.difficulty-easy {
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--success-color);
+}
+
+.difficulty-trung-bình,
+.difficulty-medium {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--warning-color);
+}
+
+.difficulty-khó,
+.difficulty-hard {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--danger-color);
+}
+
+/* Guidelines & Tips */
+.itinerary-day__guidelines,
+.itinerary-day__tips {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+/* Make Experiences block match Guidelines visually */
+.itinerary-day__experiences {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+/* Intro and Info headings to match other cards */
+.intro-section h3,
+.info-section h3 {
+    font-family: var(--ff-heading);
+    font-size: var(--fs-xl); /* 20px - matching blog section */
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin: 0 0 16px 0;
+}
+
+.itinerary-day__guidelines h3,
+.itinerary-day__tips h3,
+.itinerary-day__experiences h3 {
+    font-family: var(--ff-heading);
+    font-size: var(--fs-xl); /* 20px - matching blog section */
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin: 0 0 16px 0;
+}
+
+.itinerary-day__notes-list,
+.itinerary-day__tips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.itinerary-day__notes-list li,
+.itinerary-day__tips-list li {
+    font-family: var(--ff-primary);
+    color: var(--medium-gray);
+    line-height: 1.6;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    padding-left: 20px;
+    font-size: var(--fs-paragraphs); /* responsive font size */
+}
+
+.itinerary-day__notes-list li:last-child,
+.itinerary-day__tips-list li:last-child {
+    border-bottom: none;
+}
+
+.itinerary-day__notes-list li::before,
+.itinerary-day__tips-list li::before {
+    content: "•";
+    color: var(--primary-color);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* Amenities */
+.itinerary-day__amenities {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.itinerary-day__amenities h3 {
+    font-family: var(--ff-heading);
+    font-size: var(--fs-xl); /* 20px - matching blog section */
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin: 0 0 16px 0;
+}
+
+.itinerary-day__amenities-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+}
+
+.itinerary-day__amenities-list li {
+    font-family: var(--ff-primary);
+    color: var(--medium-gray);
+    padding: 8px 12px;
+    background: #1261A60D;
+    border-radius: 6px;
+    border-left: 3px solid var(--primary-color);
+    font-size: var(--fs-paragraphs); /* responsive font size */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .experiences-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .experience-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .experience-icon {
+        align-self: center;
+    }
+    
+    .experience-meta {
+        justify-content: center;
+    }
+    
+    .itinerary-day__amenities-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dark Mode Support */
+body.dark .experience-card,
+body.dark .itinerary-day__guidelines,
+body.dark .itinerary-day__tips,
+body.dark .itinerary-day__experiences,
+body.dark .itinerary-day__amenities {
+    background: rgba(20, 20, 22, 0.9);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark .experience-content h4,
+body.dark .itinerary-day__guidelines h3,
+body.dark .itinerary-day__tips h3,
+body.dark .itinerary-day__experiences h3,
+body.dark .itinerary-day__amenities h3 {
+    color: var(--white);
+}
+
+body.dark .experience-content p,
+body.dark .itinerary-day__notes-list li,
+body.dark .itinerary-day__tips-list li {
+    color: #cbd5e1;
+}
+
+/* Ticket info text styling */
+.ticket-info-text {
+    margin-top: 6px;
+}
+.ticket-info-text pre {
+    font-family: var(--ff-primary);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--medium-gray);
+    background: transparent;
+    border: none;
+    padding: 0;
+    white-space: pre-wrap;
+}
+
+@media (max-width: 768px) {
+    .ticket-info-text pre {
+        font-size: 13.5px;
+        line-height: 1.65;
+    }
+}
+
+body.dark .itinerary-day__notes-list li,
+body.dark .itinerary-day__tips-list li {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark .itinerary-day__amenities-list li {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e5e7eb;
+}
+
+/* ===========================================
+   NEW LAYOUT STYLES - SIDE BY SIDE
+   =========================================== */
+
+/* Remove top margin for first section */
+.no-margin-top {
+    margin-top: -72px !important;
+}
+
+/* New side-by-side layout */
+.intro-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 32px;
+}
+
+.intro-section,
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Description content - no text truncation */
+.description-content {
+    line-height: 1.7;
+}
+
+.description-content p {
+    font-family: var(--ff-primary);
+    color: var(--dark-gray);
+    margin: 0;
+    line-height: 1.7;
+    text-align: justify;
+    font-size: var(--fs-paragraphs);
+}
+
+/* Additional info row */
+.additional-info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+/* Responsive Design for New Layout */
+@media (max-width: 1024px) {
+    .intro-layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .additional-info-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .intro-layout {
+        gap: 20px;
+    }
+    
+    .additional-info-row {
+        gap: 16px;
+    }
+    
+    .description-content p {
+        text-align: left;
+    }
+}
+
+/* Dark Mode Support for New Layout */
+body.dark .description-content p {
+    color: #e5e7eb;
+}
+
+/* ===========================================
+   ATTRACTION DETAIL INFO SECTION STYLING
+   =========================================== */
+
+/* Style info section to match guidelines/experiences cards */
+.info-section .itinerary-day__info-card {
+    background: var(--white);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-light);
+    margin-bottom: 1rem;
+}
+
+.info-section .itinerary-day__info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-section .itinerary-day__info-list li {
+    padding: 0.5rem 0;
+    border-bottom: none; /* keep clean, no divided blocks */
+    font-size: var(--fs-paragraphs); /* responsive font size */
+    line-height: 1.7;
+    color: var(--dark-gray);
+    font-family: var(--ff-primary);
+}
+
+.info-section .itinerary-day__info-list li:last-child {
+    border-bottom: none;
+}
+
+.info-section .itinerary-day__info-list li strong {
+    color: var(--secondary-color);
+    font-weight: 600;
+    display: inline-block;
+    min-width: 120px;
+    font-size: var(--fs-xl); /* 20px - matching blog section */
+    font-family: var(--ff-heading); /* match intro heading font */
+    white-space: nowrap; /* keep label and following colon on one line */
+    margin-right: 6px; /* spacing before the colon/text */
+}
+
+/* Nested lists styling */
+.info-section .itinerary-day__info-list ul {
+    margin: 0.25rem 0 0 0;
+    padding-left: 0; /* flush with content, bullets handled by pseudo */
+    list-style: none;
+}
+
+.info-section .itinerary-day__info-list ul li {
+    padding: 0.25rem 0 0.25rem 20px; /* small, consistent indent for bullet */
+    border-bottom: none;
+    font-size: var(--fs-paragraphs); /* responsive font size */
+    color: var(--dark-gray);
+    position: relative;
+    font-family: var(--ff-primary);
+}
+
+.info-section .itinerary-day__info-list ul li:before {
+    content: "•";
+    color: var(--primary-color);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* Ticket info text styling */
+.ticket-info-text {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.ticket-info-text pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: var(--ff-primary);
+    font-size: var(--fs-paragraphs); /* responsive font size */
+    color: var(--dark-gray);
+}
+
+/* Opening hours text styling */
+.opening-hours-text {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.opening-hours-text pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: var(--ff-primary);
+    font-size: var(--fs-paragraphs); /* responsive font size */
+    color: var(--dark-gray);
+}
+
+/* Responsive adjustments for info section */
+@media (max-width: 768px) {
+    .info-section .itinerary-day__info-card {
+        padding: 1rem;
+    }
+    /* Keep label inline on mobile so the ':' never wraps to next line */
+    .info-section .itinerary-day__info-list li strong {
+        min-width: unset;
+        display: inline;
+        margin: 0 6px 0 0;
+        white-space: nowrap;
+    }
+    
+    .info-section .itinerary-day__info-list li {
+        padding: 0.5rem 0;
+    }
+}
+
+/* Dark mode alignment for intro/info cards */
+body.dark .itinerary-day__description-card,
+body.dark .itinerary-day__info-card {
+    background: rgba(20, 20, 22, 0.9);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ===========================================
+   REVIEWS & MAP - SIDE BY SIDE LAYOUT
+   =========================================== */
+.reviews-map-container {
+    display: grid;
+    grid-template-columns: 60% 40%; /* Đánh giá to hơn (60%), Bản đồ nhỏ hơn (40%) */
+    gap: 24px;
+    margin: 32px 0;
+    align-items: start; /* Align to top */
+}
+
+.reviews-col,
+.map-col {
+    min-width: 0; /* Prevent overflow */
+}
+
+/* Override reviews section margin when inside grid */
+.reviews-col .reviews-section {
+    margin: 0;
+}
+
+/* Map Card Styling - Match Reviews Section */
+.map-overview-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.map-card-header {
+    margin-bottom: 20px;
+}
+
+.map-card-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    font-family: var(--ff-heading);
+}
+
+.map-card-header p {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.map-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Map Container Inside Card */
+.map-card-body .itinerary-overview__map-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    height: 450px; /* Fixed height for map */
+}
+
+.map-card-body .itinerary-overview__map-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.map-card-body .itinerary-overview__map {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+}
+
+/* Remove old heading inside map */
+.map-card-body .map-overview__heading {
+    display: none;
+}
+
+/* Dark Mode */
+body.dark .map-overview-card {
+    background: rgba(20, 20, 22, 0.9);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark .map-card-header h2 {
+    color: #ffffff;
+}
+
+body.dark .map-card-header p {
+    color: #9ca3af;
+}
+
+body.dark .map-card-body .itinerary-overview__map-container {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive - Stack vertically on smaller screens */
+@media (max-width: 1200px) {
+    .reviews-map-container {
+        grid-template-columns: 55% 45%; /* Adjust ratio for medium screens */
+    }
+    
+    .map-card-body .itinerary-overview__map-container {
+        height: 400px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .reviews-map-container {
+        grid-template-columns: 1fr; /* Stack vertically */
+        gap: 20px;
+    }
+    
+    .map-card-body .itinerary-overview__map-container {
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .reviews-map-container {
+        margin: 20px 0;
+        gap: 16px;
+    }
+    
+    .map-overview-card {
+        padding: 20px 16px;
+    }
+    
+    .map-card-header h2 {
+        font-size: 1.125rem;
+    }
+    
+    .map-card-body .itinerary-overview__map-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .map-card-body .itinerary-overview__map-container {
+        height: 250px;
+    }
+}
+
+/* ===========================================
+   MAP SECTION (Full Width) - Matching Accommodation Style
+   =========================================== */
+.map-container {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    box-shadow: var(--shadow-light);
+    margin-bottom: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: var(--transition);
+    grid-column: 1 / -1;
+}
+
+.map-container:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+}
+
+body.dark .map-container {
+    background: rgba(20, 20, 22, 0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.map-container .section-title {
+    font-family: var(--ff-heading) !important;
+    font-size: clamp(1.2rem, 1rem + 1vw, 1.8rem) !important;
+    font-weight: 600 !important;
+    margin-bottom: 20px;
+    color: var(--secondary-color, #2d3748);
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 12px;
+    display: inline-block;
+    letter-spacing: normal;
+}
+
+body.dark .map-container .section-title {
+    color: #fff;
+}
+
+.map-address {
+    margin-top: 16px;
+    color: var(--medium-gray);
+    line-height: 1.8;
+    font-family: var(--ff-primary);
+    font-size: var(--fs-paragraphs);
+}
+
+body.dark .map-address {
+    color: #94a3b8;
+}
+
+/* Map Container Inside Full Width Map */
+.map-container .itinerary-overview__map-container {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    height: 480px;
+    background: linear-gradient(135deg, #1261A610 0%, #c1025110 100%);
+}
+
+.map-container .itinerary-overview__map-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #eef2f5;
+}
+
+.map-container .itinerary-overview__map {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    height: 100%;
+    border-radius: var(--border-radius);
+}
+
+/* Remove old heading inside map */
+.map-container .map-overview__heading {
+    display: none;
+}
+
+/* Dark Mode for Map Container */
+body.dark .map-container .itinerary-overview__map-container {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Map Embed Styling for other pages */
+.attraction-map-embed,
+.entertainment-map-embed,
+.cuisine-map-embed {
+    width: 100%;
+    height: 480px;
+    background: linear-gradient(135deg, #1261A610 0%, #c1025110 100%);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+/* Map Container for different pages */
+#glanceMap,
+#entMap {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+}
